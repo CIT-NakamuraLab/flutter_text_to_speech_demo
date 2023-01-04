@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './screens/home_screen.dart';
+import './screens/health_condition.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         home: const MyHomePage(),
         routes: {
           HomeScreen.routeName: (context) => HomeScreen(),
+          HealthCondition.routeName: (context) => const HealthCondition(),
         });
   }
 }

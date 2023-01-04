@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
+import './health_condition.dart';
+
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home-screen';
   final FlutterTts flutterTts = FlutterTts();
@@ -28,50 +30,49 @@ class HomeScreen extends StatelessWidget {
         right: 15,
         bottom: 7.5,
       ),
-      child: ListTile(
-        tileColor: Theme.of(context).colorScheme.secondary,
-        leading: Icon(
-          icon,
-          size: 35,
-          color: Colors.white,
-        ),
-        title: Text(
-          titleText,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontWeight: FontWeight.w900,
-            fontSize: 24,
+      child: GestureDetector(
+        onTap: () {
+          _speak(speakText);
+        },
+        child: ListTile(
+          tileColor: Theme.of(context).colorScheme.secondary,
+          leading: Icon(
+            icon,
+            size: 35,
+            color: Colors.white,
           ),
-        ),
-        trailing: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 35,
-              width: 35,
-              child: IconButton(
-                onPressed: () {
-                  _speak(speakText);
-                },
-                icon: const Icon(Icons.volume_up),
-              ),
+          title: Text(
+            titleText,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontWeight: FontWeight.w900,
+              fontSize: 24,
             ),
-            const Text(
-              'Click',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic,
+          ),
+          trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(
+                Icons.volume_up,
                 color: Colors.white,
               ),
-            )
-          ],
-        ),
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            color: Colors.blue,
-            width: 2,
+              Text(
+                'Click',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.white,
+                ),
+              )
+            ],
           ),
-          borderRadius: BorderRadius.circular(10),
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(
+              color: Colors.blue,
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
       ),
     );
@@ -79,17 +80,58 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final deviceHeight = MediaQuery.of(context).size.height;
+    final deviceHeight = MediaQuery.of(context).size.height -
+        AppBar().preferredSize.height -
+        MediaQuery.of(context).padding.top;
 
     return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Expanded(
+              child: SizedBox(
+                height: 50,
+                child: Form(
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'お名前入力',
+                      fillColor: Colors.white,
+                      filled: true,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const Text(
+              'さん来てください',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            Column(
+              children: [
+                const Icon(
+                  Icons.screen_rotation,
+                  color: Colors.black,
+                ),
+                Text(
+                  'スマホを振ってください',
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: Colors.redAccent[700],
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
       body: Column(
         children: [
-          Container(
-            height: deviceHeight * 0.18,
-            color: Theme.of(context).colorScheme.primary,
-          ),
           SizedBox(
-            height: deviceHeight * 0.7,
+            height: deviceHeight * 0.87,
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -109,124 +151,96 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           Container(
-            height: deviceHeight * 0.12,
+            height: deviceHeight * 0.13,
             color: Theme.of(context).colorScheme.primary,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(
-                      child: Container(
-                        width: 85,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.medical_services,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              '健康状態',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                GestureDetector(
+                  onTap: () => Navigator.of(context)
+                      .pushNamed(HealthCondition.routeName),
+                  child: Container(
+                    width: 85,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white),
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    GestureDetector(
-                      child: Container(
-                        width: 85,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.circular(10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.medical_services,
+                          color: Colors.white,
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.back_hand,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              '取って',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                        Text(
+                          '健康状態',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
                     ),
-                    GestureDetector(
-                      child: Container(
-                        width: 85,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.draw,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              'メモ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                  ),
+                ),
+                GestureDetector(
+                  child: Container(
+                    width: 85,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white),
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                  ],
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.back_hand,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          '取って',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  child: Container(
+                    width: 85,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white),
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.draw,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'メモ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
         ],
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   backgroundColor: Theme.of(context).colorScheme.primary,
-      //   selectedItemColor: Theme.of(context).colorScheme.secondary,
-      //   unselectedItemColor: Colors.white,
-      //   type: BottomNavigationBarType.fixed,
-      //   items: const [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.medical_services),
-      //       label: 'ホーム',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.abc),
-      //       label: '健康状態',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.medical_services),
-      //       label: '取って',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.abc),
-      //       label: 'LE',
-      //     ),
-      //   ],
-      // ),
     );
   }
 }
