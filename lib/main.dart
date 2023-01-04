@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import './screens/home_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -7,60 +9,72 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+        title: 'Text To Speech Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: Colors.redAccent[100],
+            secondary: Colors.greenAccent,
+            background: Colors.greenAccent[100],
+            error: Colors.red,
+          ),
+          buttonTheme: const ButtonThemeData(
+            buttonColor: Colors.amber,
+          ),
+        ),
+        home: const MyHomePage(),
+        routes: {
+          HomeScreen.routeName: (context) => HomeScreen(),
+        });
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+    return GestureDetector(
+      onTap: () => Navigator.of(context)
+          .pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false),
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text(
+                '伝えたい気持ちをサポートする',
+                style: TextStyle(fontSize: 20),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                '音声会話補助アプリ',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'comecome',
+                style: TextStyle(
+                  fontSize: 42,
+                  fontWeight: FontWeight.w900,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
