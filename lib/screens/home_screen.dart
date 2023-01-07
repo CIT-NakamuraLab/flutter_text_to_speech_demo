@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 import './health_condition.dart';
+import './take_hand.dart';
+import './paint_screen.dart';
+import '../widgets/bottom_tab.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home-screen';
-  final FlutterTts flutterTts = FlutterTts();
 
   HomeScreen({super.key});
+
+  final FlutterTts flutterTts = FlutterTts();
 
   Future<void> _speak(String speakText) async {
     await flutterTts.setLanguage('ja-JP');
@@ -85,6 +89,7 @@ class HomeScreen extends StatelessWidget {
         MediaQuery.of(context).padding.top;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Row(
           children: [
@@ -156,85 +161,23 @@ class HomeScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                GestureDetector(
-                  onTap: () => Navigator.of(context)
+                BottomTab(
+                  transitionFunction: () => Navigator.of(context)
                       .pushNamed(HealthCondition.routeName),
-                  child: Container(
-                    width: 85,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(
-                          Icons.medical_services,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          '健康状態',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                  labelText: '健康状態',
+                  icon: Icons.medical_services,
                 ),
-                GestureDetector(
-                  child: Container(
-                    width: 85,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(
-                          Icons.back_hand,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          '取って',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                BottomTab(
+                  transitionFunction: () =>
+                      Navigator.of(context).pushNamed(TakeHand.routeName),
+                  labelText: '取って',
+                  icon: Icons.back_hand,
                 ),
-                GestureDetector(
-                  child: Container(
-                    width: 85,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(
-                          Icons.draw,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          'メモ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                BottomTab(
+                  transitionFunction: () =>
+                      Navigator.of(context).pushNamed(PaintScreen.routeName),
+                  labelText: 'メモ',
+                  icon: Icons.draw,
                 ),
               ],
             ),

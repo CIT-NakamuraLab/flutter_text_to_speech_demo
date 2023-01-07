@@ -38,6 +38,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_tts: ^3.6.3
   shake: ^2.2.0
+  provider: ^6.0.5
+  syncfusion_flutter_signaturepad: ^20.4.42
+  whiteboardkit: ^0.2.2
 
 dev_dependencies:
   flutter_test:

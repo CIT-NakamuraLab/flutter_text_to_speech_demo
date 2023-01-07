@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
+import '../widgets/bottom_tab.dart';
+import './take_hand.dart';
+import './home_screen.dart';
+
 class HealthCondition extends StatelessWidget {
   static const routeName = '/health-condition';
   const HealthCondition({super.key});
@@ -10,13 +14,10 @@ class HealthCondition extends StatelessWidget {
     final deviceHeight = MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
         MediaQuery.of(context).padding.top;
-    // MediaQuery.of(context).padding.bottom;
-    // final deviceHeight =
-    // MediaQuery.of(context).size.height - AppBar().preferredSize.height;
 
     final FlutterTts flutterTts = FlutterTts();
 
-    Future<void> _speak(String speakText) async {
+    Future<void> speak(String speakText) async {
       await flutterTts.setLanguage('ja-JP');
       await flutterTts.setSpeechRate(0.5);
       await flutterTts.setVolume(1.0);
@@ -24,15 +25,16 @@ class HealthCondition extends StatelessWidget {
       await flutterTts.speak(speakText);
     }
 
-    Widget _generateGrid(String text, String speakText) {
+    Widget generateGrid(String text, String speakText) {
       return GestureDetector(
         onTap: () {
-          _speak(speakText);
+          speak(speakText);
         },
         child: Card(
           elevation: 3,
-          shape: const RoundedRectangleBorder(
-            side: BorderSide(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: const BorderSide(
               color: Colors.red,
               width: 5,
             ),
@@ -100,65 +102,56 @@ class HealthCondition extends StatelessWidget {
               child: Column(
                 children: [
                   _generateCaterory('どうされましたか?', Icons.vaccines),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: GridView(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        childAspectRatio: 3 / 2,
-                      ),
-                      children: [
-                        _generateGrid('痛い', '痛いです'),
-                        _generateGrid('苦しい', '苦しいです'),
-                        _generateGrid('かゆい', 'かゆいです'),
-                        _generateGrid('めまい', 'めまいがします'),
-                        _generateGrid('不安', '不安です'),
-                        _generateGrid('吐き気', '吐き気がします'),
-                      ],
+                  GridView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      childAspectRatio: 3 / 2,
                     ),
+                    children: [
+                      generateGrid('痛い', '痛いです'),
+                      generateGrid('苦しい', '苦しいです'),
+                      generateGrid('かゆい', 'かゆいです'),
+                      generateGrid('めまい', 'めまいがします'),
+                      generateGrid('不安', '不安です'),
+                      generateGrid('吐き気', '吐き気がします'),
+                    ],
                   ),
                   _generateCaterory('どこが?', Icons.where_to_vote),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: GridView(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                        childAspectRatio: 3 / 2,
-                      ),
-                      children: [
-                        _generateGrid('頭が', '頭が'),
-                        _generateGrid('目が', '目が'),
-                        _generateGrid('耳が', '耳が'),
-                        _generateGrid('歯が', '歯が'),
-                        _generateGrid('肺が', '肺が'),
-                        _generateGrid('腹が', '腹が'),
-                        _generateGrid('腰が', '腰が'),
-                        _generateGrid('足が', '足が'),
-                      ],
+                  GridView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      childAspectRatio: 3 / 2,
                     ),
+                    children: [
+                      generateGrid('頭が', '頭が'),
+                      generateGrid('目が', '目が'),
+                      generateGrid('耳が', '耳が'),
+                      generateGrid('歯が', '歯が'),
+                      generateGrid('肺が', '肺が'),
+                      generateGrid('腹が', '腹が'),
+                      generateGrid('腰が', '腰が'),
+                      generateGrid('足が', '足が'),
+                    ],
                   ),
                   _generateCaterory('どうしたい?', Icons.where_to_vote),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: GridView(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 5 / 2,
-                      ),
-                      children: [
-                        _generateGrid('病院に行きたい', '病院に行きたいです'),
-                        _generateGrid('薬を飲みたい', '薬を飲みたいです'),
-                      ],
+                  GridView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 5 / 2,
                     ),
+                    children: [
+                      generateGrid('病院に行きたい', '病院に行きたいです'),
+                      generateGrid('薬を飲みたい', '薬を飲みたいです'),
+                    ],
                   ),
                   GridView(
                     shrinkWrap: true,
@@ -169,9 +162,9 @@ class HealthCondition extends StatelessWidget {
                       childAspectRatio: 3 / 2,
                     ),
                     children: [
-                      _generateGrid('今すぐ', '今すぐ'),
-                      _generateGrid('様子を見て', '様子を見て'),
-                      _generateGrid('明日', '明日'),
+                      generateGrid('今すぐ', '今すぐ'),
+                      generateGrid('様子を見て', '様子を見て'),
+                      generateGrid('明日', '明日'),
                     ],
                   ),
                 ],
@@ -184,84 +177,23 @@ class HealthCondition extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                GestureDetector(
-                  onTap: () => Navigator.of(context).pop(),
-                  child: Container(
-                    width: deviceHeight * 0.12,
-                    height: deviceHeight * 0.08,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(
-                          Icons.undo,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          '戻る',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                BottomTab(
+                  transitionFunction: () => Navigator.of(context).pop(),
+                  labelText: '戻る',
+                  icon: Icons.undo,
                 ),
-                GestureDetector(
-                  child: Container(
-                    width: deviceHeight * 0.12,
-                    height: deviceHeight * 0.08,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(
-                          Icons.back_hand,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          '取って',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                BottomTab(
+                  transitionFunction: () =>
+                      Navigator.of(context).pushNamed(TakeHand.routeName),
+                  labelText: '取って',
+                  icon: Icons.back_hand,
                 ),
-                GestureDetector(
-                  child: Container(
-                    width: deviceHeight * 0.12,
-                    height: deviceHeight * 0.08,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(
-                          Icons.home,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          'Top',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                BottomTab(
+                  transitionFunction: () => Navigator.of(context)
+                      .pushNamedAndRemoveUntil(
+                          HomeScreen.routeName, (_) => false),
+                  labelText: 'Top',
+                  icon: Icons.home,
                 ),
               ],
             ),
