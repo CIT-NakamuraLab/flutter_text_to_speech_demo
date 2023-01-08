@@ -28,54 +28,6 @@ class TakeHand extends StatelessWidget {
       await flutterTts.speak(speakText);
     }
 
-    Widget generateGrid(String labelText, String speakText) {
-      return GestureDetector(
-        onTap: () {
-          speak(speakText);
-        },
-        child: Card(
-          elevation: 3,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-            side: BorderSide(
-              color: Colors.blue.shade700,
-              width: 5,
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Icon(
-                    Icons.back_hand,
-                    color: Colors.blue.shade700,
-                  ),
-                ),
-                Text(
-                  labelText,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Icon(
-                    Icons.volume_up,
-                    color: Colors.blue.shade700,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(

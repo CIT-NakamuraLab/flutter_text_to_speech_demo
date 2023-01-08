@@ -27,65 +27,6 @@ class HealthCondition extends StatelessWidget {
       await flutterTts.speak(speakText);
     }
 
-    Widget generateGrid(String text, String speakText) {
-      return GestureDetector(
-        onTap: () {
-          speak(speakText);
-        },
-        child: Card(
-          elevation: 3,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-            side: const BorderSide(
-              color: Colors.red,
-              width: 5,
-            ),
-          ),
-          child: Align(
-            alignment: Alignment.center,
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
-    Widget _generateCaterory(String text, IconData icon) {
-      return Container(
-        width: double.infinity,
-        height: deviceHeight * 0.07,
-        color: Colors.green[100],
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            const Icon(
-              Icons.help,
-              size: 36,
-              color: Colors.white,
-            ),
-            Text(
-              text,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
-              ),
-            ),
-            Icon(
-              icon,
-              size: 36,
-              color: Colors.white,
-            )
-          ],
-        ),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
