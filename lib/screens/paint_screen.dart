@@ -6,6 +6,11 @@ import 'package:whiteboardkit/drawing_controller.dart';
 import 'package:whiteboardkit/whiteboard.dart';
 import 'package:whiteboardkit/whiteboard_style.dart';
 
+import '../widgets/bottom_tab.dart';
+import '../screens/health_condition.dart';
+import '../screens/take_hand.dart';
+import '../screens/home_screen.dart';
+
 class PaintScreen extends StatefulWidget {
   static const routeName = '/paint-screen';
   const PaintScreen({super.key});
@@ -38,34 +43,6 @@ class _PaintScreenState extends State<PaintScreen> {
         MediaQuery.of(context).padding.top;
     final deviceWidth = MediaQuery.of(context).size.width;
 
-    Widget generateSelectColor(String colorText, Color colorData) {
-      return GestureDetector(
-        onTap: () {},
-        child: Container(
-          height: deviceWidth * 0.1,
-          width: deviceWidth * 0.1,
-          color: colorData,
-          child: Padding(
-            padding: const EdgeInsets.all(3),
-            child: FittedBox(
-              fit: BoxFit.contain,
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  colorText,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -87,17 +64,52 @@ class _PaintScreenState extends State<PaintScreen> {
         ],
       ),
       body: Center(
-        child: Column(
-          children: [
-            Expanded(
-              child: Whiteboard(
-                controller: controller,
-                style: const WhiteboardStyle(
-                  toolboxColor: Colors.amber,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: deviceHeight * 0.7,
+                width: deviceWidth,
+                child: Whiteboard(
+                  controller: controller,
+                  style: const WhiteboardStyle(
+                    toolboxColor: Colors.black,
+                  ),
                 ),
               ),
-            ),
-          ],
+              SizedBox(
+                height: deviceHeight * 0.87 - deviceHeight * 0.7,
+              ),
+              Container(
+                height: deviceHeight * 0.13,
+                color: Theme.of(context).colorScheme.primary,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    BottomTab(
+                      transitionFunction: () => Navigator.of(context)
+                          .pushNamed(HealthCondition.routeName),
+                      labelText: '健康状態',
+                      icon: Icons.medical_services,
+                    ),
+                    BottomTab(
+                      transitionFunction: () =>
+                          Navigator.of(context).pushNamed(TakeHand.routeName),
+                      labelText: '取って',
+                      icon: Icons.back_hand,
+                    ),
+                    BottomTab(
+                      transitionFunction: () => Navigator.of(context)
+                          .pushNamedAndRemoveUntil(
+                              HomeScreen.routeName, (route) => false),
+                      labelText: 'Top',
+                      icon: Icons.home,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

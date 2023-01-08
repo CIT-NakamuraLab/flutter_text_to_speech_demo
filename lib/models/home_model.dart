@@ -4,6 +4,7 @@ import 'package:shake/shake.dart';
 class HomeModel extends ChangeNotifier {
   shakeGesture(BuildContext context) {
     ShakeDetector.autoStart(onPhoneShake: () {
+      print('SHAKE');
       showDialog(
           context: context,
           builder: (_) {
