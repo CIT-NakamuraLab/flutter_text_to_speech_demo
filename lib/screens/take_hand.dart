@@ -5,6 +5,7 @@ import '../widgets/bottom_tab.dart';
 import '../screens/health_condition.dart';
 import '../screens/home_screen.dart';
 import '../screens/paint_screen.dart';
+import '../widgets/generate_Grid.dart';
 
 class TakeHand extends StatelessWidget {
   static const routeName = '/take-hand';
@@ -112,19 +113,55 @@ class TakeHand extends StatelessWidget {
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
                     ),
-                    children: [
-                      generateGrid('紙とペン', '紙とペンを取ってください'),
-                      generateGrid('つえ', 'つえを取ってください'),
-                      generateGrid('めがね', 'めがねを取ってください'),
-                      generateGrid('新聞', '新聞を取ってください'),
-                      generateGrid('薬', '薬を取ってください'),
-                      generateGrid('リモコン', 'リモコンを取ってください'),
-                      generateGrid('ティッシュ', 'ティッシュを取ってください'),
-                      generateGrid('タオル', 'タオルを取ってください'),
-                      generateGrid('マスク', 'マスクを取ってください'),
-                      generateGrid('財布', '財布を取ってください'),
-                      generateGrid('靴下', '靴下を取ってください'),
-                      generateGrid('上着', '上着を取ってください'),
+                    children: const [
+                      GenerateGrid(
+                          labelText: '紙とペン',
+                          speakText: '紙とペンを取ってください',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: 'つえ',
+                          speakText: 'つえを取ってください',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: 'めがね',
+                          speakText: 'めがねを取ってください',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: '新聞',
+                          speakText: '新聞を取ってください',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: '薬',
+                          speakText: '薬を取ってください',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: 'リモコン',
+                          speakText: 'リモコンを取ってください',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: 'ティッシュ',
+                          speakText: 'ティッシュを取ってください',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: 'タオル',
+                          speakText: 'タオルを取ってください',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: 'マスク',
+                          speakText: 'マスクを取ってください',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: '財布',
+                          speakText: '財布を取ってください',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: '靴下',
+                          speakText: '靴下を取ってください',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: '上着',
+                          speakText: '上着を取ってください',
+                          routeName: routeName),
                     ],
                   ),
                   SizedBox(

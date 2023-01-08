@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 import '../widgets/bottom_tab.dart';
+import '../widgets/generate_Grid.dart';
+import '../widgets/generate_Caterory.dart';
 import './take_hand.dart';
 import './home_screen.dart';
 
@@ -101,7 +103,11 @@ class HealthCondition extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  _generateCaterory('どうされましたか?', Icons.vaccines),
+                  const GenerateCaterory(
+                    text: 'どうされましたか?',
+                    icon: Icons.vaccines,
+                    routeName: routeName,
+                  ),
                   GridView(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -110,16 +116,39 @@ class HealthCondition extends StatelessWidget {
                       crossAxisCount: 3,
                       childAspectRatio: 3 / 2,
                     ),
-                    children: [
-                      generateGrid('痛い', '痛いです'),
-                      generateGrid('苦しい', '苦しいです'),
-                      generateGrid('かゆい', 'かゆいです'),
-                      generateGrid('めまい', 'めまいがします'),
-                      generateGrid('不安', '不安です'),
-                      generateGrid('吐き気', '吐き気がします'),
+                    children: const [
+                      GenerateGrid(
+                        labelText: '痛い',
+                        speakText: '痛いです',
+                        routeName: routeName,
+                      ),
+                      GenerateGrid(
+                          labelText: '苦しい',
+                          speakText: '苦しいです',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: 'かゆい',
+                          speakText: 'かゆいです',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: 'めまい',
+                          speakText: 'めまいがします',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: '不安',
+                          speakText: '不安です',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: '吐き気',
+                          speakText: '吐き気がします',
+                          routeName: routeName),
                     ],
                   ),
-                  _generateCaterory('どこが?', Icons.where_to_vote),
+                  const GenerateCaterory(
+                    text: 'どこが?',
+                    icon: Icons.where_to_vote,
+                    routeName: routeName,
+                  ),
                   GridView(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -128,18 +157,46 @@ class HealthCondition extends StatelessWidget {
                       crossAxisCount: 4,
                       childAspectRatio: 3 / 2,
                     ),
-                    children: [
-                      generateGrid('頭が', '頭が'),
-                      generateGrid('目が', '目が'),
-                      generateGrid('耳が', '耳が'),
-                      generateGrid('歯が', '歯が'),
-                      generateGrid('肺が', '肺が'),
-                      generateGrid('腹が', '腹が'),
-                      generateGrid('腰が', '腰が'),
-                      generateGrid('足が', '足が'),
+                    children: const [
+                      GenerateGrid(
+                          labelText: '頭が',
+                          speakText: '頭が',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: '目が',
+                          speakText: '目が',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: '耳が',
+                          speakText: '耳が',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: '歯が',
+                          speakText: '歯が',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: '肺が',
+                          speakText: '肺が',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: '腹が',
+                          speakText: '腹が',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: '腰が',
+                          speakText: '腰が',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: '足が',
+                          speakText: '足が',
+                          routeName: routeName),
                     ],
                   ),
-                  _generateCaterory('どうしたい?', Icons.where_to_vote),
+                  const GenerateCaterory(
+                    text: 'どうしたい?',
+                    icon: Icons.where_to_vote,
+                    routeName: routeName,
+                  ),
                   GridView(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -148,9 +205,15 @@ class HealthCondition extends StatelessWidget {
                       crossAxisCount: 2,
                       childAspectRatio: 5 / 2,
                     ),
-                    children: [
-                      generateGrid('病院に行きたい', '病院に行きたいです'),
-                      generateGrid('薬を飲みたい', '薬を飲みたいです'),
+                    children: const [
+                      GenerateGrid(
+                          labelText: '病院に行きたい',
+                          speakText: '病院に行きたいです',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: '薬を飲みたい',
+                          speakText: '薬を飲みたいです',
+                          routeName: routeName),
                     ],
                   ),
                   GridView(
@@ -161,10 +224,19 @@ class HealthCondition extends StatelessWidget {
                       crossAxisCount: 3,
                       childAspectRatio: 3 / 2,
                     ),
-                    children: [
-                      generateGrid('今すぐ', '今すぐ'),
-                      generateGrid('様子を見て', '様子を見て'),
-                      generateGrid('明日', '明日'),
+                    children: const [
+                      GenerateGrid(
+                          labelText: '今すぐ',
+                          speakText: '今すぐ',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: '様子を見て',
+                          speakText: '様子を見て',
+                          routeName: routeName),
+                      GenerateGrid(
+                          labelText: '明日',
+                          speakText: '明日',
+                          routeName: routeName),
                     ],
                   ),
                 ],
