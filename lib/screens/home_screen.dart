@@ -141,7 +141,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _speak('$nameさん来てください');
+                      name.isEmpty
+                          ? _speak("誰か来てください")
+                          : _speak('$nameさん来てください');
                     },
                     child: Column(
                       children: [
