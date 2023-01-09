@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 
 import '../widgets/bottom_tab.dart';
 import '../screens/health_condition.dart';
 import '../screens/home_screen.dart';
 import '../screens/paint_screen.dart';
-import '../widgets/generate_Grid.dart';
+import '../widgets/generate_grid.dart';
 
 class TakeHand extends StatelessWidget {
   static const routeName = '/take-hand';
@@ -17,16 +16,6 @@ class TakeHand extends StatelessWidget {
         AppBar().preferredSize.height -
         MediaQuery.of(context).padding.top;
     final deviceWidth = MediaQuery.of(context).size.width;
-
-    final FlutterTts flutterTts = FlutterTts();
-
-    Future<void> speak(String speakText) async {
-      await flutterTts.setLanguage('ja-JP');
-      await flutterTts.setSpeechRate(0.5);
-      await flutterTts.setVolume(1.0);
-      await flutterTts.setPitch(1.0);
-      await flutterTts.speak(speakText);
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -67,53 +56,65 @@ class TakeHand extends StatelessWidget {
                     ),
                     children: const [
                       GenerateGrid(
-                          labelText: '紙とペン',
-                          speakText: '紙とペンを取ってください',
-                          routeName: routeName),
+                        labelText: '紙とペン',
+                        speakText: '紙とペンを取ってください',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: 'つえ',
-                          speakText: 'つえを取ってください',
-                          routeName: routeName),
+                        labelText: 'つえ',
+                        speakText: 'つえを取ってください',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: 'めがね',
-                          speakText: 'めがねを取ってください',
-                          routeName: routeName),
+                        labelText: 'めがね',
+                        speakText: 'めがねを取ってください',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: '新聞',
-                          speakText: '新聞を取ってください',
-                          routeName: routeName),
+                        labelText: '新聞',
+                        speakText: '新聞を取ってください',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: '薬',
-                          speakText: '薬を取ってください',
-                          routeName: routeName),
+                        labelText: '薬',
+                        speakText: '薬を取ってください',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: 'リモコン',
-                          speakText: 'リモコンを取ってください',
-                          routeName: routeName),
+                        labelText: 'リモコン',
+                        speakText: 'リモコンを取ってください',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: 'ティッシュ',
-                          speakText: 'ティッシュを取ってください',
-                          routeName: routeName),
+                        labelText: 'ティッシュ',
+                        speakText: 'ティッシュを取ってください',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: 'タオル',
-                          speakText: 'タオルを取ってください',
-                          routeName: routeName),
+                        labelText: 'タオル',
+                        speakText: 'タオルを取ってください',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: 'マスク',
-                          speakText: 'マスクを取ってください',
-                          routeName: routeName),
+                        labelText: 'マスク',
+                        speakText: 'マスクを取ってください',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: '財布',
-                          speakText: '財布を取ってください',
-                          routeName: routeName),
+                        labelText: '財布',
+                        speakText: '財布を取ってください',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: '靴下',
-                          speakText: '靴下を取ってください',
-                          routeName: routeName),
+                        labelText: '靴下',
+                        speakText: '靴下を取ってください',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: '上着',
-                          speakText: '上着を取ってください',
-                          routeName: routeName),
+                        labelText: '上着',
+                        speakText: '上着を取ってください',
+                        routeName: routeName,
+                      ),
                     ],
                   ),
                   SizedBox(

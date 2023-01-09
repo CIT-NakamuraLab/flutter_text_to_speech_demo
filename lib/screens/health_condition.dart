@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 
 import '../widgets/bottom_tab.dart';
-import '../widgets/generate_Grid.dart';
-import '../widgets/generate_Caterory.dart';
+import '../widgets/generate_grid.dart';
+import '../widgets/generate_caterory.dart';
 import './take_hand.dart';
 import './home_screen.dart';
 
@@ -16,16 +15,6 @@ class HealthCondition extends StatelessWidget {
     final deviceHeight = MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
         MediaQuery.of(context).padding.top;
-
-    final FlutterTts flutterTts = FlutterTts();
-
-    Future<void> speak(String speakText) async {
-      await flutterTts.setLanguage('ja-JP');
-      await flutterTts.setSpeechRate(0.5);
-      await flutterTts.setVolume(1.0);
-      await flutterTts.setPitch(1.0);
-      await flutterTts.speak(speakText);
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -64,25 +53,30 @@ class HealthCondition extends StatelessWidget {
                         routeName: routeName,
                       ),
                       GenerateGrid(
-                          labelText: '苦しい',
-                          speakText: '苦しいです',
-                          routeName: routeName),
+                        labelText: '苦しい',
+                        speakText: '苦しいです',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: 'かゆい',
-                          speakText: 'かゆいです',
-                          routeName: routeName),
+                        labelText: 'かゆい',
+                        speakText: 'かゆいです',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: 'めまい',
-                          speakText: 'めまいがします',
-                          routeName: routeName),
+                        labelText: 'めまい',
+                        speakText: 'めまいがします',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: '不安',
-                          speakText: '不安です',
-                          routeName: routeName),
+                        labelText: '不安',
+                        speakText: '不安です',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: '吐き気',
-                          speakText: '吐き気がします',
-                          routeName: routeName),
+                        labelText: '吐き気',
+                        speakText: '吐き気がします',
+                        routeName: routeName,
+                      ),
                     ],
                   ),
                   const GenerateCaterory(
@@ -100,37 +94,45 @@ class HealthCondition extends StatelessWidget {
                     ),
                     children: const [
                       GenerateGrid(
-                          labelText: '頭が',
-                          speakText: '頭が',
-                          routeName: routeName),
+                        labelText: '頭が',
+                        speakText: '頭が',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: '目が',
-                          speakText: '目が',
-                          routeName: routeName),
+                        labelText: '目が',
+                        speakText: '目が',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: '耳が',
-                          speakText: '耳が',
-                          routeName: routeName),
+                        labelText: '耳が',
+                        speakText: '耳が',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: '歯が',
-                          speakText: '歯が',
-                          routeName: routeName),
+                        labelText: '歯が',
+                        speakText: '歯が',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: '肺が',
-                          speakText: '肺が',
-                          routeName: routeName),
+                        labelText: '肺が',
+                        speakText: '肺が',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: '腹が',
-                          speakText: '腹が',
-                          routeName: routeName),
+                        labelText: '腹が',
+                        speakText: '腹が',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: '腰が',
-                          speakText: '腰が',
-                          routeName: routeName),
+                        labelText: '腰が',
+                        speakText: '腰が',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: '足が',
-                          speakText: '足が',
-                          routeName: routeName),
+                        labelText: '足が',
+                        speakText: '足が',
+                        routeName: routeName,
+                      ),
                     ],
                   ),
                   const GenerateCaterory(
@@ -148,13 +150,15 @@ class HealthCondition extends StatelessWidget {
                     ),
                     children: const [
                       GenerateGrid(
-                          labelText: '病院に行きたい',
-                          speakText: '病院に行きたいです',
-                          routeName: routeName),
+                        labelText: '病院に行きたい',
+                        speakText: '病院に行きたいです',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: '薬を飲みたい',
-                          speakText: '薬を飲みたいです',
-                          routeName: routeName),
+                        labelText: '薬を飲みたい',
+                        speakText: '薬を飲みたいです',
+                        routeName: routeName,
+                      ),
                     ],
                   ),
                   GridView(
@@ -167,17 +171,20 @@ class HealthCondition extends StatelessWidget {
                     ),
                     children: const [
                       GenerateGrid(
-                          labelText: '今すぐ',
-                          speakText: '今すぐ',
-                          routeName: routeName),
+                        labelText: '今すぐ',
+                        speakText: '今すぐ',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: '様子を見て',
-                          speakText: '様子を見て',
-                          routeName: routeName),
+                        labelText: '様子を見て',
+                        speakText: '様子を見て',
+                        routeName: routeName,
+                      ),
                       GenerateGrid(
-                          labelText: '明日',
-                          speakText: '明日',
-                          routeName: routeName),
+                        labelText: '明日',
+                        speakText: '明日',
+                        routeName: routeName,
+                      ),
                     ],
                   ),
                 ],

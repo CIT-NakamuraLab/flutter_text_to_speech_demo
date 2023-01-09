@@ -16,7 +16,7 @@ class _TitleScreenState extends State<TitleScreen> {
       onTap: () => Navigator.of(context).pushReplacement(
         PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return HomeScreen();
+            return const HomeScreen();
           },
           transitionDuration: const Duration(seconds: 1),
           reverseTransitionDuration: const Duration(seconds: 1),
