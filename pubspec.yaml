@@ -41,6 +41,7 @@ dependencies:
   provider: ^6.0.5
   syncfusion_flutter_signaturepad: ^20.4.42
   whiteboardkit: ^0.2.2
+  speech_to_text: ^2.7.0
 
 dev_dependencies:
   flutter_test:

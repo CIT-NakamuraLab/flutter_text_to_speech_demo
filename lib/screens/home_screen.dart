@@ -4,6 +4,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import './health_condition.dart';
 import './take_hand.dart';
 import './paint_screen.dart';
+import './speech_to_text.dart';
 import '../widgets/bottom_tab.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -214,6 +215,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.of(context).pushNamed(PaintScreen.routeName),
                   labelText: 'メモ',
                   icon: Icons.draw,
+                ),
+                BottomTab(
+                  transitionFunction: () =>
+                      Navigator.of(context).pushNamed(SpeechToText.routeName),
+                  labelText: '音声認識',
+                  icon: Icons.volume_up,
                 ),
               ],
             ),
