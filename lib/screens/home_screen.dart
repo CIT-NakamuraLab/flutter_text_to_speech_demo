@@ -238,18 +238,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       BottomTab(
                         transitionFunction: () => Navigator.of(context)
-                            .pushNamed(PaintScreen.routeName),
+                            .pushNamedAndRemoveUntil(
+                                PaintScreen.routeName, ((route) => false)),
                         labelText: 'メモ',
                         icon: Icons.draw,
                       ),
+                      BottomTab(
+                        transitionFunction: () => Navigator.of(context)
+                            .pushNamed(SpeechToText.routeName),
+                        labelText: '音声認識',
+                        icon: Icons.volume_up,
+                      ),
                     ],
                   ),
-                ),
-                BottomTab(
-                  transitionFunction: () =>
-                      Navigator.of(context).pushNamed(SpeechToText.routeName),
-                  labelText: '音声認識',
-                  icon: Icons.volume_up,
                 ),
               ],
             ),
