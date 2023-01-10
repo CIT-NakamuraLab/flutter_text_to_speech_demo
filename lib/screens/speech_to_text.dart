@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:speech_to_text/speech_to_text.dart';
 
 class SpeechToText extends StatefulWidget {
   static const routeName = '/speech-to-text';
@@ -13,9 +14,11 @@ class SpeechToText extends StatefulWidget {
 }
 
 class _SpeechToTextState extends State<SpeechToText> {
+  String _currentLocaleId = "";
   String lastWords = '';
   String lastError = '';
   String lastStatus = '';
+  bool startStopFlag = true;
   stt.SpeechToText speech = stt.SpeechToText();
 
   // 音声認識開始
@@ -25,16 +28,31 @@ class _SpeechToTextState extends State<SpeechToText> {
       onStatus: statusListener,
     );
     if (available) {
-      speech.listen(onResult: resultListener);
+      var systemLocale = await speech.systemLocale();
+      _currentLocaleId = systemLocale.localeId ?? '';
+      if (_currentLocaleId == "en_JP") {
+        _currentLocaleId = "ja_JP";
+      }
+      speech.listen(onResult: resultListener, localeId: _currentLocaleId);
     } else {
       print("The user has denied the use of speech recognition.");
     }
+
+    setState(
+      () {
+        startStopFlag = !startStopFlag;
+      },
+    );
   }
 
   // 音声入力停止
   Future<void> stop() async {
     speech.stop();
-    
+    setState(
+      () {
+        startStopFlag = !startStopFlag;
+      },
+    );
   }
 
   // エラーリスナー
@@ -69,11 +87,7 @@ class _SpeechToTextState extends State<SpeechToText> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              '変換文字:$lastWords',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            Text(
-              'ステータス : $lastStatus',
+              '$lastWords',
               style: Theme.of(context).textTheme.headline4,
             ),
           ],
@@ -82,20 +96,21 @@ class _SpeechToTextState extends State<SpeechToText> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FloatingActionButton(
-            heroTag: 'speak',
-            onPressed: speak,
-            child: const Icon(
-              Icons.play_arrow,
-            ),
-          ),
-          FloatingActionButton(
-            heroTag: 'stop',
-            onPressed: stop,
-            child: const Icon(
-              Icons.stop,
-            ),
-          )
+          startStopFlag
+              ? FloatingActionButton(
+                  heroTag: 'speak',
+                  onPressed: speak,
+                  child: const Icon(
+                    Icons.play_arrow,
+                  ),
+                )
+              : FloatingActionButton(
+                  heroTag: 'stop',
+                  onPressed: stop,
+                  child: const Icon(
+                    Icons.stop,
+                  ),
+                )
         ],
       ),
     );
