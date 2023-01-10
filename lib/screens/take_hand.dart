@@ -122,7 +122,8 @@ class TakeHand extends StatelessWidget {
                     width: deviceWidth * 0.7,
                     child: GestureDetector(
                       onTap: () => Navigator.of(context)
-                          .pushNamed(PaintScreen.routeName),
+                          .pushNamedAndRemoveUntil(
+                              PaintScreen.routeName, ((route) => false)),
                       child: ListTile(
                         leading: const Icon(
                           Icons.arrow_circle_right,

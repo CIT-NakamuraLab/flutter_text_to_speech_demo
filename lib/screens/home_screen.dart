@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import './health_condition.dart';
 import './take_hand.dart';
 import './paint_screen.dart';
+import './speech_to_text.dart';
 import '../widgets/bottom_tab.dart';
 import '../widgets/call.dart';
 
@@ -237,9 +238,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       BottomTab(
                         transitionFunction: () => Navigator.of(context)
-                            .pushNamed(PaintScreen.routeName),
+                            .pushNamedAndRemoveUntil(
+                                PaintScreen.routeName, ((route) => false)),
                         labelText: 'メモ',
                         icon: Icons.draw,
+                      ),
+                      BottomTab(
+                        transitionFunction: () => Navigator.of(context)
+                            .pushNamed(SpeechToText.routeName),
+                        labelText: '音声認識',
+                        icon: Icons.volume_up,
                       ),
                     ],
                   ),

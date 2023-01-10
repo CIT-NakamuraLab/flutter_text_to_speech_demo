@@ -20,7 +20,7 @@ class BottomTab extends StatelessWidget {
         GestureDetector(
           onTap: transitionFunction,
           child: Container(
-            width: deviceHeight * 0.12,
+            width: deviceHeight * 0.1,
             height: deviceHeight * 0.08,
             decoration: BoxDecoration(
               border: Border.all(color: Colors.white),
