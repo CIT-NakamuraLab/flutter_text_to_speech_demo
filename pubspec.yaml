@@ -42,6 +42,8 @@ dependencies:
   syncfusion_flutter_signaturepad: ^20.4.42
   whiteboardkit: ^0.2.2
   speech_to_text: ^2.7.0
+  painter: ^2.0.0
+  flutter_colorpicker: ^1.0.3
 
 dev_dependencies:
   flutter_test:
