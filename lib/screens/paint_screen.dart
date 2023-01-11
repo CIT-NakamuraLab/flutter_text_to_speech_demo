@@ -6,9 +6,10 @@ import 'package:whiteboardkit/whiteboard.dart';
 import 'package:whiteboardkit/whiteboard_style.dart';
 
 import '../widgets/bottom_tab.dart';
-import '../screens/health_condition.dart';
-import '../screens/take_hand.dart';
-import '../screens/home_screen.dart';
+import './health_condition.dart';
+import './take_hand.dart';
+import './home_screen.dart';
+import './speech_to_text.dart';
 
 class PaintScreen extends StatefulWidget {
   static const routeName = '/paint-screen';
@@ -96,6 +97,12 @@ class _PaintScreenState extends State<PaintScreen> {
                           Navigator.of(context).pushNamed(TakeHand.routeName),
                       labelText: '取って',
                       icon: Icons.back_hand,
+                    ),
+                    BottomTab(
+                      transitionFunction: () => Navigator.of(context)
+                          .pushNamed(SpeechToText.routeName),
+                      labelText: '音声認識',
+                      icon: Icons.volume_up,
                     ),
                     BottomTab(
                       transitionFunction: () => Navigator.of(context)

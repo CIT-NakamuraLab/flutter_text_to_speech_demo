@@ -5,6 +5,7 @@ import '../screens/health_condition.dart';
 import '../screens/home_screen.dart';
 import '../screens/paint_screen.dart';
 import '../widgets/generate_grid.dart';
+import './speech_to_text.dart';
 
 class TakeHand extends StatelessWidget {
   static const routeName = '/take-hand';
@@ -168,6 +169,12 @@ class TakeHand extends StatelessWidget {
                       .pushNamed(HealthCondition.routeName),
                   labelText: '健康状態',
                   icon: Icons.medical_services,
+                ),
+                BottomTab(
+                  transitionFunction: () =>
+                      Navigator.of(context).pushNamed(SpeechToText.routeName),
+                  labelText: '音声認識',
+                  icon: Icons.volume_up,
                 ),
                 BottomTab(
                   transitionFunction: () => Navigator.of(context)

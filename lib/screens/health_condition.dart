@@ -5,6 +5,8 @@ import '../widgets/generate_grid.dart';
 import '../widgets/generate_caterory.dart';
 import './take_hand.dart';
 import './home_screen.dart';
+import './speech_to_text.dart';
+import './paint_screen.dart';
 
 class HealthCondition extends StatelessWidget {
   static const routeName = '/health-condition';
@@ -207,6 +209,12 @@ class HealthCondition extends StatelessWidget {
                       Navigator.of(context).pushNamed(TakeHand.routeName),
                   labelText: '取って',
                   icon: Icons.back_hand,
+                ),
+                BottomTab(
+                  transitionFunction: () =>
+                      Navigator.of(context).pushNamed(SpeechToText.routeName),
+                  labelText: '音声認識',
+                  icon: Icons.volume_up,
                 ),
                 BottomTab(
                   transitionFunction: () => Navigator.of(context)
