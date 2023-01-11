@@ -5,6 +5,11 @@ import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:speech_to_text/speech_to_text.dart';
 
+import '../widgets/bottom_tab.dart';
+import './health_condition.dart';
+import './take_hand.dart';
+import './home_screen.dart';
+
 class SpeechToText extends StatefulWidget {
   static const routeName = '/speech-to-text';
   const SpeechToText({super.key});
@@ -78,6 +83,9 @@ class _SpeechToTextState extends State<SpeechToText> {
 
   @override
   Widget build(BuildContext context) {
+    final deviceHeight = MediaQuery.of(context).size.height -
+        AppBar().preferredSize.height -
+        MediaQuery.of(context).padding.top;
     return Scaffold(
       appBar: AppBar(
         title: const Text('SpeechToText'),
@@ -86,32 +94,75 @@ class _SpeechToTextState extends State<SpeechToText> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              '$lastWords',
-              style: Theme.of(context).textTheme.headline4,
+            SizedBox(
+              height: deviceHeight * 0.87,
+              child: Stack(
+                children: [
+                  SingleChildScrollView(
+                    child: Text(
+                      '$lastWords',
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(deviceHeight * 0.02),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: startStopFlag
+                          ? FloatingActionButton(
+                              heroTag: 'speak',
+                              onPressed: speak,
+                              child: const Icon(
+                                Icons.play_arrow,
+                              ),
+                            )
+                          : FloatingActionButton(
+                              heroTag: 'stop',
+                              onPressed: stop,
+                              child: const Icon(
+                                Icons.stop,
+                              ),
+                            ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              color: Theme.of(context).colorScheme.primary,
+              height: deviceHeight * 0.13,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  BottomTab(
+                    transitionFunction: () => Navigator.of(context).pop(),
+                    labelText: '戻る',
+                    icon: Icons.undo,
+                  ),
+                  BottomTab(
+                    transitionFunction: () => Navigator.of(context)
+                        .pushNamed(HealthCondition.routeName),
+                    labelText: '健康状態',
+                    icon: Icons.medical_services,
+                  ),
+                  BottomTab(
+                    transitionFunction: () =>
+                        Navigator.of(context).pushNamed(TakeHand.routeName),
+                    labelText: '取って',
+                    icon: Icons.back_hand,
+                  ),
+                  BottomTab(
+                    transitionFunction: () => Navigator.of(context)
+                        .pushNamedAndRemoveUntil(
+                            HomeScreen.routeName, (_) => false),
+                    labelText: 'Top',
+                    icon: Icons.home,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          startStopFlag
-              ? FloatingActionButton(
-                  heroTag: 'speak',
-                  onPressed: speak,
-                  child: const Icon(
-                    Icons.play_arrow,
-                  ),
-                )
-              : FloatingActionButton(
-                  heroTag: 'stop',
-                  onPressed: stop,
-                  child: const Icon(
-                    Icons.stop,
-                  ),
-                )
-        ],
       ),
     );
   }
