@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.21,
+            height: MediaQuery.of(context).size.height * 0.3,
             child: Column(
               children: [
                 TextField(
@@ -253,8 +253,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   tileColor:
                                       Theme.of(context).colorScheme.secondary,
                                   trailing: SizedBox(
-                                    // width:100になるように iPhone14 Pro MAX width:430/4
-                                    width: deviceWidth / 4.3,
+                                    // width:100になるように iPhone14 Pro MAX width:430/3.4
+                                    width: deviceWidth / 3.9,
                                     child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
@@ -316,7 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
             floatingActionButton: Padding(
               padding: EdgeInsets.only(
-                  top: 0, left: 0, right: 0, bottom: deviceHeight * 0.09),
+                  top: 0, left: 0, right: 0, bottom: deviceHeight * 0.16),
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
