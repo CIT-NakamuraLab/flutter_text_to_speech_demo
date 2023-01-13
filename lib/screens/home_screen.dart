@@ -107,6 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     }
                     _titleController.text = "";
                     _descriptionController.text = "";
+
+                    Navigator.of(context).pop();
                   },
                   child: id == null ? const Text("さくせい") : const Text("こうしん"),
                 ),
