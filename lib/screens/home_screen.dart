@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text_to_speech_demo/db/sqlCrud.dart';
+import 'package:text_to_speech_demo/widgets/top_Bar.dart';
 
+import '../widgets/create_Dialog.dart';
 import './health_condition.dart';
 import './take_hand.dart';
 import './paint_screen.dart';
@@ -10,6 +12,8 @@ import './input_text.dart';
 import '../widgets/bottom_tab.dart';
 import '../widgets/call.dart';
 import '../widgets/text_to_speech.dart';
+
+import '../widgets/sql_Management.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home-screen';
@@ -32,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _refreshJournals() async {
     final data = await SqlCrud.getItems();
     if (data.isEmpty) {
-      print("empty");
       await SqlCrud.createItem(title: "ありがとう", descrption: "ありがとうございます");
       await SqlCrud.createItem(title: "すいません", descrption: "すいません");
       await SqlCrud.createItem(title: "のどがかわきました", descrption: "のどが､かわきました");
@@ -40,8 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
       await SqlCrud.createItem(title: "トイレ", descrption: "トイレに行きたいです");
       await SqlCrud.createItem(title: "ぐあいがわるいです", descrption: "具合が悪いです");
       _refreshJournals();
-    } else {
-      print("notEmpty");
     }
     setState(() {
       _journals = data;
@@ -90,12 +91,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ElevatedButton(
                   onPressed: () async {
                     if (id == null) {
-                      await _addItem();
+                      await SqlManagement.addItem(_titleController.text,
+                          _descriptionController.text, _refreshJournals);
                     } else {
-                      await _updateItem(id);
+                      await SqlManagement.updateItem(id, _titleController.text,
+                          _descriptionController.text, _refreshJournals);
                     }
                     _titleController.text = "";
                     _descriptionController.text = "";
+
+                    Navigator.of(context).pop();
                   },
                   child: id == null ? const Text("さくせい") : const Text("こうしん"),
                 ),
@@ -105,26 +110,6 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
     );
-  }
-
-  Future<void> _addItem() async {
-    await SqlCrud.createItem(
-        title: _titleController.text, descrption: _descriptionController.text);
-    _refreshJournals();
-  }
-
-  Future<void> _updateItem(int id) async {
-    await SqlCrud.updateItem(
-        id, _titleController.text, _descriptionController.text);
-    _refreshJournals();
-  }
-
-  Future<void> _deleteItem(int id) async {
-    await SqlCrud.deleteItem(id);
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('さくじょしました!'),
-    ));
-    _refreshJournals();
   }
 
   @override
@@ -151,60 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return Scaffold(
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
-              title: Row(
-                children: [
-                  Expanded(
-                    child: SizedBox(
-                      height: 50,
-                      child: Form(
-                        child: TextFormField(
-                          controller: _controller,
-                          decoration: const InputDecoration(
-                            labelText: 'お名前入力',
-                            fillColor: Colors.white,
-                            filled: true,
-                          ),
-                          onChanged: ((value) {
-                            setState(() {
-                              name = value;
-                            });
-                          }),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Text(
-                    'さん来てください',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      name.isEmpty
-                          ? TextToSpeech.speak("誰か来てください")
-                          : TextToSpeech.speak('$nameさん来てください');
-                    },
-                    child: Column(
-                      children: [
-                        const Icon(
-                          Icons.screen_rotation,
-                          color: Colors.black,
-                        ),
-                        Text(
-                          'スマホを振ってください',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.redAccent[700],
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
+              title: const TopBar(),
             ),
             body: _isLoading
                 ? const Center(
@@ -248,20 +180,33 @@ class _HomeScreenState extends State<HomeScreen> {
                                     // width:100になるように iPhone14 Pro MAX width:430/3.4
                                     width: deviceWidth / 3.9,
                                     child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          IconButton(
-                                            icon: const Icon(Icons.edit),
-                                            onPressed: () => _showForm(
-                                                _journals[index]['id']),
-                                          ),
-                                          IconButton(
-                                            icon: const Icon(Icons.delete),
-                                            onPressed: () => _deleteItem(
-                                                _journals[index]['id']),
-                                          ),
-                                        ]),
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(Icons.edit),
+                                          onPressed: () =>
+                                              _showForm(_journals[index]['id']),
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(Icons.delete),
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (_) {
+                                                return CreateDialog(
+                                                  title: _journals[index]
+                                                      ["title"],
+                                                  index: index,
+                                                  refreshJournals:
+                                                      _refreshJournals,
+                                                  journals: _journals,
+                                                );
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
