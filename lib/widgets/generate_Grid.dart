@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
+
+import './text_to_speech.dart';
 
 class GenerateGrid extends StatelessWidget {
   final String labelText, speakText, routeName;
@@ -20,19 +21,10 @@ class GenerateGrid extends StatelessWidget {
     }
 
     final deviceWidth = MediaQuery.of(context).size.width;
-    final FlutterTts flutterTts = FlutterTts();
-
-    Future<void> speak(String speakText) async {
-      await flutterTts.setLanguage('ja-JP');
-      await flutterTts.setSpeechRate(0.5);
-      await flutterTts.setVolume(1.0);
-      await flutterTts.setPitch(1.0);
-      await flutterTts.speak(speakText);
-    }
 
     return GestureDetector(
       onTap: () {
-        speak(speakText);
+        TextToSpeech.speak(speakText);
       },
       child: screenIcon
           ? Card(

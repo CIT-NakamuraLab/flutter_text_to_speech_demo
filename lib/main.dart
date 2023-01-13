@@ -7,6 +7,7 @@ import './screens/paint_screen.dart';
 import './screens/take_hand.dart';
 import './screens/title_screen.dart';
 import './screens/speech_to_text.dart';
+import './screens/input_text.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +44,8 @@ class MyApp extends StatelessWidget {
         HealthCondition.routeName: (context) => const HealthCondition(),
         PaintScreen.routeName: (context) => const PaintScreen(),
         TakeHand.routeName: (context) => const TakeHand(),
-        SpeechToText.routeName:(context) => const SpeechToText(),
+        SpeechToText.routeName: (context) => const SpeechToText(),
+        InputText.routeName: (context) => const InputText(),
       },
     );
   }
