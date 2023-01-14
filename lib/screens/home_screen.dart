@@ -1,19 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text_to_speech_demo/db/sqlCrud.dart';
 import 'package:text_to_speech_demo/widgets/top_Bar.dart';
 
-import '../widgets/create_Dialog.dart';
+import '../widgets/delete_Dialog.dart';
 import './health_condition.dart';
 import './take_hand.dart';
-import './paint_screen.dart';
 import './speech_to_text.dart';
 import './input_text.dart';
 import '../widgets/bottom_tab.dart';
 import '../widgets/call.dart';
 import '../widgets/text_to_speech.dart';
-
-import '../widgets/sql_Management.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home-screen';
@@ -23,8 +21,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-  final TextEditingController _controller = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   var name = "";
@@ -32,25 +28,17 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> _journals = [];
   bool _isLoading = true;
 
+  final category = HomeScreen.routeName.toString().replaceAll("/", "");
   // データを引っ張る
-  Future<void> _refreshJournals() async {
-    final data = await SqlCrud.getItems();
-    if (data.isEmpty) {
-      await SqlCrud.createItem(title: "ありがとう", descrption: "ありがとうございます");
-      await SqlCrud.createItem(title: "すいません", descrption: "すいません");
-      await SqlCrud.createItem(title: "のどがかわきました", descrption: "のどが､かわきました");
-      await SqlCrud.createItem(title: "エアコン", descrption: "エアコンを操作してください");
-      await SqlCrud.createItem(title: "トイレ", descrption: "トイレに行きたいです");
-      await SqlCrud.createItem(title: "ぐあいがわるいです", descrption: "具合が悪いです");
-      _refreshJournals();
-    }
+  Future<void> refreshJournals() async {
+    final data = await SqlCrud.refreshAndInitJournals(category: category);
     setState(() {
       _journals = data;
       _isLoading = false;
     });
   }
 
-  void _showForm(int? id) async {
+  Future<void> showForm(int? id) async {
     if (id != null) {
       final existingJournal =
           _journals.firstWhere((element) => element["id"] == id);
@@ -91,15 +79,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 ElevatedButton(
                   onPressed: () async {
                     if (id == null) {
-                      await SqlManagement.addItem(_titleController.text,
-                          _descriptionController.text, _refreshJournals);
+                      await SqlCrud.createItem(
+                        title: _titleController.text,
+                        descrption: _descriptionController.text,
+                        categories: category,
+                      );
+                      refreshJournals();
                     } else {
-                      await SqlManagement.updateItem(id, _titleController.text,
-                          _descriptionController.text, _refreshJournals);
+                      await SqlCrud.updateItem(
+                        id: id,
+                        title: _titleController.text,
+                        descrption: _descriptionController.text,
+                        categories: category,
+                      );
+                      refreshJournals();
                     }
                     _titleController.text = "";
                     _descriptionController.text = "";
-
                     Navigator.of(context).pop();
                   },
                   child: id == null ? const Text("さくせい") : const Text("こうしん"),
@@ -115,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _refreshJournals();
+    refreshJournals();
   }
 
   @override
@@ -158,7 +154,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               child: GestureDetector(
                                 onTap: () {
-                                  TextToSpeech.speak(_journals[index]["description"]);
+                                  TextToSpeech.speak(
+                                      _journals[index]["description"]);
                                 },
                                 child: ListTile(
                                   shape: RoundedRectangleBorder(
@@ -185,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         IconButton(
                                           icon: const Icon(Icons.edit),
                                           onPressed: () =>
-                                              _showForm(_journals[index]['id']),
+                                              showForm(_journals[index]['id']),
                                         ),
                                         IconButton(
                                           icon: const Icon(Icons.delete),
@@ -193,12 +190,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                             showDialog(
                                               context: context,
                                               builder: (_) {
-                                                return CreateDialog(
+                                                return DeleteDialog(
                                                   title: _journals[index]
                                                       ["title"],
                                                   index: index,
                                                   refreshJournals:
-                                                      _refreshJournals,
+                                                      refreshJournals,
                                                   journals: _journals,
                                                 );
                                               },
@@ -261,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
-                  onPressed: () => _showForm(null),
+                  onPressed: () => showForm(null),
                   heroTag: "add",
                   child: const Icon(Icons.add),
                 ),
