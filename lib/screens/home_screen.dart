@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 import 'package:text_to_speech_demo/db/sqlCrud.dart';
 import 'package:text_to_speech_demo/widgets/top_Bar.dart';
@@ -9,8 +8,10 @@ import './health_condition.dart';
 import './take_hand.dart';
 import './paint_screen.dart';
 import './speech_to_text.dart';
+import './input_text.dart';
 import '../widgets/bottom_tab.dart';
 import '../widgets/call.dart';
+import '../widgets/text_to_speech.dart';
 
 import '../widgets/sql_Management.dart';
 
@@ -22,15 +23,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final FlutterTts flutterTts = FlutterTts();
-
-  Future<void> _speak(String speakText) async {
-    await flutterTts.setLanguage('ja-JP');
-    await flutterTts.setSpeechRate(0.5);
-    await flutterTts.setVolume(1.0);
-    await flutterTts.setPitch(1.0);
-    await flutterTts.speak(speakText);
-  }
 
   final TextEditingController _controller = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
@@ -166,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               child: GestureDetector(
                                 onTap: () {
-                                  _speak(_journals[index]["description"]);
+                                  TextToSpeech.speak(_journals[index]["description"]);
                                 },
                                 child: ListTile(
                                   shape: RoundedRectangleBorder(
@@ -241,10 +233,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               icon: Icons.back_hand,
                             ),
                             BottomTab(
-                              transitionFunction: () => Navigator.of(context)
-                                  .pushNamedAndRemoveUntil(
-                                      PaintScreen.routeName,
-                                      ((route) => false)),
+                              transitionFunction: () =>
+                                  Navigator.of(context).pushNamed(
+                                InputText.routeName,
+                              ),
                               labelText: 'メモ',
                               icon: Icons.draw,
                             ),
@@ -261,7 +253,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
             floatingActionButton: Padding(
               padding: EdgeInsets.only(
-                  top: 0, left: 0, right: 0, bottom: deviceHeight * 0.16),
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: deviceHeight * 0.16,
+              ),
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
