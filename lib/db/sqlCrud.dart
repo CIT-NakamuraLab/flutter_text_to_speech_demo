@@ -101,8 +101,7 @@ class SqlCrud {
     print("sqlCrud\n");
     print(data);
 
-    if (data.isEmpty) {
-      print("Empty");
+    if (data.isEmpty && category == "home-screen") {
       // Keyで管理しないと無限に増加
       await SqlCrud.createItem(
         title: "ありがとう",
@@ -134,6 +133,8 @@ class SqlCrud {
         descrption: "具合が悪いです",
         categories: "home-screen",
       );
+      refreshAndInitJournals(category: category);
+    } else if (data.isEmpty && category == "take-hand") {
       await SqlCrud.createItem(
         title: "かみとペン",
         descrption: "紙とペンをとってください",
@@ -189,12 +190,7 @@ class SqlCrud {
         descrption: "うわぎをとってください",
         categories: "take-hand",
       );
-
       refreshAndInitJournals(category: category);
-      // setState(() {
-      //   _journals = data;
-      //   _isLoading = false;
-      // });
     }
     // print(data);
     return data;
