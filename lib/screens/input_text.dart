@@ -16,6 +16,9 @@ class _InputTextState extends State<InputText> {
   final _inputTextKey = GlobalKey<FormState>();
   final _inputTextController = TextEditingController();
 
+  int typeIndex = 0;
+  List<List<List<String>>> currentType = JapaneseModel.hiragana;
+
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height -
@@ -23,7 +26,46 @@ class _InputTextState extends State<InputText> {
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom;
     final deviceWidth = MediaQuery.of(context).size.width;
-    int buttonIndex = 0;
+
+    List<int> lastCharList = [];
+
+    Widget generateButtons(List<List<List<String>>> type) {
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            for (int j = 0; j < type[0].length; j++) ...{
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  for (int k = 0; k < type[0][j].length; k++) ...{
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 7),
+                      child: SizedBox(
+                        width: deviceWidth * 0.15,
+                        child: FloatingActionButton(
+                          heroTag: type[0][j][k],
+                          backgroundColor: Colors.pink,
+                          onPressed: () {
+                            _inputTextController.text += type[0][j][k];
+                          },
+                          child: Text(
+                            type[0][j][k],
+                            style: TextStyle(
+                              fontSize: deviceWidth * 0.07,
+                              // fontSize: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  }
+                ],
+              ),
+            }
+          ],
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -39,6 +81,7 @@ class _InputTextState extends State<InputText> {
                 child: Form(
                   key: _inputTextKey,
                   child: TextFormField(
+                    enabled: false,
                     style: TextStyle(fontSize: deviceWidth * 0.05),
                     controller: _inputTextController,
                     decoration: const InputDecoration(
@@ -54,50 +97,16 @@ class _InputTextState extends State<InputText> {
               ),
               SizedBox(
                 height: deviceHeight * 0.6,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      for (int j = 0;
-                          j < JapaneseModel.hiragana[buttonIndex].length;
-                          j++) ...{
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            for (int k = 0;
-                                k <
-                                    JapaneseModel
-                                        .hiragana[buttonIndex][j].length;
-                                k++) ...{
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 7),
-                                child: SizedBox(
-                                  width: deviceWidth * 0.15,
-                                  child: FloatingActionButton(
-                                    heroTag: JapaneseModel.hiragana[buttonIndex]
-                                        [j][k],
-                                    backgroundColor: Colors.pink,
-                                    onPressed: () {
-                                      _inputTextController.text += JapaneseModel
-                                          .hiragana[buttonIndex][j][k];
-                                    },
-                                    child: Text(
-                                      JapaneseModel.hiragana[buttonIndex][j][k],
-                                      style: TextStyle(
-                                        fontSize: deviceWidth * 0.07,
-                                        // fontSize: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            }
-                          ],
-                        ),
-                      }
-                    ],
-                  ),
-                ),
+                child: (() {
+                  switch (typeIndex % 3) {
+                    case 0:
+                      return generateButtons(JapaneseModel.hiragana);
+                    case 1:
+                      return generateButtons(JapaneseModel.katakana);
+                    case 2:
+                      return generateButtons(JapaneseModel.alphabet);
+                  }
+                })(),
               ),
               SizedBox(
                 height: deviceHeight * 0.15,
@@ -109,8 +118,45 @@ class _InputTextState extends State<InputText> {
                       child: SizedBox(
                         width: deviceWidth * 0.15,
                         child: FloatingActionButton(
+                          heroTag: 'changeType',
+                          onPressed: () {
+                            setState(() {
+                              typeIndex++;
+                            });
+                          },
+                          child: const Text('あ/ア/a'),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: SizedBox(
+                        width: deviceWidth * 0.15,
+                        child: FloatingActionButton(
                           heroTag: 'dakuten',
                           onPressed: () {
+                            switch (typeIndex % 3) {
+                              case 0:
+                                setState(() {
+                                  currentType = JapaneseModel.hiragana;
+                                });
+                                break;
+                              case 1:
+                                setState(() {
+                                  currentType = JapaneseModel.katakana;
+                                });
+                                break;
+                              case 2:
+                                setState(() {
+                                  currentType = JapaneseModel.alphabet;
+                                });
+                                break;
+                            }
+
+                            if (_inputTextController.text.trim().isEmpty) {
+                              return;
+                            }
+
                             // 最後の1文字を取得
                             final lastChar = _inputTextController.text
                                 .substring(
@@ -122,23 +168,24 @@ class _InputTextState extends State<InputText> {
                                     0, _inputTextController.text.length - 1);
 
                             // 最後の1文字が格納されているindexを取得
-                            final List<int> lastCharList =
-                                InputButton.getHiragana(lastChar);
+                            setState(() {
+                              lastCharList =
+                                  InputButton.getListNum(currentType, lastChar);
+                            });
 
                             try {
                               // TODO プログラム可読性の悪さを修正
                               _inputTextController.text = lastCharList[0] == 2
                                   ? firstStr +
-                                      JapaneseModel.hiragana[lastCharList[0]]
+                                      currentType[lastCharList[0]]
                                           [lastCharList[1]][lastCharList[2]]
                                   : firstStr +
-                                      JapaneseModel
-                                              .hiragana[lastCharList[0] + 1]
+                                      currentType[lastCharList[0] + 1]
                                           [lastCharList[1]][lastCharList[2]];
                             } catch (e) {
                               // 入力された文字が濁点の付いている文字の場合
                               _inputTextController.text = firstStr +
-                                  JapaneseModel.hiragana[lastCharList[0] - 1]
+                                  currentType[lastCharList[0] - 1]
                                       [lastCharList[1]][lastCharList[2]];
                             }
                           },
