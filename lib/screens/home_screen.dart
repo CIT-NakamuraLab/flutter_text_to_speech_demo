@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text_to_speech_demo/db/sqlCrud.dart';
+import 'package:text_to_speech_demo/models/sample_model.dart';
 import 'package:text_to_speech_demo/widgets/top_Bar.dart';
 
 import '../widgets/delete_Dialog.dart';
@@ -12,6 +12,7 @@ import './input_text.dart';
 import '../widgets/bottom_tab.dart';
 import '../widgets/call.dart';
 import '../widgets/text_to_speech.dart';
+import '../widgets/edit_Dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home-screen';
@@ -21,8 +22,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
   var name = "";
 
   List<Map<String, dynamic>> _journals = [];
@@ -38,80 +37,23 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  Future<void> showForm(int? id) async {
-    if (id != null) {
-      final existingJournal =
-          _journals.firstWhere((element) => element["id"] == id);
-      _titleController.text = existingJournal["title"];
-      _descriptionController.text = existingJournal["description"];
-    }
-    showModalBottomSheet(
-      context: context,
-      elevation: 20,
-      isScrollControlled: true,
-      builder: (context) {
-        return Padding(
-          padding: EdgeInsets.only(
-            top: 15,
-            left: 15,
-            right: 15,
-            // this will prevent the soft keyboard from covering the text fields
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.3,
-            child: Column(
-              children: [
-                TextField(
-                  decoration: const InputDecoration(hintText: "みることば"),
-                  controller: _titleController,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  decoration: const InputDecoration(hintText: "いうことば"),
-                  controller: _descriptionController,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (id == null) {
-                      await SqlCrud.createItem(
-                        title: _titleController.text,
-                        descrption: _descriptionController.text,
-                        categories: category,
-                      );
-                      refreshJournals();
-                    } else {
-                      await SqlCrud.updateItem(
-                        id: id,
-                        title: _titleController.text,
-                        descrption: _descriptionController.text,
-                        categories: category,
-                      );
-                      refreshJournals();
-                    }
-                    _titleController.text = "";
-                    _descriptionController.text = "";
-                    Navigator.of(context).pop();
-                  },
-                  child: id == null ? const Text("さくせい") : const Text("こうしん"),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   @override
   void initState() {
     super.initState();
+    initData();
     refreshJournals();
+  }
+
+  void initData() async {
+    final db = await SqlCrud.getAllItems();
+    if (db.isEmpty) {
+      SAMPLE_DATA.map((Data) => {
+            SqlCrud.createItem(
+                title: Data.title,
+                description: Data.description,
+                categories: Data.categories),
+          });
+    }
   }
 
   @override
@@ -157,52 +99,70 @@ class _HomeScreenState extends State<HomeScreen> {
                                   TextToSpeech.speak(
                                       _journals[index]["description"]);
                                 },
-                                child: ListTile(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  leading: const Icon(
-                                    Icons.volume_up,
-                                  ),
-                                  title: Text(
-                                    _journals[index]["title"],
-                                    style: const TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w900,
+                                child: Card(
+                                  elevation: 5,
+                                  child: ListTile(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
-                                  ),
-                                  tileColor:
-                                      Theme.of(context).colorScheme.secondary,
-                                  trailing: SizedBox(
-                                    // width:100になるように iPhone14 Pro MAX width:430/3.4
-                                    width: deviceWidth / 3.9,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        IconButton(
-                                          icon: const Icon(Icons.edit),
-                                          onPressed: () =>
-                                              showForm(_journals[index]['id']),
-                                        ),
-                                        IconButton(
-                                          icon: const Icon(Icons.delete),
-                                          onPressed: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (_) {
-                                                return DeleteDialog(
-                                                  title: _journals[index]
-                                                      ["title"],
-                                                  index: index,
-                                                  refreshJournals:
-                                                      refreshJournals,
-                                                  journals: _journals,
-                                                );
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ],
+                                    leading: const Icon(
+                                      Icons.volume_up,
+                                    ),
+                                    title: Text(
+                                      _journals[index]["title"],
+                                      style: const TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w900,
+                                      ),
+                                    ),
+                                    tileColor: Colors.white,
+                                    // Theme.of(context).colorScheme.secondary,
+                                    trailing: SizedBox(
+                                      // width:100になるように iPhone14 Pro MAX width:430/3.4
+                                      width: deviceWidth / 3.9,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          IconButton(
+                                            icon: const Icon(Icons.edit),
+                                            onPressed: () {
+                                              showModalBottomSheet(
+                                                context: context,
+                                                elevation: 20,
+                                                isScrollControlled: true,
+                                                builder: (context) {
+                                                  return EditDialog(
+                                                    id: _journals[index]['id'],
+                                                    category: category,
+                                                    journals: _journals,
+                                                    refreshJournals:
+                                                        refreshJournals,
+                                                  );
+                                                },
+                                              );
+                                            },
+                                          ),
+                                          IconButton(
+                                            icon: const Icon(Icons.delete),
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (_) {
+                                                  return DeleteDialog(
+                                                    title: _journals[index]
+                                                        ["title"],
+                                                    index: index,
+                                                    journals: _journals,
+                                                    refreshJournals:
+                                                        refreshJournals,
+                                                  );
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -218,22 +178,26 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             BottomTab(
-                              transitionFunction: () => Navigator.of(context)
-                                  .pushNamed(HealthCondition.routeName),
+                              transitionFunction: () {
+                                Navigator.of(context)
+                                    .pushNamed(HealthCondition.routeName);
+                              },
                               labelText: '健康状態',
                               icon: Icons.medical_services,
                             ),
                             BottomTab(
-                              transitionFunction: () => Navigator.of(context)
-                                  .pushNamed(TakeHand.routeName),
+                              transitionFunction: () {
+                                Navigator.of(context)
+                                    .pushNamed(TakeHand.routeName);
+                              },
                               labelText: '取って',
                               icon: Icons.back_hand,
                             ),
                             BottomTab(
-                              transitionFunction: () =>
-                                  Navigator.of(context).pushNamed(
-                                InputText.routeName,
-                              ),
+                              transitionFunction: () {
+                                Navigator.of(context)
+                                    .pushNamed(InputText.routeName);
+                              },
                               labelText: 'メモ',
                               icon: Icons.draw,
                             ),
@@ -258,7 +222,21 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
-                  onPressed: () => showForm(null),
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      elevation: 20,
+                      isScrollControlled: true,
+                      builder: (context) {
+                        return EditDialog(
+                          id: null,
+                          category: category,
+                          journals: _journals,
+                          refreshJournals: refreshJournals,
+                        );
+                      },
+                    );
+                  },
                   heroTag: "add",
                   child: const Icon(Icons.add),
                 ),

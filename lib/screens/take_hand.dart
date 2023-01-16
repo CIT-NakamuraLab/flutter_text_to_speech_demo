@@ -87,28 +87,33 @@ class _TakeHandState extends State<TakeHand> {
                           onTap: () {
                             TextToSpeech.speak(_journals[index]["description"]);
                           },
-                          child: ListTile(
+                          child: Card(
+                            elevation: 5,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            leading: const Icon(
-                              Icons.volume_up,
-                            ),
-                            title: Text(
-                              _journals[index]["title"],
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w900,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: ListTile(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
                               ),
-                            ),
-                            tileColor: Theme.of(context).colorScheme.secondary,
-                            trailing: SizedBox(
-                              // width:100になるように iPhone14 Pro MAX width:430/3.4
-                              width: deviceWidth / 3.9,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  IconButton(
+                              leading: const Icon(
+                                Icons.volume_up,
+                              ),
+                              title: Text(
+                                _journals[index]["title"],
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                              tileColor: Colors.white,
+                              // Theme.of(context).colorScheme.secondary,
+                              trailing: SizedBox(
+                                // width:100になるように iPhone14 Pro MAX width:430/3.4
+                                width: deviceWidth / 3.9,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
                                       icon: const Icon(Icons.edit),
                                       onPressed: () {
                                         showModalBottomSheet(
@@ -124,24 +129,26 @@ class _TakeHandState extends State<TakeHand> {
                                             );
                                           },
                                         );
-                                      }),
-                                  IconButton(
-                                    icon: const Icon(Icons.delete),
-                                    onPressed: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (_) {
-                                          return DeleteDialog(
-                                            title: _journals[index]["title"],
-                                            index: index,
-                                            refreshJournals: refreshJournals,
-                                            journals: _journals,
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.delete),
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (_) {
+                                            return DeleteDialog(
+                                              title: _journals[index]["title"],
+                                              index: index,
+                                              journals: _journals,
+                                              refreshJournals: refreshJournals,
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -163,13 +170,13 @@ class _TakeHandState extends State<TakeHand> {
                       ),
                       BottomTab(
                         transitionFunction: () => Navigator.of(context)
-                            .pushNamed(HealthCondition.routeName),
+                            .popAndPushNamed(HealthCondition.routeName),
                         labelText: '健康状態',
                         icon: Icons.medical_services,
                       ),
                       BottomTab(
                         transitionFunction: () => Navigator.of(context)
-                            .pushNamed(SpeechToText.routeName),
+                            .popAndPushNamed(SpeechToText.routeName),
                         labelText: '音声認識',
                         icon: Icons.volume_up,
                       ),

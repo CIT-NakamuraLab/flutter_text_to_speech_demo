@@ -4,7 +4,7 @@ import '../db/sqlCrud.dart';
 class EditDialog extends StatelessWidget {
   final Function refreshJournals;
   final String category;
-  final int id;
+  final int? id;
   final List<Map<String, dynamic>> journals;
   const EditDialog({
     super.key,
@@ -17,9 +17,9 @@ class EditDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("EditDialog");
+    print(id);
     final TextEditingController titleController = TextEditingController();
     final TextEditingController descriptionController = TextEditingController();
-
     if (id != null) {
       final existingJournal =
           journals.firstWhere((element) => element["id"] == id);
@@ -56,17 +56,18 @@ class EditDialog extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 if (id == null) {
+                  print("null");
                   await SqlCrud.createItem(
                     title: titleController.text,
-                    descrption: descriptionController.text,
+                    description: descriptionController.text,
                     categories: category,
                   );
                   refreshJournals();
                 } else {
                   await SqlCrud.updateItem(
-                    id: id,
+                    id: id!,
                     title: titleController.text,
-                    descrption: descriptionController.text,
+                    description: descriptionController.text,
                     categories: category,
                   );
                   refreshJournals();
@@ -81,6 +82,5 @@ class EditDialog extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

@@ -25,14 +25,14 @@ class SqlCrud {
 
   static Future<int> createItem({
     required String title,
-    required String? descrption,
+    required String description,
     required String categories,
   }) async {
     final db = await SqlCrud.db();
 
     final data = {
       'title': title,
-      'description': descrption,
+      'description': description,
       'categories': categories,
     };
     final id = await db.insert('items', data,
@@ -54,6 +54,14 @@ class SqlCrud {
     );
   }
 
+  static Future<List<Map<String, dynamic>>> getAllItems() async {
+    final db = await SqlCrud.db();
+    return db.query(
+      'items',
+      orderBy: "id",
+    );
+  }
+
   // where id
   static Future<List<Map<String, dynamic>>> getItem({
     required int id,
@@ -65,14 +73,14 @@ class SqlCrud {
   static Future<int> updateItem({
     required int id,
     required String title,
-    required String? descrption,
+    required String? description,
     required String categories,
   }) async {
     final db = await SqlCrud.db();
 
     final data = {
       'title': title,
-      'description': descrption,
+      'description': description,
       "categories": categories,
       'createdAt': DateTime.now().toString()
     };
@@ -101,98 +109,98 @@ class SqlCrud {
     print("sqlCrud\n");
     print(data);
 
-    if (data.isEmpty && category == "home-screen") {
-      // Keyで管理しないと無限に増加
-      await SqlCrud.createItem(
-        title: "ありがとう",
-        descrption: "ありがとうございます",
-        categories: "home-screen",
-      );
-      await SqlCrud.createItem(
-        title: "すいません",
-        descrption: "すいません",
-        categories: "home-screen",
-      );
-      await SqlCrud.createItem(
-        title: "のどがかわきました",
-        descrption: "のどが､かわきました",
-        categories: "home-screen",
-      );
-      await SqlCrud.createItem(
-        title: "エアコン",
-        descrption: "エアコンを操作してください",
-        categories: "home-screen",
-      );
-      await SqlCrud.createItem(
-        title: "トイレ",
-        descrption: "トイレに行きたいです",
-        categories: "home-screen",
-      );
-      await SqlCrud.createItem(
-        title: "ぐあいがわるいです",
-        descrption: "具合が悪いです",
-        categories: "home-screen",
-      );
-      refreshAndInitJournals(category: category);
-    } else if (data.isEmpty && category == "take-hand") {
-      await SqlCrud.createItem(
-        title: "かみとペン",
-        descrption: "紙とペンをとってください",
-        categories: "take-hand",
-      );
-      await SqlCrud.createItem(
-        title: "めがね",
-        descrption: "めがねをとってください",
-        categories: "take-hand",
-      );
-      await SqlCrud.createItem(
-        title: "しんぶん",
-        descrption: "新聞をとってください",
-        categories: "take-hand",
-      );
-      await SqlCrud.createItem(
-        title: "クスリ",
-        descrption: "クスリをとってください",
-        categories: "take-hand",
-      );
-      await SqlCrud.createItem(
-        title: "リモコン",
-        descrption: "リモコンをとってください",
-        categories: "take-hand",
-      );
-      await SqlCrud.createItem(
-        title: "ティッシュ",
-        descrption: "ティッシュをとってください",
-        categories: "take-hand",
-      );
-      await SqlCrud.createItem(
-        title: "タオル",
-        descrption: "タオルをとってください",
-        categories: "take-hand",
-      );
-      await SqlCrud.createItem(
-        title: "マスク",
-        descrption: "マスクをとってください",
-        categories: "take-hand",
-      );
-      await SqlCrud.createItem(
-        title: "さいふ",
-        descrption: "さいふをとってください",
-        categories: "take-hand",
-      );
-      await SqlCrud.createItem(
-        title: "くつした",
-        descrption: "くつしたをとってください",
-        categories: "take-hand",
-      );
-      await SqlCrud.createItem(
-        title: "うわぎ",
-        descrption: "うわぎをとってください",
-        categories: "take-hand",
-      );
-      refreshAndInitJournals(category: category);
-    }
-    // print(data);
+    // if (data.isEmpty && category == "home-screen") {
+    //   // Keyで管理しないと無限に増加
+    //   await SqlCrud.createItem(
+    //     title: "ありがとう",
+    //     description: "ありがとうございます",
+    //     categories: "home-screen",
+    //   );
+    //   await SqlCrud.createItem(
+    //     title: "すいません",
+    //     description: "すいません",
+    //     categories: "home-screen",
+    //   );
+    //   await SqlCrud.createItem(
+    //     title: "のどがかわきました",
+    //     description: "のどが､かわきました",
+    //     categories: "home-screen",
+    //   );
+    //   await SqlCrud.createItem(
+    //     title: "エアコン",
+    //     description: "エアコンを操作してください",
+    //     categories: "home-screen",
+    //   );
+    //   await SqlCrud.createItem(
+    //     title: "トイレ",
+    //     description: "トイレに行きたいです",
+    //     categories: "home-screen",
+    //   );
+    //   await SqlCrud.createItem(
+    //     title: "ぐあいがわるいです",
+    //     description: "具合が悪いです",
+    //     categories: "home-screen",
+    //   );
+    //   // refreshAndInitJournals(category: category);
+    // } else if (data.isEmpty && category == "take-hand") {
+    //   await SqlCrud.createItem(
+    //     title: "かみとペン",
+    //     description: "紙とペンをとってください",
+    //     categories: "take-hand",
+    //   );
+    //   await SqlCrud.createItem(
+    //     title: "めがね",
+    //     description: "めがねをとってください",
+    //     categories: "take-hand",
+    //   );
+    //   await SqlCrud.createItem(
+    //     title: "しんぶん",
+    //     description: "新聞をとってください",
+    //     categories: "take-hand",
+    //   );
+    //   await SqlCrud.createItem(
+    //     title: "クスリ",
+    //     description: "クスリをとってください",
+    //     categories: "take-hand",
+    //   );
+    //   await SqlCrud.createItem(
+    //     title: "リモコン",
+    //     description: "リモコンをとってください",
+    //     categories: "take-hand",
+    //   );
+    //   await SqlCrud.createItem(
+    //     title: "ティッシュ",
+    //     description: "ティッシュをとってください",
+    //     categories: "take-hand",
+    //   );
+    //   await SqlCrud.createItem(
+    //     title: "タオル",
+    //     description: "タオルをとってください",
+    //     categories: "take-hand",
+    //   );
+    //   await SqlCrud.createItem(
+    //     title: "マスク",
+    //     description: "マスクをとってください",
+    //     categories: "take-hand",
+    //   );
+    //   await SqlCrud.createItem(
+    //     title: "さいふ",
+    //     description: "さいふをとってください",
+    //     categories: "take-hand",
+    //   );
+    //   await SqlCrud.createItem(
+    //     title: "くつした",
+    //     description: "くつしたをとってください",
+    //     categories: "take-hand",
+    //   );
+    //   await SqlCrud.createItem(
+    //     title: "うわぎ",
+    //     description: "うわぎをとってください",
+    //     categories: "take-hand",
+    //   );
+    //   // refreshAndInitJournals(category: category);
+    // }
+    // // print(data);
     return data;
   }
 }
