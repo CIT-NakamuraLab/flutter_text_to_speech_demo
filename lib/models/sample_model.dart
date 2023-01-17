@@ -1,6 +1,12 @@
 import 'package:text_to_speech_demo/models/opinion.dart';
 
 const SAMPLE_DATA = [
+  // init回避のため
+  Opinion(
+    title: "title",
+    description: "description",
+    categories: "categories",
+  ),
   Opinion(
     title: "ありがとう",
     description: "ありがとうございます",
