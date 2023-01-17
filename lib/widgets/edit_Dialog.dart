@@ -17,7 +17,6 @@ class EditDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("EditDialog");
-    print(id);
     final TextEditingController titleController = TextEditingController();
     final TextEditingController descriptionController = TextEditingController();
     if (id != null) {
