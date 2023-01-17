@@ -92,4 +92,64 @@ const SAMPLE_DATA = [
     description: "うわぎをとってください",
     categories: "take-hand",
   ),
+  Opinion(
+    title: "お茶",
+    description: "お茶をとってください",
+    categories: "hot-drink",
+  ),
+  Opinion(
+    title: "コーヒー",
+    description: "コーヒーをとってください",
+    categories: "hot-drink",
+  ),
+  Opinion(
+    title: "紅茶",
+    description: "紅茶をとってください",
+    categories: "hot-drink",
+  ),
+  Opinion(
+    title: "ココア",
+    description: "ココアをとってください",
+    categories: "hot-drink",
+  ),
+  Opinion(
+    title: "ホットミルク",
+    description: "ホットミルクをとってください",
+    categories: "hot-drink",
+  ),
+  Opinion(
+    title: "スープ",
+    description: "スープをとってください",
+    categories: "hot-drink",
+  ),
+  Opinion(
+    title: "水",
+    description: "水をとってください",
+    categories: "cold-drink",
+  ),
+  Opinion(
+    title: "お茶",
+    description: "お茶をとってください",
+    categories: "cold-drink",
+  ),
+  Opinion(
+    title: "アイスコーヒー",
+    description: "アイスコーヒーをとってください",
+    categories: "cold-drink",
+  ),
+  Opinion(
+    title: "ジュース",
+    description: "ジュースをとってください",
+    categories: "cold-drink",
+  ),
+  Opinion(
+    title: "牛乳",
+    description: "牛乳をとってください",
+    categories: "cold-drink",
+  ),
+  Opinion(
+    title: "お酒",
+    description: "お酒をとってください",
+    categories: "cold-drink",
+  ),
 ];

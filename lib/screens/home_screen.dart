@@ -46,13 +46,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void initData() async {
     final db = await SqlCrud.getAllItems();
+    print(db.isEmpty);
     if (db.isEmpty) {
-      SAMPLE_DATA.map((Data) => {
-            SqlCrud.createItem(
-                title: Data.title,
-                description: Data.description,
-                categories: Data.categories),
-          });
+      SAMPLE_DATA.map(
+        (Data) async {
+          await SqlCrud.createItem(
+              title: Data.title,
+              description: Data.description,
+              categories: Data.categories);
+        },
+      ).toList();
     }
   }
 

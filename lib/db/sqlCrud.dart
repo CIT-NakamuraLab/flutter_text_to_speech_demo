@@ -29,7 +29,6 @@ class SqlCrud {
     required String categories,
   }) async {
     final db = await SqlCrud.db();
-
     final data = {
       'title': title,
       'description': description,
@@ -37,7 +36,7 @@ class SqlCrud {
     };
     final id = await db.insert('items', data,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
-    print("id:" + id.toString());
+    print("id" + id.toString());
     return id;
   }
 
@@ -55,6 +54,7 @@ class SqlCrud {
   }
 
   static Future<List<Map<String, dynamic>>> getAllItems() async {
+    print("getAllItem");
     final db = await SqlCrud.db();
     return db.query(
       'items',
