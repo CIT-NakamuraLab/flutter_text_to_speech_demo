@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
@@ -25,6 +26,9 @@ class _SpeechToTextState extends State<SpeechToText> {
   String lastStatus = '';
   bool startStopFlag = true;
   stt.SpeechToText speech = stt.SpeechToText();
+
+  bool _isCalled = false;
+  Offset position = const Offset(0, 0);
 
   // 音声認識開始
   Future<void> speak() async {
@@ -86,12 +90,21 @@ class _SpeechToTextState extends State<SpeechToText> {
     final deviceHeight = MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
         MediaQuery.of(context).padding.top;
+    final deviceWidth = MediaQuery.of(context).size.width;
+
+    setState(() {
+      if (!_isCalled) {
+        position = Offset(deviceWidth * 0.8, deviceHeight * 0.75);
+      }
+      _isCalled = true;
+    });
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('SpeechToText'),
-      ),
-      body: Center(
-        child: Column(
+        appBar: AppBar(
+          title: const Text('SpeechToText'),
+        ),
+        body: Center(
+            child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(
@@ -100,29 +113,30 @@ class _SpeechToTextState extends State<SpeechToText> {
                 children: [
                   SingleChildScrollView(
                     child: Text(
-                      '$lastWords',
+                      lastWords,
                       style: Theme.of(context).textTheme.headline4,
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(deviceHeight * 0.02),
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: startStopFlag
-                          ? FloatingActionButton(
-                              heroTag: 'speak',
-                              onPressed: speak,
-                              child: const Icon(
-                                Icons.play_arrow,
-                              ),
-                            )
-                          : FloatingActionButton(
-                              heroTag: 'stop',
-                              onPressed: stop,
-                              child: const Icon(
-                                Icons.stop,
-                              ),
-                            ),
+                  GestureDetector(
+                    dragStartBehavior: DragStartBehavior.down,
+                    onPanUpdate: ((details) {
+                      position = details.localPosition;
+                      setState(() {});
+                    }),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          left: position.dx,
+                          top: position.dy,
+                          child: FloatingActionButton(
+                            heroTag: startStopFlag ? 'start' : 'stop',
+                            onPressed: startStopFlag ? speak : stop,
+                            child: startStopFlag
+                                ? const Icon(Icons.play_arrow)
+                                : const Icon(Icons.stop),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -164,8 +178,6 @@ class _SpeechToTextState extends State<SpeechToText> {
               ),
             ),
           ],
-        ),
-      ),
-    );
+        )));
   }
 }

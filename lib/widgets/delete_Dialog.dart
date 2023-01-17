@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../db/sqlCrud.dart';
 
@@ -16,23 +19,44 @@ class DeleteDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text("さくじょしますか?"),
-      content: Text(title),
-      actions: [
-        TextButton(
-            onPressed: () {
-              SqlCrud.deleteItem(
-                id: journals[index]['id'],
-              );
-              refreshJournals();
-              Navigator.of(context).pop();
-            },
-            child: const Text("します")),
-        TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text("しません")),
-      ],
-    );
+    return Platform.isAndroid
+        ? AlertDialog(
+            title: const Text("さくじょしますか?"),
+            content: Text(title),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    SqlCrud.deleteItem(id: journals[index]['id']);
+                    refreshJournals();
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("します")),
+              TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text("しません")),
+            ],
+          )
+        : CupertinoAlertDialog(
+            title: const Text("さくじょしますか?"),
+            content: Text(title),
+            actions: [
+              CupertinoDialogAction(
+                isDefaultAction: true,
+                onPressed: () {
+                  SqlCrud.deleteItem(id: journals[index]['id']);
+                  refreshJournals();
+                  Navigator.of(context).pop();
+                },
+                child: const Text('します'),
+              ),
+              CupertinoDialogAction(
+                isDestructiveAction: true,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('しません'),
+              ),
+            ],
+          );
   }
 }
