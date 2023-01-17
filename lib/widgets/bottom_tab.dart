@@ -21,7 +21,11 @@ class BottomTab extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            TextToSpeech.speak("$labelTextページに移動します｡");
+            if (labelText == "戻る") {
+              TextToSpeech.speak("1つ前のページに移動します｡");
+            } else {
+              TextToSpeech.speak("$labelTextページに移動します｡");
+            }
             transitionFunction();
           },
           child: Container(
