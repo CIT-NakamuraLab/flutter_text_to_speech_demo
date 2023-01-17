@@ -206,15 +206,16 @@ class HealthCondition extends StatelessWidget {
                 ),
                 BottomTab(
                   transitionFunction: () =>
-                      Navigator.of(context).popAndPushNamed(TakeHand.routeName),
+                      Navigator.of(context).pushNamed(TakeHand.routeName),
                   labelText: '取って',
                   icon: Icons.back_hand,
                 ),
                 BottomTab(
-                  transitionFunction: () => Navigator.of(context)
-                      .popAndPushNamed(SpeechToText.routeName),
-                  labelText: '音声認識',
-                  icon: Icons.volume_up,
+                  transitionFunction: () => Navigator.of(context).pushNamed(
+                    PaintScreen.routeName,
+                  ),
+                  labelText: '手書き',
+                  icon: Icons.draw,
                 ),
                 BottomTab(
                   transitionFunction: () => Navigator.of(context)

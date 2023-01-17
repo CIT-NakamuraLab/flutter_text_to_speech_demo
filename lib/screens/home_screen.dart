@@ -8,12 +8,12 @@ import 'package:text_to_speech_demo/widgets/top_Bar.dart';
 import '../widgets/delete_Dialog.dart';
 import './health_condition.dart';
 import './take_hand.dart';
-import './speech_to_text.dart';
 import './input_text.dart';
 import '../widgets/bottom_tab.dart';
 import '../widgets/call.dart';
 import '../widgets/text_to_speech.dart';
 import '../widgets/edit_Dialog.dart';
+import './paint_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home-screen';
@@ -257,14 +257,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Navigator.of(context)
                                     .pushNamed(InputText.routeName);
                               },
-                              labelText: 'メモ',
-                              icon: Icons.draw,
+                              labelText: '入力',
+                              icon: Icons.keyboard,
                             ),
                             BottomTab(
-                              transitionFunction: () => Navigator.of(context)
-                                  .pushNamed(SpeechToText.routeName),
-                              labelText: '音声認識',
-                              icon: Icons.volume_up,
+                              transitionFunction: () =>
+                                  Navigator.of(context).pushNamed(
+                                PaintScreen.routeName,
+                              ),
+                              labelText: '手書き',
+                              icon: Icons.draw,
                             ),
                           ],
                         ),

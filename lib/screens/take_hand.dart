@@ -4,7 +4,6 @@ import '../widgets/bottom_tab.dart';
 import '../screens/health_condition.dart';
 import '../screens/home_screen.dart';
 import '../screens/paint_screen.dart';
-import './speech_to_text.dart';
 import '../db/sqlCrud.dart';
 import '../widgets/delete_Dialog.dart';
 import '../widgets/text_to_speech.dart';
@@ -170,15 +169,17 @@ class _TakeHandState extends State<TakeHand> {
                       ),
                       BottomTab(
                         transitionFunction: () => Navigator.of(context)
-                            .popAndPushNamed(HealthCondition.routeName),
+                            .pushNamed(HealthCondition.routeName),
                         labelText: '健康状態',
                         icon: Icons.medical_services,
                       ),
                       BottomTab(
-                        transitionFunction: () => Navigator.of(context)
-                            .popAndPushNamed(SpeechToText.routeName),
-                        labelText: '音声認識',
-                        icon: Icons.volume_up,
+                        transitionFunction: () =>
+                            Navigator.of(context).pushNamed(
+                          PaintScreen.routeName,
+                        ),
+                        labelText: '手書き',
+                        icon: Icons.draw,
                       ),
                       BottomTab(
                         transitionFunction: () => Navigator.of(context)

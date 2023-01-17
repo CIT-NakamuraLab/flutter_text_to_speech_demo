@@ -87,22 +87,21 @@ class _PaintScreenState extends State<PaintScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     BottomTab(
+                      transitionFunction: () => Navigator.of(context).pop(),
+                      labelText: '戻る',
+                      icon: Icons.undo,
+                    ),
+                    BottomTab(
                       transitionFunction: () => Navigator.of(context)
-                          .popAndPushNamed(HealthCondition.routeName),
+                          .pushNamed(HealthCondition.routeName),
                       labelText: '健康状態',
                       icon: Icons.medical_services,
                     ),
                     BottomTab(
-                      transitionFunction: () => Navigator.of(context)
-                          .popAndPushNamed(TakeHand.routeName),
+                      transitionFunction: () =>
+                          Navigator.of(context).pushNamed(TakeHand.routeName),
                       labelText: '取って',
                       icon: Icons.back_hand,
-                    ),
-                    BottomTab(
-                      transitionFunction: () => Navigator.of(context)
-                          .popAndPushNamed(SpeechToText.routeName),
-                      labelText: '音声認識',
-                      icon: Icons.volume_up,
                     ),
                     BottomTab(
                       transitionFunction: () => Navigator.of(context)
