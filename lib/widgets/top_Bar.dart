@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
+import '../widgets/text_to_speech.dart';
 
 class TopBar extends StatefulWidget {
   const TopBar({super.key});
@@ -9,16 +9,6 @@ class TopBar extends StatefulWidget {
 }
 
 class _TopBarState extends State<TopBar> {
-  final FlutterTts flutterTts = FlutterTts();
-
-  Future<void> _speak(String speakText) async {
-    await flutterTts.setLanguage('ja-JP');
-    await flutterTts.setSpeechRate(0.5);
-    await flutterTts.setVolume(1.0);
-    await flutterTts.setPitch(1.0);
-    await flutterTts.speak(speakText);
-  }
-
   final TextEditingController _controller = TextEditingController();
   var name = "";
 
@@ -56,7 +46,9 @@ class _TopBarState extends State<TopBar> {
         ),
         GestureDetector(
           onTap: () {
-            name.isEmpty ? _speak("誰か来てください") : _speak('$nameさん来てください');
+            name.isEmpty
+                ? TextToSpeech.speak("誰か来てください")
+                : TextToSpeech.speak('$nameさん来てください');
           },
           child: Column(
             children: [

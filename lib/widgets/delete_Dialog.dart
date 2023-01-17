@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import './sql_Management.dart';
+import '../db/sqlCrud.dart';
 
-class CreateDialog extends StatelessWidget {
+class DeleteDialog extends StatelessWidget {
   final String title;
   final int index;
   final List<Map<String, dynamic>> journals;
   final Function refreshJournals;
-  const CreateDialog({
+  const DeleteDialog({
     super.key,
     required this.title,
     required this.index,
@@ -22,7 +22,10 @@ class CreateDialog extends StatelessWidget {
       actions: [
         TextButton(
             onPressed: () {
-              SqlManagement.deleteItem(journals[index]['id'], refreshJournals);
+              SqlCrud.deleteItem(
+                id: journals[index]['id'],
+              );
+              refreshJournals();
               Navigator.of(context).pop();
             },
             child: const Text("します")),
