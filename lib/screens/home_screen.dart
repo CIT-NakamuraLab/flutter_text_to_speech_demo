@@ -115,151 +115,114 @@ class _HomeScreenState extends State<HomeScreen> {
                 ? const Center(
                     child: CircularProgressIndicator(),
                   )
-                : Column(
-                    children: [
-                      SizedBox(
-                        height: deviceHeight * 0.87,
-                        child: Stack(
-                          children: [
-                            ListView.builder(
-                              itemCount: _journals.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 15,
-                                    left: 15,
-                                    right: 15,
-                                    bottom: 7.5,
-                                  ),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      TextToSpeech.speak(
-                                          _journals[index]["description"]);
-                                    },
-                                    child: Card(
-                                      elevation: 5,
-                                      child: ListTile(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        leading: const Icon(
-                                          Icons.volume_up,
-                                        ),
-                                        title: Text(
-                                          _journals[index]["title"],
-                                          style: const TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.w900,
+                : SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: deviceHeight * 0.87,
+                          child: Stack(
+                            children: [
+                              ListView.builder(
+                                itemCount: _journals.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 15,
+                                      left: 15,
+                                      right: 15,
+                                      bottom: 7.5,
+                                    ),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        TextToSpeech.speak(
+                                            _journals[index]["description"]);
+                                      },
+                                      child: Card(
+                                        elevation: 5,
+                                        child: ListTile(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                           ),
-                                        ),
-                                        tileColor: Colors.white,
-                                        // Theme.of(context).colorScheme.secondary,
-                                        trailing: SizedBox(
-                                          // width:100になるように iPhone14 Pro MAX width:430/3.4
-                                          width: deviceWidth / 3.9,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              IconButton(
-                                                icon: const Icon(Icons.edit),
-                                                onPressed: () => _modal(
-                                                  _journals[index]['id'],
+                                          leading: const Icon(
+                                            Icons.volume_up,
+                                          ),
+                                          title: Text(
+                                            _journals[index]["title"],
+                                            style: const TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          tileColor: Colors.white,
+                                          // Theme.of(context).colorScheme.secondary,
+                                          trailing: SizedBox(
+                                            // width:100になるように iPhone14 Pro MAX width:430/3.4
+                                            width: deviceWidth / 3.9,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                IconButton(
+                                                  icon: const Icon(Icons.edit),
+                                                  onPressed: () => _modal(
+                                                    _journals[index]['id'],
+                                                  ),
                                                 ),
-                                              ),
-                                              IconButton(
-                                                icon: const Icon(Icons.delete),
-                                                onPressed: () {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (_) {
-                                                      return DeleteDialog(
-                                                        title: _journals[index]
-                                                            ["title"],
-                                                        index: index,
-                                                        journals: _journals,
-                                                        refreshJournals:
-                                                            refreshJournals,
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                              ),
-                                            ],
+                                                IconButton(
+                                                  icon:
+                                                      const Icon(Icons.delete),
+                                                  onPressed: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (_) {
+                                                        return DeleteDialog(
+                                                          title:
+                                                              _journals[index]
+                                                                  ["title"],
+                                                          index: index,
+                                                          journals: _journals,
+                                                          refreshJournals:
+                                                              refreshJournals,
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              },
-                            ),
-                            GestureDetector(
-                              dragStartBehavior: DragStartBehavior.down,
-                              onPanUpdate: ((details) {
-                                position = details.localPosition;
-                                setState(() {});
-                              }),
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    left: position.dx,
-                                    top: position.dy,
-                                    child: FloatingActionButton(
-                                      heroTag: "add",
-                                      child: const Icon(Icons.add),
-                                      onPressed: () => _modal(null),
+                                  );
+                                },
+                              ),
+                              GestureDetector(
+                                dragStartBehavior: DragStartBehavior.down,
+                                onPanUpdate: ((details) {
+                                  position = details.localPosition;
+                                  setState(() {});
+                                }),
+                                child: Stack(
+                                  children: [
+                                    Positioned(
+                                      left: position.dx,
+                                      top: position.dy,
+                                      child: FloatingActionButton(
+                                        heroTag: "add",
+                                        child: const Icon(Icons.add),
+                                        onPressed: () => _modal(null),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        height: deviceHeight * 0.13,
-                        color: Theme.of(context).colorScheme.primary,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            BottomTab(
-                              transitionFunction: () {
-                                Navigator.of(context)
-                                    .pushNamed(HealthCondition.routeName);
-                              },
-                              labelText: '健康状態',
-                              icon: Icons.medical_services,
-                            ),
-                            BottomTab(
-                              transitionFunction: () {
-                                Navigator.of(context)
-                                    .pushNamed(TakeHand.routeName);
-                              },
-                              labelText: '取って',
-                              icon: Icons.back_hand,
-                            ),
-                            BottomTab(
-                              transitionFunction: () {
-                                Navigator.of(context)
-                                    .pushNamed(InputText.routeName);
-                              },
-                              labelText: '入力',
-                              icon: Icons.keyboard,
-                            ),
-                            BottomTab(
-                              transitionFunction: () =>
-                                  Navigator.of(context).pushNamed(
-                                PaintScreen.routeName,
-                              ),
-                              labelText: '手書き',
-                              icon: Icons.draw,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
           );
         },

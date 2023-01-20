@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:text_to_speech_demo/screens/tabs_screen.dart';
 
 import './screens/home_screen.dart';
 import './screens/health_condition.dart';
@@ -38,8 +39,10 @@ class MyApp extends StatelessWidget {
           buttonColor: Colors.amber,
         ),
       ),
-      home: const TitleScreen(),
+      // home: const TitleScreen(),
+      initialRoute: TabsScreen.routeName,
       routes: {
+        TabsScreen.routeName: (context) => const TabsScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
         HealthCondition.routeName: (context) => const HealthCondition(),
         PaintScreen.routeName: (context) => const PaintScreen(),

@@ -36,6 +36,7 @@ class _InputTextState extends State<InputText> {
         AppBar().preferredSize.height -
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom;
+
     final deviceWidth = MediaQuery.of(context).size.width;
 
     Widget generateButtons(List<List<List<String>>> type) {
