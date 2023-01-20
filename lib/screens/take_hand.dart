@@ -8,7 +8,7 @@ import '../db/sqlCrud.dart';
 import '../widgets/delete_Dialog.dart';
 import '../widgets/text_to_speech.dart';
 
-import '../widgets/edit_Dialog.dart';
+import '../widgets/adding_edit_modal.dart';
 
 class TakeHand extends StatefulWidget {
   static const routeName = '/take-hand';
@@ -120,7 +120,7 @@ class _TakeHandState extends State<TakeHand> {
                                           elevation: 20,
                                           isScrollControlled: true,
                                           builder: (context) {
-                                            return EditDialog(
+                                            return AddingEditModal(
                                               id: _journals[index]['id'],
                                               category: category,
                                               journals: _journals,

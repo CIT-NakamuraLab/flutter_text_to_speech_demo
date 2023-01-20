@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import '../db/sqlCrud.dart';
 
-class EditDialog extends StatelessWidget {
+class AddingEditModal extends StatelessWidget {
   final Function refreshJournals;
   final String category;
   final int? id;
   final List<Map<String, dynamic>> journals;
-  const EditDialog({
+  const AddingEditModal({
     super.key,
     required this.refreshJournals,
     required this.category,
@@ -16,7 +16,7 @@ class EditDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("EditDialog");
+    print("AddingEditModal");
     final TextEditingController titleController = TextEditingController();
     final TextEditingController descriptionController = TextEditingController();
     if (id != null) {
