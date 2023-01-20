@@ -12,7 +12,7 @@ import './input_text.dart';
 import '../widgets/bottom_tab.dart';
 import '../widgets/call.dart';
 import '../widgets/text_to_speech.dart';
-import '../widgets/edit_Dialog.dart';
+import '../widgets/adding_edit_modal.dart';
 import './paint_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -66,6 +66,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void updatePosition(BuildContext context) {
     setState(() {});
+  }
+
+  void _modal(int? id) {
+    showModalBottomSheet(
+      context: context,
+      elevation: 20,
+      isScrollControlled: true,
+      builder: (context) {
+        return AddingEditModal(
+          id: id,
+          category: category,
+          journals: _journals,
+          refreshJournals: refreshJournals,
+        );
+      },
+    );
   }
 
   @override
@@ -148,23 +164,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             children: [
                                               IconButton(
                                                 icon: const Icon(Icons.edit),
-                                                onPressed: () {
-                                                  showModalBottomSheet(
-                                                    context: context,
-                                                    elevation: 20,
-                                                    isScrollControlled: true,
-                                                    builder: (context) {
-                                                      return EditDialog(
-                                                        id: _journals[index]
-                                                            ['id'],
-                                                        category: category,
-                                                        journals: _journals,
-                                                        refreshJournals:
-                                                            refreshJournals,
-                                                      );
-                                                    },
-                                                  );
-                                                },
+                                                onPressed: () => _modal(
+                                                  _journals[index]['id'],
+                                                ),
                                               ),
                                               IconButton(
                                                 icon: const Icon(Icons.delete),
@@ -207,21 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: FloatingActionButton(
                                       heroTag: "add",
                                       child: const Icon(Icons.add),
-                                      onPressed: () {
-                                        showModalBottomSheet(
-                                          context: context,
-                                          elevation: 20,
-                                          isScrollControlled: true,
-                                          builder: (context) {
-                                            return EditDialog(
-                                              id: null,
-                                              category: category,
-                                              journals: _journals,
-                                              refreshJournals: refreshJournals,
-                                            );
-                                          },
-                                        );
-                                      },
+                                      onPressed: () => _modal(null),
                                     ),
                                   ),
                                 ],
