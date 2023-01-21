@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:text_to_speech_demo/screens/health_condition.dart';
-import 'package:text_to_speech_demo/screens/home_screen.dart';
-import 'package:text_to_speech_demo/screens/input_text.dart';
-import 'package:text_to_speech_demo/screens/take_hand.dart';
+import './health_condition.dart';
+import './home_screen.dart';
+import './input_text.dart';
+import './take_hand.dart';
+import '../widgets/text_to_speech.dart';
 
 class TabsScreen extends StatefulWidget {
   static const routeName = "/tabsScreen";
@@ -15,22 +16,40 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   int _selectedIndex = 0;
-  final List<Widget> _screen = [
-    const HomeScreen(),
-    const HealthCondition(),
-    const TakeHand(),
-    const InputText(),
+
+  final List<Map<String, dynamic>> _screenInfo = [
+    {
+      "label": "Home",
+      "screen": const HomeScreen(),
+    },
+    {
+      "label": "健康状態",
+      "screen": const HealthCondition(),
+    },
+    {
+      "label": "取って",
+      "screen": const TakeHand(),
+    },
+    {
+      "label": "入力",
+      "screen": const InputText(),
+    },
   ];
   void _onTapScreen(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    setState(
+      () {
+        _selectedIndex = index;
+        TextToSpeech.speak(
+          _screenInfo[_selectedIndex]["label"] + "画面に移動しました",
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screen[_selectedIndex],
+      body: _screenInfo[_selectedIndex]["screen"],
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
