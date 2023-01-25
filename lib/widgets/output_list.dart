@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import '../widgets/text_to_speech.dart';
 import '../widgets/adding_edit_modal.dart';
 import '../db/sqlCrud.dart';
-import '../widgets/delete_Dialog.dart';
-import '../models/sample_model.dart';
+import 'delete_dialog.dart';
 import '../screens/home_screen.dart';
+import '../data/sample_model.dart';
 
 class OutputList extends StatefulWidget {
   const OutputList({
@@ -43,11 +43,11 @@ class _OutputListState extends State<OutputList> {
     print(db.isEmpty);
     if (db.isEmpty) {
       SAMPLE_DATA.map(
-        (Data) async {
+        (itemdata) async {
           await SqlCrud.createItem(
-              title: Data.title,
-              description: Data.description,
-              categories: Data.categories);
+              title: itemdata.title,
+              description: itemdata.description,
+              categories: itemdata.categories);
         },
       ).toList();
     }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:text_to_speech_demo/screens/favorite_screen.dart';
-import './health_condition.dart';
-import './home_screen.dart';
-import './input_text.dart';
-import './take_hand.dart';
 import '../widgets/text_to_speech.dart';
+import './favorite_screen.dart';
+import './health_condition_screen.dart';
+import './home_screen.dart';
+import './input_text_screen.dart';
 
 class TabsScreen extends StatefulWidget {
   static const routeName = "/tabsScreen";
@@ -25,7 +24,7 @@ class _TabsScreenState extends State<TabsScreen> {
     },
     {
       "label": "健康状態",
-      "screen": const HealthCondition(),
+      "screen": const HealthConditionScreen(),
     },
     // {
     //   "label": "取って",
@@ -37,7 +36,7 @@ class _TabsScreenState extends State<TabsScreen> {
     },
     {
       "label": "入力",
-      "screen": const InputText(),
+      "screen": const InputTextScreen(),
     },
   ];
   void _onTapScreen(int index) {

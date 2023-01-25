@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
 import '../db/sqlCrud.dart';
-import '../widgets/delete_Dialog.dart';
+import '../widgets/delete_dialog.dart';
 import '../widgets/text_to_speech.dart';
 
 import '../widgets/adding_edit_modal.dart';
 
-class TakeHand extends StatefulWidget {
+class TakeHandScreen extends StatefulWidget {
   static const routeName = '/take-hand';
-  const TakeHand({super.key});
+  const TakeHandScreen({super.key});
 
   @override
-  State<TakeHand> createState() => _TakeHandState();
+  State<TakeHandScreen> createState() => _TakeHandScreenState();
 }
 
-class _TakeHandState extends State<TakeHand> {
-  final category = TakeHand.routeName.toString().replaceAll("/", "");
+class _TakeHandScreenState extends State<TakeHandScreen> {
+  final category = TakeHandScreen.routeName.toString().replaceAll("/", "");
 
   List<Map<String, dynamic>> _journals = [];
   bool _isLoading = true;

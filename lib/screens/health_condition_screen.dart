@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../widgets/generate_grid.dart';
 import '../widgets/generate_caterory.dart';
 
-class HealthCondition extends StatelessWidget {
-  static const routeName = '/health-condition';
-  const HealthCondition({super.key});
+class HealthConditionScreen extends StatelessWidget {
+  static const routeName = '/health-condition-screen';
+  const HealthConditionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

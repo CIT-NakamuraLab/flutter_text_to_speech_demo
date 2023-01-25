@@ -1,20 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:text_to_speech_demo/db/sqlCrud.dart';
-import 'package:text_to_speech_demo/models/sample_model.dart';
-import 'package:text_to_speech_demo/widgets/output_list.dart';
-import 'package:text_to_speech_demo/widgets/top_Bar.dart';
-
-import '../widgets/delete_Dialog.dart';
-import './health_condition.dart';
-import './take_hand.dart';
-import './input_text.dart';
-import '../widgets/bottom_tab.dart';
-import '../widgets/call.dart';
-import '../widgets/text_to_speech.dart';
+import '../db/sqlCrud.dart';
 import '../widgets/adding_edit_modal.dart';
-import './paint_screen.dart';
+import '../widgets/call.dart';
+import '../widgets/output_list.dart';
+import '../widgets/top_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home-screen';

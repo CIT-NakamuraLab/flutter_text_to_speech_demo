@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import '../widgets/text_to_speech.dart';
 import '../widgets/adding_edit_modal.dart';
 import '../db/sqlCrud.dart';
-import '../widgets/delete_Dialog.dart';
+import '../widgets/delete_dialog.dart';
 import '../screens/home_screen.dart';
-import '../widgets/top_Bar.dart';
+import '../widgets/top_bar.dart';
 
 class FavoriteScreen extends StatefulWidget {
   static const String routeName = "/favorite-screen";

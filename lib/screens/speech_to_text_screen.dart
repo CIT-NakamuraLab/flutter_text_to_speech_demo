@@ -4,22 +4,21 @@ import 'package:flutter/gestures.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
-import 'package:speech_to_text/speech_to_text.dart';
 
 import '../widgets/bottom_tab.dart';
-import './health_condition.dart';
-import './take_hand.dart';
+import './health_condition_screen.dart';
 import './home_screen.dart';
+import './take_hand_screen.dart';
 
-class SpeechToText extends StatefulWidget {
+class SpeechToTextScreen extends StatefulWidget {
   static const routeName = '/speech-to-text';
-  const SpeechToText({super.key});
+  const SpeechToTextScreen({super.key});
 
   @override
-  State<SpeechToText> createState() => _SpeechToTextState();
+  State<SpeechToTextScreen> createState() => _SpeechToTextScreenState();
 }
 
-class _SpeechToTextState extends State<SpeechToText> {
+class _SpeechToTextScreenState extends State<SpeechToTextScreen> {
   String _currentLocaleId = "";
   String lastWords = '';
   String lastError = '';
@@ -38,7 +37,7 @@ class _SpeechToTextState extends State<SpeechToText> {
     );
     if (available) {
       var systemLocale = await speech.systemLocale();
-      _currentLocaleId = systemLocale.localeId ?? '';
+      _currentLocaleId = systemLocale!.localeId;
       if (_currentLocaleId == "en_JP") {
         _currentLocaleId = "ja_JP";
       }
@@ -157,13 +156,13 @@ class _SpeechToTextState extends State<SpeechToText> {
                   ),
                   BottomTab(
                     transitionFunction: () => Navigator.of(context)
-                        .pushNamed(HealthCondition.routeName),
+                        .pushNamed(HealthConditionScreen.routeName),
                     labelText: '健康状態',
                     icon: Icons.medical_services,
                   ),
                   BottomTab(
-                    transitionFunction: () =>
-                        Navigator.of(context).pushNamed(TakeHand.routeName),
+                    transitionFunction: () => Navigator.of(context)
+                        .pushNamed(TakeHandScreen.routeName),
                     labelText: '取って',
                     icon: Icons.back_hand,
                   ),

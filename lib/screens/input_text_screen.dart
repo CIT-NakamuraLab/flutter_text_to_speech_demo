@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import '../models/letter_model.dart';
 import '../widgets/text_to_speech.dart';
 
-class InputText extends StatefulWidget {
+class InputTextScreen extends StatefulWidget {
   static const routeName = '/input-text';
-  const InputText({super.key});
+  const InputTextScreen({super.key});
 
   @override
-  State<InputText> createState() => _InputTextState();
+  State<InputTextScreen> createState() => _InputTextScreenState();
 }
 
-class _InputTextState extends State<InputText> {
+class _InputTextScreenState extends State<InputTextScreen> {
   final _inputTextController = TextEditingController();
   final _types = [
     LetterModel.hiragana,
