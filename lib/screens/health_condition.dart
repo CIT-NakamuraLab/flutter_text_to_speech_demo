@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/bottom_tab.dart';
 import '../widgets/generate_grid.dart';
 import '../widgets/generate_caterory.dart';
-import './take_hand.dart';
-import './home_screen.dart';
-import './speech_to_text.dart';
-import './paint_screen.dart';
 
 class HealthCondition extends StatelessWidget {
   static const routeName = '/health-condition';
@@ -191,40 +186,6 @@ class HealthCondition extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-          ),
-          Container(
-            color: Theme.of(context).colorScheme.primary,
-            height: deviceHeight * 0.13,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                BottomTab(
-                  transitionFunction: () => Navigator.of(context).pop(),
-                  labelText: '戻る',
-                  icon: Icons.undo,
-                ),
-                BottomTab(
-                  transitionFunction: () =>
-                      Navigator.of(context).pushNamed(TakeHand.routeName),
-                  labelText: '取って',
-                  icon: Icons.back_hand,
-                ),
-                BottomTab(
-                  transitionFunction: () => Navigator.of(context).pushNamed(
-                    PaintScreen.routeName,
-                  ),
-                  labelText: '手書き',
-                  icon: Icons.draw,
-                ),
-                BottomTab(
-                  transitionFunction: () => Navigator.of(context)
-                      .pushNamedAndRemoveUntil(
-                          HomeScreen.routeName, (_) => false),
-                  labelText: 'Top',
-                  icon: Icons.home,
-                ),
-              ],
             ),
           ),
         ],

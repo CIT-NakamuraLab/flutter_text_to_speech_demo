@@ -36,6 +36,7 @@ class _InputTextState extends State<InputText> {
         AppBar().preferredSize.height -
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom;
+
     final deviceWidth = MediaQuery.of(context).size.width;
 
     Widget generateButtons(List<List<List<String>>> type) {
@@ -89,7 +90,7 @@ class _InputTextState extends State<InputText> {
         child: Column(
           children: [
             SizedBox(
-              height: deviceHeight * 0.2,
+              height: deviceHeight * 0.15,
               child: TextFormField(
                 controller: _inputTextController,
                 enabled: false,
@@ -104,7 +105,7 @@ class _InputTextState extends State<InputText> {
               child: generateButtons(currentType),
             ),
             SizedBox(
-              height: deviceHeight * 0.15,
+              height: deviceHeight * 0.10,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
