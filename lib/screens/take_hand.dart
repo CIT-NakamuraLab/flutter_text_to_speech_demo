@@ -37,6 +37,12 @@ class _TakeHandState extends State<TakeHand> {
     refreshJournals();
   }
 
+  void buttonTapProcess(int index) {
+    TextToSpeech.speak(
+      _journals[index]["description"],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height -
@@ -82,14 +88,13 @@ class _TakeHandState extends State<TakeHand> {
                           right: 15,
                           bottom: 7.5,
                         ),
-                        child: GestureDetector(
-                          onTap: () {
-                            TextToSpeech.speak(_journals[index]["description"]);
-                          },
-                          child: Card(
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
+                        child: Card(
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          child: InkWell(
+                            onTap: () => buttonTapProcess(index),
+                            onLongPress: () => buttonTapProcess(index),
                             child: ListTile(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),

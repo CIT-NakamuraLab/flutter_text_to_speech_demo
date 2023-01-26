@@ -22,20 +22,27 @@ class GenerateGrid extends StatelessWidget {
 
     final deviceWidth = MediaQuery.of(context).size.width;
 
-    return GestureDetector(
-      onTap: () {
-        TextToSpeech.speak(speakText);
-      },
-      child: screenIcon
-          ? Card(
-              elevation: 3,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: BorderSide(
-                  color: color,
-                  width: 5,
-                ),
+    void buttonTapProcess() {
+      TextToSpeech.speak(speakText);
+    }
+
+    return screenIcon
+        ? Card(
+            elevation: 3,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: BorderSide(
+                color: color,
+                width: 5,
               ),
+            ),
+            child: InkWell(
+              onTap: () {
+                TextToSpeech.speak(speakText);
+              },
+              onLongPress: () {
+                TextToSpeech.speak(speakText);
+              },
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Row(
@@ -66,16 +73,20 @@ class GenerateGrid extends StatelessWidget {
                       ),
                     ]),
               ),
-            )
-          : Card(
-              elevation: 3,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: BorderSide(
-                  color: color,
-                  width: 5,
-                ),
+            ),
+          )
+        : Card(
+            elevation: 3,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: BorderSide(
+                color: color,
+                width: 5,
               ),
+            ),
+            child: InkWell(
+              onTap: () => buttonTapProcess(),
+              onLongPress: () => buttonTapProcess(),
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
@@ -88,6 +99,6 @@ class GenerateGrid extends StatelessWidget {
                 ),
               ),
             ),
-    );
+          );
   }
 }

@@ -84,6 +84,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void buttonTapProcess(int index) {
+    TextToSpeech.speak(
+      _journals[index]["description"],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // 追加するI/Oになる際には､reload回数が52回まで増加
@@ -98,6 +104,10 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       _isCalled = true;
     });
+
+    print(MediaQuery.of(context).size.height);
+    print(MediaQuery.of(context).padding.top);
+    print(AppBar().preferredSize.height);
 
     return ChangeNotifierProvider<HomeModel>(
       create: (context) => HomeModel()
@@ -131,13 +141,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     right: 15,
                                     bottom: 7.5,
                                   ),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      TextToSpeech.speak(
-                                          _journals[index]["description"]);
-                                    },
-                                    child: Card(
-                                      elevation: 5,
+                                  child: Card(
+                                    elevation: 5,
+                                    child: InkWell(
+                                      onTap: () => buttonTapProcess(index),
+                                      onLongPress: () =>
+                                          buttonTapProcess(index),
                                       child: ListTile(
                                         shape: RoundedRectangleBorder(
                                           borderRadius:

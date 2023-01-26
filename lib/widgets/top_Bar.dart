@@ -44,8 +44,13 @@ class _TopBarState extends State<TopBar> {
             fontSize: 16,
           ),
         ),
-        GestureDetector(
+        InkWell(
           onTap: () {
+            name.isEmpty
+                ? TextToSpeech.speak("誰か来てください")
+                : TextToSpeech.speak('$nameさん来てください');
+          },
+          onLongPress: () {
             name.isEmpty
                 ? TextToSpeech.speak("誰か来てください")
                 : TextToSpeech.speak('$nameさん来てください');

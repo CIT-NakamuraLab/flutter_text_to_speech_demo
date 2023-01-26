@@ -16,18 +16,21 @@ class BottomTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
 
+    void buttonTapProcess() {
+      if (labelText == "戻る") {
+        TextToSpeech.speak("1つ前のページに移動しました｡");
+      } else {
+        TextToSpeech.speak("$labelTextページに移動しました｡");
+      }
+      transitionFunction();
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        GestureDetector(
-          onTap: () {
-            if (labelText == "戻る") {
-              TextToSpeech.speak("1つ前のページに移動しました｡");
-            } else {
-              TextToSpeech.speak("$labelTextページに移動しました｡");
-            }
-            transitionFunction();
-          },
+        InkWell(
+          onTap: () => buttonTapProcess(),
+          onLongPress: () => buttonTapProcess(),
           child: Container(
             width: deviceHeight * 0.1,
             height: deviceHeight * 0.08,
