@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text_to_speech_demo/db/sqlCrud.dart';
 import 'package:text_to_speech_demo/models/sample_model.dart';
+import 'package:text_to_speech_demo/widgets/output_list.dart';
 import 'package:text_to_speech_demo/widgets/top_Bar.dart';
 
 import '../widgets/delete_Dialog.dart';
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Offset position = const Offset(0, 0);
 
-  // データを引っ張る
+  // // データを引っ張る
   Future<void> refreshJournals() async {
     final data = await SqlCrud.refreshAndInitJournals(category: category);
     setState(() {
@@ -62,10 +63,6 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ).toList();
     }
-  }
-
-  void updatePosition(BuildContext context) {
-    setState(() {});
   }
 
   void _modal(int? id) {
@@ -129,143 +126,76 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       SizedBox(
                         height: deviceHeight * 0.87,
-                        child: Stack(
-                          children: [
-                            ListView.builder(
-                              itemCount: _journals.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 15,
-                                    left: 15,
-                                    right: 15,
-                                    bottom: 7.5,
-                                  ),
-                                  child: Card(
-                                    elevation: 5,
-                                    child: InkWell(
-                                      onTap: () => buttonTapProcess(index),
-                                      onLongPress: () =>
-                                          buttonTapProcess(index),
-                                      child: ListTile(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        leading: const Icon(
-                                          Icons.volume_up,
-                                        ),
-                                        title: Text(
-                                          _journals[index]["title"],
-                                          style: const TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.w900,
+                        child: ListView.builder(
+                          itemCount: _journals.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(
+                                top: 15,
+                                left: 15,
+                                right: 15,
+                                bottom: 7.5,
+                              ),
+                              child: Card(
+                                elevation: 5,
+                                child: InkWell(
+                                  onTap: () => buttonTapProcess(index),
+                                  onLongPress: () => buttonTapProcess(index),
+                                  child: ListTile(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    leading: const Icon(
+                                      Icons.volume_up,
+                                    ),
+                                    title: Text(
+                                      _journals[index]["title"],
+                                      style: const TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w900,
+                                      ),
+                                    ),
+                                    tileColor: Colors.white,
+                                    // Theme.of(context).colorScheme.secondary,
+                                    trailing: SizedBox(
+                                      // width:100になるように iPhone14 Pro MAX width:430/3.4
+                                      width: deviceWidth / 3.9,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          IconButton(
+                                            icon: const Icon(Icons.edit),
+                                            onPressed: () => _modal(
+                                              _journals[index]['id'],
+                                            ),
                                           ),
-                                        ),
-                                        tileColor: Colors.white,
-                                        // Theme.of(context).colorScheme.secondary,
-                                        trailing: SizedBox(
-                                          // width:100になるように iPhone14 Pro MAX width:430/3.4
-                                          width: deviceWidth / 3.9,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              IconButton(
-                                                icon: const Icon(Icons.edit),
-                                                onPressed: () => _modal(
-                                                  _journals[index]['id'],
-                                                ),
-                                              ),
-                                              IconButton(
-                                                icon: const Icon(Icons.delete),
-                                                onPressed: () {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (_) {
-                                                      return DeleteDialog(
-                                                        title: _journals[index]
-                                                            ["title"],
-                                                        index: index,
-                                                        journals: _journals,
-                                                        refreshJournals:
-                                                            refreshJournals,
-                                                      );
-                                                    },
+                                          IconButton(
+                                            icon: const Icon(Icons.delete),
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (_) {
+                                                  return DeleteDialog(
+                                                    title: _journals[index]
+                                                        ["title"],
+                                                    index: index,
+                                                    journals: _journals,
+                                                    refreshJournals:
+                                                        refreshJournals,
                                                   );
                                                 },
-                                              ),
-                                            ],
+                                              );
+                                            },
                                           ),
-                                        ),
+                                        ],
                                       ),
                                     ),
                                   ),
-                                );
-                              },
-                            ),
-                            GestureDetector(
-                              dragStartBehavior: DragStartBehavior.down,
-                              onPanUpdate: ((details) {
-                                position = details.localPosition;
-                                setState(() {});
-                              }),
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    left: position.dx,
-                                    top: position.dy,
-                                    child: FloatingActionButton(
-                                      heroTag: "add",
-                                      child: const Icon(Icons.add),
-                                      onPressed: () => _modal(null),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: deviceHeight * 0.13,
-                        color: Theme.of(context).colorScheme.primary,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            BottomTab(
-                              transitionFunction: () {
-                                Navigator.of(context)
-                                    .pushNamed(HealthCondition.routeName);
-                              },
-                              labelText: '健康状態',
-                              icon: Icons.medical_services,
-                            ),
-                            BottomTab(
-                              transitionFunction: () {
-                                Navigator.of(context)
-                                    .pushNamed(TakeHand.routeName);
-                              },
-                              labelText: '取って',
-                              icon: Icons.back_hand,
-                            ),
-                            BottomTab(
-                              transitionFunction: () {
-                                Navigator.of(context)
-                                    .pushNamed(InputText.routeName);
-                              },
-                              labelText: '入力',
-                              icon: Icons.keyboard,
-                            ),
-                            BottomTab(
-                              transitionFunction: () =>
-                                  Navigator.of(context).pushNamed(
-                                PaintScreen.routeName,
-                              ),
-                              labelText: '手書き',
-                              icon: Icons.draw,
-                            ),
-                          ],
+                            );
+                          },
                         ),
                       ),
                     ],

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/bottom_tab.dart';
-import '../screens/health_condition.dart';
-import '../screens/home_screen.dart';
-import '../screens/paint_screen.dart';
 import '../db/sqlCrud.dart';
 import '../widgets/delete_Dialog.dart';
 import '../widgets/text_to_speech.dart';
@@ -24,7 +20,13 @@ class _TakeHandState extends State<TakeHand> {
   List<Map<String, dynamic>> _journals = [];
   bool _isLoading = true;
   Future<void> refreshJournals() async {
-    final data = await SqlCrud.refreshAndInitJournals(category: category);
+    //  int index
+    // final data = await SqlCrud.refreshAndInitJournals(category: category);
+
+    final data = await SqlCrud.refreshAndFavoriteJournals(
+        // favorite: _journals[index]["favorite"],
+        );
+
     setState(() {
       _journals = data;
       _isLoading = false;
@@ -159,41 +161,6 @@ class _TakeHandState extends State<TakeHand> {
                         ),
                       );
                     },
-                  ),
-                ),
-                Container(
-                  height: deviceHeight * 0.13,
-                  color: Theme.of(context).colorScheme.primary,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      BottomTab(
-                        transitionFunction: () => Navigator.of(context).pop(),
-                        labelText: '戻る',
-                        icon: Icons.undo,
-                      ),
-                      BottomTab(
-                        transitionFunction: () => Navigator.of(context)
-                            .pushNamed(HealthCondition.routeName),
-                        labelText: '健康状態',
-                        icon: Icons.medical_services,
-                      ),
-                      BottomTab(
-                        transitionFunction: () =>
-                            Navigator.of(context).pushNamed(
-                          PaintScreen.routeName,
-                        ),
-                        labelText: '手書き',
-                        icon: Icons.draw,
-                      ),
-                      BottomTab(
-                        transitionFunction: () => Navigator.of(context)
-                            .pushNamedAndRemoveUntil(
-                                HomeScreen.routeName, (route) => false),
-                        labelText: 'Top',
-                        icon: Icons.home,
-                      ),
-                    ],
                   ),
                 ),
               ],
