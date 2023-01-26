@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:text_to_speech_demo/screens/favorite_screen.dart';
 import './health_condition.dart';
 import './home_screen.dart';
 import './input_text.dart';
@@ -26,9 +27,13 @@ class _TabsScreenState extends State<TabsScreen> {
       "label": "健康状態",
       "screen": const HealthCondition(),
     },
+    // {
+    //   "label": "取って",
+    //   "screen": const TakeHand(),
+    // },
     {
-      "label": "取って",
-      "screen": const TakeHand(),
+      "label": "お気に入り",
+      "screen": const FavoriteScreen(),
     },
     {
       "label": "入力",
@@ -66,11 +71,17 @@ class _TabsScreenState extends State<TabsScreen> {
             backgroundColor: Theme.of(context).colorScheme.primary,
             label: "健康状態",
           ),
+          // BottomNavigationBarItem(
+          //   backgroundColor: Theme.of(context).colorScheme.primary,
+          //   icon: const Icon(Icons.back_hand_outlined),
+          //   activeIcon: const Icon(Icons.back_hand_rounded),
+          //   label: "取って",
+          // ),
           BottomNavigationBarItem(
+            icon: const Icon(Icons.star_outline_outlined),
+            activeIcon: const Icon(Icons.star),
             backgroundColor: Theme.of(context).colorScheme.primary,
-            icon: const Icon(Icons.back_hand_outlined),
-            activeIcon: const Icon(Icons.back_hand_rounded),
-            label: "取って",
+            label: "お気に入り",
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.keyboard_alt_outlined),

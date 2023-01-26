@@ -20,7 +20,13 @@ class _TakeHandState extends State<TakeHand> {
   List<Map<String, dynamic>> _journals = [];
   bool _isLoading = true;
   Future<void> refreshJournals() async {
-    final data = await SqlCrud.refreshAndInitJournals(category: category);
+    //  int index
+    // final data = await SqlCrud.refreshAndInitJournals(category: category);
+
+    final data = await SqlCrud.refreshAndFavoriteJournals(
+        // favorite: _journals[index]["favorite"],
+        );
+
     setState(() {
       _journals = data;
       _isLoading = false;
