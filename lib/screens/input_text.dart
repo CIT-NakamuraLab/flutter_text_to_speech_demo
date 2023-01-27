@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:text_to_speech_demo/widgets/top_Bar.dart';
+import '../widgets/shake.dart';
 import '../models/letter_model.dart';
 import '../widgets/text_to_speech.dart';
 import '../widgets/input_text_buttons.dart';
@@ -30,6 +31,19 @@ class _InputTextState extends State<InputText> {
   List<List<List<String>>> selectedType = LetterModel.hiragana;
   // 最後の1文字が格納されているindexを取得し、格納
   List<int> lastCharList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    Shake.detector.startListening();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    Shake.detector.stopListening();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,57 +174,69 @@ class _InputTextState extends State<InputText> {
     }
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: const Text('InputText'),
+        title: const TopBar(),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            SizedBox(
-              height: deviceHeight * 0.15,
-              child: TextFormField(
-                controller: _inputTextController,
-                enabled: false,
-                maxLines: null,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.all(10),
+                height: deviceHeight * 0.10,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(width: 0.2),
+                ),
+                child: SingleChildScrollView(
+                  child: TextFormField(
+                    controller: _inputTextController,
+                    enabled: false,
+                    maxLines: null,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                    ),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: deviceHeight * 0.6,
-              child: generateButtons(currentType),
-            ),
-            SizedBox(
-              height: deviceHeight * 0.10,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InputTextButton(
-                    buttonFunction: onPlayButton,
-                    buttonChild: const Icon(Icons.play_arrow),
-                  ),
-                  InputTextButton(
-                    buttonFunction: onDakutenButton,
-                    buttonChild: const Text('"'),
-                  ),
-                  InputTextButton(
-                    buttonFunction: onChangeButton,
-                    buttonChild: const Text('ア'),
-                  ),
-                  InputTextButton(
-                    buttonFunction: onDeleteButton,
-                    buttonChild: const Icon(Icons.backspace),
-                  ),
-                  InputTextButton(
-                    buttonFunction: onClearButton,
-                    buttonChild: const Icon(Icons.delete),
-                  ),
-                ],
+              SizedBox(
+                height: deviceHeight * 0.62,
+                child: generateButtons(currentType),
               ),
-            ),
-          ],
+              Container(
+                alignment: Alignment.bottomCenter,
+                height: deviceHeight * 0.10,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InputTextButton(
+                      buttonFunction: onPlayButton,
+                      buttonChild: const Icon(Icons.play_arrow),
+                    ),
+                    InputTextButton(
+                      buttonFunction: onDakutenButton,
+                      buttonChild: const Text('"'),
+                    ),
+                    InputTextButton(
+                      buttonFunction: onChangeButton,
+                      buttonChild: const Text('ア'),
+                    ),
+                    InputTextButton(
+                      buttonFunction: onDeleteButton,
+                      buttonChild: const Icon(Icons.backspace),
+                    ),
+                    InputTextButton(
+                      buttonFunction: onClearButton,
+                      buttonChild: const Icon(Icons.delete),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

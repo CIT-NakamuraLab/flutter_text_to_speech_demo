@@ -53,6 +53,7 @@ class _TakeHandState extends State<TakeHand> {
     final deviceWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: const Text(
           '取って欲しいもの',

@@ -34,15 +34,15 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: Colors.redAccent[100],
           secondary: Colors.greenAccent,
-          background: Colors.greenAccent[100],
+          // background: Colors.greenAccent[100],
+          background: Color.fromARGB(255, 252, 239, 217),
           error: Colors.red,
         ),
         buttonTheme: const ButtonThemeData(
           buttonColor: Colors.amber,
         ),
       ),
-      // home: const TitleScreen(),
-      initialRoute: TabsScreen.routeName,
+      home: const TitleScreen(),
       routes: {
         TabsScreen.routeName: (context) => const TabsScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
