@@ -1,30 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:shake/shake.dart';
+import 'package:text_to_speech_demo/widgets/top_Bar.dart';
 
 import './text_to_speech.dart';
 
-class HomeModel extends ChangeNotifier {
-  final String call = "助けてください";
-
-  shakeGesture(BuildContext context) {
+class Call {
+  static shakeGesture(BuildContext context) {
     ShakeDetector.autoStart(
       onPhoneShake: () {
-        TextToSpeech.speak(call);
-        showDialog(
-          context: context,
-          builder: (_) {
-            return AlertDialog(
-              title: Text(call),
-              actions: [
-                TextButton(
-                  child: const Text('OK'),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            );
-          },
-        );
+        if (TopBar.controller.text.isEmpty) {
+          TextToSpeech.speak("誰か来てください");
+        } else {
+          TextToSpeech.speak("${TopBar.controller.text}さん来てください");
+        }
       },
+      minimumShakeCount: 2,
+      shakeSlopTimeMS: 500,
+      shakeCountResetTime: 3000,
+      shakeThresholdGravity: 2.7,
     );
   }
 }
