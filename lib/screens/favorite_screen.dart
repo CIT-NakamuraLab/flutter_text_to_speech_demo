@@ -5,6 +5,7 @@ import '../db/sqlCrud.dart';
 import '../widgets/delete_Dialog.dart';
 import '../screens/home_screen.dart';
 import '../widgets/top_Bar.dart';
+import '../widgets/shake.dart';
 
 class FavoriteScreen extends StatefulWidget {
   static const String routeName = "/favorite-screen";
@@ -35,8 +36,16 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   void initState() {
     super.initState();
+    Shake.detector.startListening();
     // initData();
     refreshJournals();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    Shake.detector.stopListening();
+    super.dispose();
   }
 
   // void initData() async {
@@ -93,12 +102,20 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     final deviceWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: const TopBar(),
       ),
       body: _journals.isEmpty
-          ? const Center(
-              child: Text("お気に入りが存在しません"),
+          ? Center(
+              child: Text(
+                "お気に入りが存在しません",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
             )
           : ListView.builder(
               itemCount: _journals.length,

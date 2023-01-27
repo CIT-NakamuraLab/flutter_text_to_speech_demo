@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import './home_screen.dart';
+import '../screens/tabs_screen.dart';
 
 class TitleScreen extends StatefulWidget {
   const TitleScreen({super.key});
@@ -12,12 +11,12 @@ class TitleScreen extends StatefulWidget {
 class _TitleScreenState extends State<TitleScreen> {
   Future<void> pageTransition() async {
     await Future.delayed(
-      const Duration(seconds: 1),
+      const Duration(seconds: 2),
     );
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) {
-          return const HomeScreen();
+          return const TabsScreen();
         },
         transitionDuration: const Duration(seconds: 1),
         reverseTransitionDuration: const Duration(seconds: 1),
@@ -71,34 +70,11 @@ class _TitleScreenState extends State<TitleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: const Color.fromARGB(255, 174, 249, 232),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text(
-              '伝えたい気持ちをサポートする',
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              '音声会話補助アプリ',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'comecome',
-              style: TextStyle(
-                fontSize: 42,
-                fontWeight: FontWeight.w900,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-          ],
+        child: FittedBox(
+          fit: BoxFit.contain,
+          child: Image.asset("assets/images/loading_screen.png"),
         ),
       ),
     );
