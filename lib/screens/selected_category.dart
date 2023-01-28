@@ -157,7 +157,7 @@ class _SelectedCategoryState extends State<SelectedCategory> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: deviceHeight,
+                    height: deviceHeight * 0.80,
                     child: ListView.builder(
                       itemCount: cardItems.length,
                       itemBuilder: (context, index) {
@@ -200,31 +200,59 @@ class _SelectedCategoryState extends State<SelectedCategory> {
                                   ),
                                 ),
                                 trailing: Wrap(
-                                  alignment: WrapAlignment.end,
+                                  alignment: WrapAlignment.start,
                                   children: [
-                                    IconButton(
-                                        icon: const Icon(Icons.edit),
-                                        onPressed: () {
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 0),
+                                      child: GestureDetector(
+                                        onTap: () {
                                           _modal(
                                             id: cardItems[index]['id'],
                                             category: category,
                                           );
-                                        }),
-                                    IconButton(
-                                      icon: const Icon(Icons.delete),
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (_) {
-                                            return DeleteDialog(
-                                              index: index,
-                                              journals: cardItems,
-                                              category: category,
-                                              refreshJournals: refreshItems,
-                                            );
-                                          },
-                                        );
-                                      },
+                                        },
+                                        onLongPress: () {
+                                          _modal(
+                                            id: cardItems[index]['id'],
+                                            category: category,
+                                          );
+                                        },
+                                        child: const Icon(Icons.edit),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 0),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (_) {
+                                              return DeleteDialog(
+                                                index: index,
+                                                journals: cardItems,
+                                                category: category,
+                                                refreshJournals: refreshItems,
+                                              );
+                                            },
+                                          );
+                                        },
+                                        onLongPress: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (_) {
+                                              return DeleteDialog(
+                                                index: index,
+                                                journals: cardItems,
+                                                category: category,
+                                                refreshJournals: refreshItems,
+                                              );
+                                            },
+                                          );
+                                        },
+                                        child: const Icon(Icons.delete),
+                                      ),
                                     ),
                                   ],
                                 ),
