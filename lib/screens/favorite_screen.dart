@@ -179,10 +179,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                     context: context,
                                     builder: (_) {
                                       return DeleteDialog(
-                                        title: _journals[index]["title"],
                                         index: index,
                                         journals: _journals,
                                         refreshJournals: refreshJournals,
+                                        category: category,
                                       );
                                     },
                                   );

@@ -37,7 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
   // // データを引っ張る
   Future<void> refreshJournals() async {
     print("Refresh");
-    final data = await SqlCrud.refreshAndInitJournals(category: category);
+    // final data = await SqlCrud.refreshAndInitJournals(category: category);
+    final data = await SqlCrud.refreshAndInitJournals(category: "drink");
     setState(() {
       _journals = data;
       _isLoading = false;
@@ -126,10 +127,6 @@ class _HomeScreenState extends State<HomeScreen> {
       _isCalled = true;
     });
 
-    print(MediaQuery.of(context).size.height);
-    print(MediaQuery.of(context).padding.top);
-    print(AppBar().preferredSize.height);
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -214,12 +211,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   context: context,
                                                   builder: (_) {
                                                     return DeleteDialog(
-                                                      title: _journals[index]
-                                                          ["title"],
                                                       index: index,
                                                       journals: _journals,
                                                       refreshJournals:
                                                           refreshJournals,
+                                                      category: category,
                                                     );
                                                   },
                                                 );
