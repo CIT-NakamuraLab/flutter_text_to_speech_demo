@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:text_to_speech_demo/screens/favorite_screen.dart';
+import 'package:text_to_speech_demo/screens/home.dart';
+import 'package:text_to_speech_demo/screens/selected_category.dart';
 import 'package:text_to_speech_demo/screens/tabs_screen.dart';
 
 import './screens/home_screen.dart';
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
           primary: Colors.redAccent[100],
           secondary: Colors.greenAccent,
           // background: Colors.greenAccent[100],
-          background: Color.fromARGB(255, 252, 239, 217),
+          background: const Color.fromARGB(255, 252, 239, 217),
           error: Colors.red,
         ),
         buttonTheme: const ButtonThemeData(
@@ -46,6 +48,8 @@ class MyApp extends StatelessWidget {
       routes: {
         TabsScreen.routeName: (context) => const TabsScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
+        Home.routeName: (context) => const Home(),
+        // SelectedCategory.routeName: (context) => const SelectedCategory(),
         HealthCondition.routeName: (context) => const HealthCondition(),
         // PaintScreen.routeName: (context) => const PaintScreen(),
         TakeHand.routeName: (context) => const TakeHand(),

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
@@ -134,8 +132,8 @@ class SqlCrud {
   static Future<void> deleteItem({required int id}) async {
     final db = await SqlCrud.db();
     try {
-      // await db.delete("items");
-      await db.delete("items", where: "id = ?", whereArgs: [id]);
+      await db.delete("items");
+      // await db.delete("items", where: "id = ?", whereArgs: [id]);
     } catch (err) {
       debugPrint("Something went wrong when deleting an item: $err");
     }
