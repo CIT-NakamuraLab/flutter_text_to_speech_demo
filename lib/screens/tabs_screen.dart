@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:text_to_speech_demo/screens/favorite_screen.dart';
-import 'package:text_to_speech_demo/screens/home.dart';
+import 'package:text_to_speech_demo/screens/home_screen.dart';
 import 'package:text_to_speech_demo/screens/selected_category.dart';
-import './health_condition.dart';
-import './home_screen.dart';
+import 'health_condition_screen.dart';
 import './input_text.dart';
 import './take_hand.dart';
 import '../widgets/text_to_speech.dart';
@@ -21,60 +20,36 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   int _selectedIndex = 0;
 
-  // final List<Map<String, dynamic>> _screenInfo = [
-  //   {
-  //     "label": "Home",
-  //     // "screen": const HomeScreen(),
-  //     "screen": const Home(),
-  //   },
-  //   {
-  //     "label": "健康状態",
-  //     "screen": const HealthCondition(),
-  //   },
-  //   // {
-  //   //   "label": "取って",
-  //   //   "screen": const TakeHand(),
-  //   // },
-  //   {
-  //     "label": "お気に入り",
-  //     "screen": const FavoriteScreen(),
-  //   },
-  //   {
-  //     "label": "入力",
-  //     "screen": const InputText(),
-  //   },
-  // ];
+  void _onTapScreen(int index) {
+    setState(
+      () {
+        _selectedIndex = index;
+        TextToSpeech.speak(
+          "${_screenInfo[_selectedIndex]}画面に移動しました",
+        );
+      },
+    );
+  }
 
-  // void _onTapScreen(int index) {
-  //   setState(
-  //     () {
-  //       _selectedIndex = index;
-  //       TextToSpeech.speak(
-  //         _screenInfo[_selectedIndex]["label"] + "画面に移動しました",
-  //       );
-  //     },
-  //   );
-  // }
-
-  final _screenInfo = <Widget>[
-    const Home(),
-    // const HomeScreen(),
-    const HealthCondition(),
+  final _screenNo = <Widget>[
+    const HomeScreen(),
+    const HealthConditionScreen(),
     const FavoriteScreen(),
     const InputText(),
   ];
+  final _screenInfo = ["ホーム", "健康状態", "お気に入り", "入力"];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PersistentTabView(
         context,
-        // List<Map<String, dynamic>> =>List<Widget>
-        screens: _screenInfo,
+        // List<Map<String, dynamic>> =>List<Widget> asにて変換　cast error
+        screens: _screenNo,
         // screens: _screenInfo[_selectedIndex]["screen"],
-        // onItemSelected: (index) {
-        //   _onTapScreen(index);
-        // },
+        onItemSelected: (index) {
+          _onTapScreen(index);
+        },
         items: [
           PersistentBottomNavBarItem(
             inactiveIcon: const Icon(

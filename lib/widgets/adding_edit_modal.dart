@@ -6,12 +6,14 @@ class AddingEditModal extends StatelessWidget {
   final String category;
   final int? id;
   final List<Map<String, dynamic>> journals;
+  final String routeName;
   const AddingEditModal({
     super.key,
     required this.refreshJournals,
     required this.category,
     required this.id,
     required this.journals,
+    required this.routeName,
   });
 
   @override
@@ -60,7 +62,9 @@ class AddingEditModal extends StatelessWidget {
                     description: descriptionController.text,
                     categories: category,
                   );
-                  refreshJournals(category: category);
+                  routeName == "/selected-category"
+                      ? refreshJournals(category: category)
+                      : refreshJournals();
                 } else {
                   await SqlCrud.updateItem(
                     id: id!,
@@ -68,7 +72,9 @@ class AddingEditModal extends StatelessWidget {
                     description: descriptionController.text,
                     categories: category,
                   );
-                  refreshJournals(category: category);
+                  routeName == "/selected-category"
+                      ? refreshJournals(category: category)
+                      : refreshJournals();
                 }
                 titleController.text = "";
                 descriptionController.text = "";
