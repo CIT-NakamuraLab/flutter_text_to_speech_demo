@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import '../widgets/text_to_speech.dart';
+import 'call.dart';
 
-class TopBar extends StatefulWidget {
+class TopBar extends StatelessWidget {
   const TopBar({super.key});
 
-  @override
-  State<TopBar> createState() => _TopBarState();
-}
-
-class _TopBarState extends State<TopBar> {
-  final TextEditingController _controller = TextEditingController();
-  var name = "";
+  static final TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,23 +16,18 @@ class _TopBarState extends State<TopBar> {
             height: 50,
             child: Form(
               child: TextFormField(
-                controller: _controller,
+                controller: controller,
                 decoration: const InputDecoration(
                   labelText: 'お名前入力',
                   fillColor: Colors.white,
                   filled: true,
                 ),
-                onChanged: ((value) {
-                  setState(() {
-                    name = value;
-                  });
-                }),
               ),
             ),
           ),
         ),
         const Text(
-          'さん来てください',
+          '来てください',
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -46,14 +36,14 @@ class _TopBarState extends State<TopBar> {
         ),
         InkWell(
           onTap: () {
-            name.isEmpty
+            controller.text.isEmpty
                 ? TextToSpeech.speak("誰か来てください")
-                : TextToSpeech.speak('$nameさん来てください');
+                : TextToSpeech.speak('${controller.text}さん来てください');
           },
           onLongPress: () {
-            name.isEmpty
+            controller.text.isEmpty
                 ? TextToSpeech.speak("誰か来てください")
-                : TextToSpeech.speak('$nameさん来てください');
+                : TextToSpeech.speak('${controller.text}さん来てください');
           },
           child: Column(
             children: [

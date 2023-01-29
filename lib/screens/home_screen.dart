@@ -15,6 +15,7 @@ import '../widgets/call.dart';
 import '../widgets/text_to_speech.dart';
 import '../widgets/adding_edit_modal.dart';
 import './paint_screen.dart';
+import 'package:shake/shake.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home-screen';
@@ -46,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    Call.shakeGesture(context);
     initData();
     refreshJournals();
   }
@@ -106,103 +108,94 @@ class _HomeScreenState extends State<HomeScreen> {
     print(MediaQuery.of(context).padding.top);
     print(AppBar().preferredSize.height);
 
-    return ChangeNotifierProvider<HomeModel>(
-      create: (context) => HomeModel()
-        ..shakeGesture(
-          context,
-        ),
-      child: Consumer<HomeModel>(
-        builder: (context, value, child) {
-          return Scaffold(
-            resizeToAvoidBottomInset: false,
-            appBar: AppBar(
-              title: const TopBar(),
-            ),
-            body: _isLoading
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Column(
-                    children: [
-                      SizedBox(
-                        height: deviceHeight * 0.87,
-                        child: ListView.builder(
-                          itemCount: _journals.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(
-                                top: 15,
-                                left: 15,
-                                right: 15,
-                                bottom: 7.5,
-                              ),
-                              child: Card(
-                                elevation: 5,
-                                child: InkWell(
-                                  onTap: () => buttonTapProcess(index),
-                                  onLongPress: () => buttonTapProcess(index),
-                                  child: ListTile(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    leading: const Icon(
-                                      Icons.volume_up,
-                                    ),
-                                    title: Text(
-                                      _journals[index]["title"],
-                                      style: const TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.w900,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: TopBar(),
+      ),
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: deviceHeight * 0.87,
+                    child: ListView.builder(
+                      itemCount: _journals.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                            top: 15,
+                            left: 15,
+                            right: 15,
+                            bottom: 7.5,
+                          ),
+                          child: Card(
+                            elevation: 5,
+                            child: InkWell(
+                              onTap: () => buttonTapProcess(index),
+                              onLongPress: () => buttonTapProcess(index),
+                              child: ListTile(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                leading: const Icon(
+                                  Icons.volume_up,
+                                ),
+                                title: Text(
+                                  _journals[index]["title"],
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                                tileColor: Colors.white,
+                                // Theme.of(context).colorScheme.secondary,
+                                trailing: SizedBox(
+                                  // width:100になるように iPhone14 Pro MAX width:430/3.4
+                                  width: deviceWidth / 3.9,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(Icons.edit),
+                                        onPressed: () => _modal(
+                                          _journals[index]['id'],
+                                        ),
                                       ),
-                                    ),
-                                    tileColor: Colors.white,
-                                    // Theme.of(context).colorScheme.secondary,
-                                    trailing: SizedBox(
-                                      // width:100になるように iPhone14 Pro MAX width:430/3.4
-                                      width: deviceWidth / 3.9,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          IconButton(
-                                            icon: const Icon(Icons.edit),
-                                            onPressed: () => _modal(
-                                              _journals[index]['id'],
-                                            ),
-                                          ),
-                                          IconButton(
-                                            icon: const Icon(Icons.delete),
-                                            onPressed: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (_) {
-                                                  return DeleteDialog(
-                                                    title: _journals[index]
-                                                        ["title"],
-                                                    index: index,
-                                                    journals: _journals,
-                                                    refreshJournals:
-                                                        refreshJournals,
-                                                  );
-                                                },
+                                      IconButton(
+                                        icon: const Icon(Icons.delete),
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (_) {
+                                              return DeleteDialog(
+                                                title: _journals[index]
+                                                    ["title"],
+                                                index: index,
+                                                journals: _journals,
+                                                refreshJournals:
+                                                    refreshJournals,
                                               );
                                             },
-                                          ),
-                                        ],
+                                          );
+                                        },
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ),
                               ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
-          );
-        },
-      ),
+                ],
+              ),
+            ),
     );
   }
 }
