@@ -63,17 +63,16 @@ class _HomeScreenState extends State<HomeScreen> {
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.all(10),
-              child: Card(
-                elevation: 5,
-                // color: CATEGORY_DATA[index].color,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(
-                    color: CATEGORY_DATA[index].color,
-                    width: 3,
+              child: Ink(
+                child: Card(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    // side: BorderSide(
+                    //   color: CATEGORY_DATA[index].color,
+                    //   width: 3,
+                    // ),
                   ),
-                ),
-                child: Ink(
                   child: ListTile(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
