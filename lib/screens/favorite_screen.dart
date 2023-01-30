@@ -125,12 +125,17 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       ),
       body: cardItems.isEmpty
           ? Center(
-              child: Text(
-                "お気に入りが存在しません",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
+              child: TextButton(
+                onPressed: () {
+                  refreshItems();
+                },
+                child: Text(
+                  "お気に入りが存在しません",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
               ),
             )
