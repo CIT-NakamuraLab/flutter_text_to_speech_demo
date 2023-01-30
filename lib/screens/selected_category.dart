@@ -162,6 +162,7 @@ class _SelectedCategoryState extends State<SelectedCategory> {
                     height: deviceHeight * 0.80,
                     child: RefreshIndicator(
                       onRefresh: () async {
+                        TextToSpeech.speak("お気に入り情報を更新しました");
                         await refreshItems(category: category);
                       },
                       child: ListView.builder(

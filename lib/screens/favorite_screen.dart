@@ -112,6 +112,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     );
   }
 
+  final notCardItem = "お気に入りカードが存在しません";
+
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height -
@@ -126,11 +128,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       body: cardItems.isEmpty
           ? Center(
               child: TextButton(
-                onPressed: () {
-                  refreshItems();
+                onPressed: () async {
+                  await refreshItems();
+                  cardItems.isEmpty
+                      ? TextToSpeech.speak(notCardItem)
+                      : TextToSpeech.speak("お気に入り情報を更新しました");
                 },
                 child: Text(
-                  "お気に入りが存在しません",
+                  notCardItem,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -141,7 +146,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
             )
           : RefreshIndicator(
               onRefresh: () async {
-                print("Loading...");
+                TextToSpeech.speak("お気に入り情報を更新しました");
                 await refreshItems();
               },
               child: ListView.builder(
