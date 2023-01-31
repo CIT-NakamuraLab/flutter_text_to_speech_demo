@@ -48,7 +48,7 @@ class AddingEditModal extends StatelessWidget {
               height: 10,
             ),
             TextField(
-              decoration: const InputDecoration(hintText: "いうことば"),
+              decoration: const InputDecoration(hintText: "はなすことば"),
               controller: descriptionController,
             ),
             const SizedBox(

@@ -40,8 +40,13 @@ class DeleteDialog extends StatelessWidget {
             ],
           )
         : CupertinoAlertDialog(
-            title: const Text("さくじょしますか?"),
-            content: Text(journals[index]["title"]),
+            title: const Text("削除しますか?"),
+            content: Text(
+              journals[index]["title"],
+              style: const TextStyle(
+                fontSize: 25,
+              ),
+            ),
             actions: [
               CupertinoDialogAction(
                 isDefaultAction: true,
@@ -52,14 +57,20 @@ class DeleteDialog extends StatelessWidget {
                       : refreshJournals();
                   Navigator.of(context).pop();
                 },
-                child: const Text('します'),
+                child: const Text(
+                  'します',
+                  style: TextStyle(color: Colors.redAccent),
+                ),
               ),
               CupertinoDialogAction(
                 isDestructiveAction: true,
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('しません'),
+                child: const Text(
+                  'しません',
+                  style: TextStyle(color: Colors.blueAccent),
+                ),
               ),
             ],
           );
