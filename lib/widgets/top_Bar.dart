@@ -46,17 +46,17 @@ class TopBar extends StatelessWidget {
                 : TextToSpeech.speak('${controller.text}さん来てください');
           },
           child: Column(
-            children: [
-              const Icon(
+            children: const [
+              Icon(
                 Icons.screen_rotation,
                 color: Colors.black,
               ),
               Text(
-                'スマホを振ってください',
+                '振ってください',
                 style: TextStyle(
-                  fontSize: 10,
-                  color: Colors.redAccent[700],
-                ),
+                    fontSize: 10,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
               )
             ],
           ),

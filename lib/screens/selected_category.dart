@@ -148,6 +148,13 @@ class _SelectedCategoryState extends State<SelectedCategory> {
             Navigator.of(context).pop(); // 前の画面へ遷移
           },
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.add),
+            iconSize: AppBar().preferredSize.height / 2,
+          ),
+        ],
         title: Text(
           categoryTitle,
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -159,119 +166,128 @@ class _SelectedCategoryState extends State<SelectedCategory> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: deviceHeight * 0.80,
+                    height: deviceHeight * 0.9,
                     child: RefreshIndicator(
                       onRefresh: () async {
-                        TextToSpeech.speak("お気に入り情報を更新しました");
+                        TextToSpeech.speak("情報を更新しました");
                         await refreshItems(category: category);
                       },
-                      child: ListView.builder(
-                        itemCount: cardItems.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(20),
-                                onTap: () => buttonTapProcess(index),
-                                onLongPress: () => buttonTapProcess(index),
-                                child: ListTile(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  leading: IconButton(
-                                    onPressed: () => _updateFavorite(
-                                      index: index,
-                                      id: cardItems[index]["id"],
-                                      category: category,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 0,
+                          vertical: 10,
+                        ),
+                        child: ListView.builder(
+                          itemCount: cardItems.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(20),
+                                  onTap: () => buttonTapProcess(index),
+                                  onLongPress: () => buttonTapProcess(index),
+                                  child: ListTile(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
-                                    icon: Icon(
-                                      cardItems[index]["favorite"] != 0
-                                          ? Icons.favorite_rounded
-                                          : Icons.favorite_border,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
-                                  ),
-                                  title: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      cardItems[index]["title"],
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 24,
+                                    leading: IconButton(
+                                      onPressed: () => _updateFavorite(
+                                        index: index,
+                                        id: cardItems[index]["id"],
+                                        category: category,
+                                      ),
+                                      icon: Icon(
+                                        cardItems[index]["favorite"] != 0
+                                            ? Icons.favorite_rounded
+                                            : Icons.favorite_border,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                       ),
                                     ),
-                                  ),
-                                  trailing: Wrap(
-                                    alignment: WrapAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 0),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            _modal(
-                                              id: cardItems[index]['id'],
-                                              category: category,
-                                            );
-                                          },
-                                          onLongPress: () {
-                                            _modal(
-                                              id: cardItems[index]['id'],
-                                              category: category,
-                                            );
-                                          },
-                                          child: const Icon(Icons.edit),
+                                    title: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        cardItems[index]["title"],
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 0),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (_) {
-                                                return DeleteDialog(
-                                                  index: index,
-                                                  journals: cardItems,
-                                                  category: category,
-                                                  refreshJournals: refreshItems,
-                                                  routeName: SelectedCategory
-                                                      .routeName,
-                                                );
-                                              },
-                                            );
-                                          },
-                                          onLongPress: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (_) {
-                                                return DeleteDialog(
-                                                  index: index,
-                                                  journals: cardItems,
-                                                  category: category,
-                                                  refreshJournals: refreshItems,
-                                                  routeName: SelectedCategory
-                                                      .routeName,
-                                                );
-                                              },
-                                            );
-                                          },
-                                          child: const Icon(Icons.delete),
+                                    ),
+                                    trailing: Wrap(
+                                      alignment: WrapAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 0),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              _modal(
+                                                id: cardItems[index]['id'],
+                                                category: category,
+                                              );
+                                            },
+                                            onLongPress: () {
+                                              _modal(
+                                                id: cardItems[index]['id'],
+                                                category: category,
+                                              );
+                                            },
+                                            child: const Icon(Icons.edit),
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 0),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (_) {
+                                                  return DeleteDialog(
+                                                    index: index,
+                                                    journals: cardItems,
+                                                    category: category,
+                                                    refreshJournals:
+                                                        refreshItems,
+                                                    routeName: SelectedCategory
+                                                        .routeName,
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            onLongPress: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (_) {
+                                                  return DeleteDialog(
+                                                    index: index,
+                                                    journals: cardItems,
+                                                    category: category,
+                                                    refreshJournals:
+                                                        refreshItems,
+                                                    routeName: SelectedCategory
+                                                        .routeName,
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            child: const Icon(Icons.delete),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   )

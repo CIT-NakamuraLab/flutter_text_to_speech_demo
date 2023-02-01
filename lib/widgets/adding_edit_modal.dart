@@ -58,8 +58,8 @@ class AddingEditModal extends StatelessWidget {
               onPressed: () async {
                 if (id == null) {
                   await SqlCrud.createItem(
-                    title: titleController.text,
-                    description: descriptionController.text,
+                    title: titleController.text.trim(),
+                    description: descriptionController.text.trim(),
                     categories: category,
                   );
                   routeName == "/selected-category"
@@ -68,8 +68,8 @@ class AddingEditModal extends StatelessWidget {
                 } else {
                   await SqlCrud.updateItem(
                     id: id!,
-                    title: titleController.text,
-                    description: descriptionController.text,
+                    title: titleController.text.trim(),
+                    description: descriptionController.text.trim(),
                     categories: category,
                   );
                   routeName == "/selected-category"
