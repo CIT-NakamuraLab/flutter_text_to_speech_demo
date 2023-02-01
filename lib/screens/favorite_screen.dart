@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../widgets/text_to_speech.dart';
 import '../widgets/adding_edit_modal.dart';
 import '../db/sqlCrud.dart';
-import '../widgets/delete_Dialog.dart';
-import '../widgets/top_Bar.dart';
+import '../widgets/delete_dialog.dart';
+import '../widgets/top_bar.dart';
 import '../widgets/shake.dart';
 import '../models/sample_model.dart';
 

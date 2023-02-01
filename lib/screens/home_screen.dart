@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:text_to_speech_demo/screens/selected_category.dart';
-import 'package:text_to_speech_demo/widgets/top_Bar.dart';
 import '../models/category_model.dart';
+import '../screens/selected_category.dart';
+import '../widgets/top_bar.dart';
 import '../widgets/text_to_speech.dart';
 import '../widgets/shake.dart';
 

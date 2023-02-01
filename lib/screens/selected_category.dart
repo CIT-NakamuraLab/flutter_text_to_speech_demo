@@ -6,7 +6,7 @@ import '../models/sample_model.dart';
 import '../widgets/text_to_speech.dart';
 import '../widgets/adding_edit_modal.dart';
 import '../widgets/shake.dart';
-import '../widgets/delete_Dialog.dart';
+import '../widgets/delete_dialog.dart';
 
 class SelectedCategory extends StatefulWidget {
   static const routeName = "/selected-category";

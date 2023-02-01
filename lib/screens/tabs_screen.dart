@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:text_to_speech_demo/screens/favorite_screen.dart';
+import '../widgets/text_to_speech.dart';
+import './favorite_screen.dart';
 import './health_condition_screen.dart';
 import './home_screen.dart';
 import './input_text.dart';
-import './take_hand.dart';
-import '../widgets/text_to_speech.dart';
 
 class TabsScreen extends StatefulWidget {
   static const routeName = "/tabsScreen";
