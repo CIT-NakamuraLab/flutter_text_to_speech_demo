@@ -148,13 +148,6 @@ class _SelectedCategoryState extends State<SelectedCategory> {
             Navigator.of(context).pop(); // 前の画面へ遷移
           },
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.add),
-            iconSize: AppBar().preferredSize.height / 2,
-          ),
-        ],
         title: Text(
           categoryTitle,
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
