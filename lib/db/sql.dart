@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
-class SqlCrud {
+class Sql {
   static Future<void> createTables(sql.Database database) async {
     print("createTables\n");
 
@@ -37,7 +37,7 @@ class SqlCrud {
     required String description,
     required String categories,
   }) async {
-    final db = await SqlCrud.db();
+    final db = await Sql.db();
     final data = {
       'title': title,
       'description': description,
@@ -54,7 +54,7 @@ class SqlCrud {
       {required String categories}) async {
     // print("getItems\n");
     // print("categories:" + categories);
-    final db = await SqlCrud.db();
+    final db = await Sql.db();
     return db.query(
       'items',
       where: 'categories = ?',
@@ -68,7 +68,7 @@ class SqlCrud {
       //   required int favorite,
       // }
       ) async {
-    final db = await SqlCrud.db();
+    final db = await Sql.db();
     return db.query(
       'items',
       where: 'favorite = 1',
@@ -78,7 +78,7 @@ class SqlCrud {
 
   static Future<List<Map<String, dynamic>>> getAllItems() async {
     // print("getAllItem");
-    final db = await SqlCrud.db();
+    final db = await Sql.db();
     return db.query(
       'items',
       orderBy: "id",
@@ -89,7 +89,7 @@ class SqlCrud {
   static Future<List<Map<String, dynamic>>> getItem({
     required int id,
   }) async {
-    final db = await SqlCrud.db();
+    final db = await Sql.db();
     return db.query('items', where: "id = ?", whereArgs: [id], limit: 1);
   }
 
@@ -99,7 +99,7 @@ class SqlCrud {
     required String description,
     required String categories,
   }) async {
-    final db = await SqlCrud.db();
+    final db = await Sql.db();
 
     final data = {
       'title': title,
@@ -110,7 +110,7 @@ class SqlCrud {
 
     final result =
         await db.update('items', data, where: "id = ?", whereArgs: [id]);
-    // print(SqlCrud());
+    // print(Sql());
     return result;
   }
 
@@ -118,7 +118,7 @@ class SqlCrud {
     required int id,
     required int favorite,
   }) async {
-    final db = await SqlCrud.db();
+    final db = await Sql.db();
     final data = {
       'favorite': favorite,
       'createdAt': DateTime.now().toString(),
@@ -130,7 +130,7 @@ class SqlCrud {
   }
 
   static Future<void> deleteItem({required int id}) async {
-    final db = await SqlCrud.db();
+    final db = await Sql.db();
     try {
       // await db.delete("items");
       await db.delete("items", where: "id = ?", whereArgs: [id]);
@@ -141,19 +141,19 @@ class SqlCrud {
 
   static Future<List<Map<String, dynamic>>> refreshAndInitJournals(
       {required String category}) async {
-    final data = await SqlCrud.getItems(
+    final data = await Sql.getItems(
       categories: category,
     );
-    // print("sqlCrud\n");
+    // print("Sql\n");
     print("refreshAndInitJournals :$data");
     return data;
   }
 
   static Future<List<Map<String, dynamic>>> refreshAndFavoriteJournals() async {
-    final data = await SqlCrud.getFavoriteItems(
+    final data = await Sql.getFavoriteItems(
         // favorite: favorite,
         );
-    // print("sqlCrud\n");
+    // print("Sql\n");
     print("refreshAndFavoriteJournals :$data");
     return data;
   }

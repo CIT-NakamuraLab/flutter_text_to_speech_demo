@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:text_to_speech_demo/models/opinion.dart';
-import '../db/sqlCrud.dart';
+import '../db/sql.dart';
 import '../models/sample_model.dart';
 import '../widgets/text_to_speech.dart';
 import '../widgets/adding_edit_modal.dart';
@@ -68,12 +68,12 @@ class _SelectedCategoryState extends State<SelectedCategory> {
   }
 
   Future<void> initData() async {
-    final db = await SqlCrud.getAllItems();
+    final db = await Sql.getAllItems();
     print(db.isEmpty);
     if (db.isEmpty) {
       SAMPLE_DATA.map(
         (data) async {
-          await SqlCrud.createItem(
+          await Sql.createItem(
               title: data.title,
               description: data.description,
               categories: data.categories);
@@ -84,8 +84,8 @@ class _SelectedCategoryState extends State<SelectedCategory> {
 
   Future<void> refreshItems({required String? category}) async {
     print("refreshItems");
-    final data = await SqlCrud.refreshAndInitJournals(category: category!);
-    // final data = await SqlCrud.refreshAndFavoriteJournals();
+    final data = await Sql.refreshAndInitJournals(category: category!);
+    // final data = await Sql.refreshAndFavoriteJournals();
     setState(() {
       cardItems = data;
       _loadedData = false;
@@ -118,7 +118,7 @@ class _SelectedCategoryState extends State<SelectedCategory> {
     } else {
       favorite = 0;
     }
-    await SqlCrud.updateItemFavorite(id: id, favorite: favorite);
+    await Sql.updateItemFavorite(id: id, favorite: favorite);
     refreshItems(category: category);
   }
 

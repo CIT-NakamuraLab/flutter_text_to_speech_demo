@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../db/sqlCrud.dart';
+import '../db/sql.dart';
 
 class AddingEditModal extends StatelessWidget {
   final Function refreshJournals;
@@ -57,7 +57,7 @@ class AddingEditModal extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 if (id == null) {
-                  await SqlCrud.createItem(
+                  await Sql.createItem(
                     title: titleController.text.trim(),
                     description: descriptionController.text.trim(),
                     categories: category,
@@ -66,7 +66,7 @@ class AddingEditModal extends StatelessWidget {
                       ? refreshJournals(category: category)
                       : refreshJournals();
                 } else {
-                  await SqlCrud.updateItem(
+                  await Sql.updateItem(
                     id: id!,
                     title: titleController.text.trim(),
                     description: descriptionController.text.trim(),

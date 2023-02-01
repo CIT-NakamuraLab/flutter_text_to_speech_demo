@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../db/sqlCrud.dart';
+import '../db/sql.dart';
 
 class DeleteDialog extends StatelessWidget {
   final int index;
@@ -27,7 +27,7 @@ class DeleteDialog extends StatelessWidget {
             actions: [
               TextButton(
                   onPressed: () {
-                    SqlCrud.deleteItem(id: journals[index]['id']);
+                    Sql.deleteItem(id: journals[index]['id']);
                     routeName == "/selected-category"
                         ? refreshJournals(category: category)
                         : refreshJournals();
@@ -51,7 +51,7 @@ class DeleteDialog extends StatelessWidget {
               CupertinoDialogAction(
                 isDefaultAction: true,
                 onPressed: () {
-                  SqlCrud.deleteItem(id: journals[index]['id']);
+                  Sql.deleteItem(id: journals[index]['id']);
                   routeName == "/selected-category"
                       ? refreshJournals(category: category)
                       : refreshJournals();
