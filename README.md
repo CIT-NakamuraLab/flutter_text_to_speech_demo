@@ -1,18 +1,15 @@
-# text_to_speech_demo
-
-## 音声通話補助アプリ**comecome**のデモアプリケーション
+# **音声通話補助アプリケーション**
 
 **このアプリは､日常で利用する言葉をカードとして記憶させ､ボタンを押すことで音声となって､出力するといった日々の会話のサポートをするアプリです**
 
 ## 目次
-- [text\_to\_speech\_demo](#text_to_speech_demo)
-  - [音声通話補助アプリ**comecome**のデモアプリケーション](#音声通話補助アプリcomecomeのデモアプリケーション)
+- [**音声通話補助アプリケーション**](#音声通話補助アプリケーション)
   - [目次](#目次)
   - [機能](#機能)
   - [操作方法](#操作方法)
 
 
-## 機能一覧
+## 機能
 - カードを押すことによって欲しい物を呼ぶことができる機能
 - スマホを振ることで名前を呼ぶことができる機能
 - 画面遷移及びデータを更新した際にも状態を読み上げる機能
@@ -50,6 +47,6 @@
 
 <img alt="favorite_init" src= "/assets/images/readme/favorite_init.png" width="325">　<img alt="favorite_card" src= "/assets/images/readme/favorite_card.png" width="325">
 
-- 入力画面では､フリック入力が苦手な人でも打ち込めるようにボタンを押すことで他者に伝えることができます
+- 入力画面では､フリック入力が苦手な人でも打ち込めるようにボタンを押すことで他者に伝えることもできます
 
 <img alt="input_call" src= "/assets/images/readme/input_call.png" width="325">
