@@ -32,11 +32,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     // initState -> didChangeDependencies
     // initStateにはcontextが作成されていないため
     if (_loadedData) {
-      // final routeArgs =
-      //     ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      // final String category = routeArgs["category"]!;
-      // iconData = routeArgs["iconData"]!;
-      // categoryTitle = routeArgs["title"]!;
       print("didChangeDependencies");
       await initData();
       await refreshItems();
