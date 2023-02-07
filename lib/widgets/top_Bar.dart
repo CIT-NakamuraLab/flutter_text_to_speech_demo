@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../widgets/text_to_speech.dart';
-import 'shake.dart';
 
 class TopBar extends StatelessWidget {
   const TopBar({super.key});
@@ -34,33 +33,21 @@ class TopBar extends StatelessWidget {
             fontSize: 16,
           ),
         ),
-        InkWell(
-          onTap: () {
-            controller.text.isEmpty
-                ? TextToSpeech.speak("誰か来てください")
-                : TextToSpeech.speak('${controller.text}さん来てください');
-          },
-          onLongPress: () {
-            controller.text.isEmpty
-                ? TextToSpeech.speak("誰か来てください")
-                : TextToSpeech.speak('${controller.text}さん来てください');
-          },
-          child: Column(
-            children: [
-              const Icon(
-                Icons.screen_rotation,
-                color: Colors.black,
-              ),
-              Text(
-                'スマホを振ってください',
-                style: TextStyle(
+        Column(
+          children: const [
+            Icon(
+              Icons.screen_rotation,
+              color: Colors.black,
+            ),
+            Text(
+              '振ってください',
+              style: TextStyle(
                   fontSize: 10,
-                  color: Colors.redAccent[700],
-                ),
-              )
-            ],
-          ),
-        )
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
       ],
     );
   }

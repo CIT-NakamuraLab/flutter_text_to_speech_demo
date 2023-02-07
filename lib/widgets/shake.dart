@@ -1,6 +1,5 @@
 import 'package:shake/shake.dart';
-import 'package:text_to_speech_demo/widgets/top_Bar.dart';
-
+import '../widgets/top_bar.dart';
 import './text_to_speech.dart';
 
 class Shake {

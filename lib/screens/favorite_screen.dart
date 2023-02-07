@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../widgets/text_to_speech.dart';
 import '../widgets/adding_edit_modal.dart';
-import '../db/sqlCrud.dart';
-import '../widgets/delete_Dialog.dart';
-import '../widgets/top_Bar.dart';
+import '../db/sql.dart';
+import '../widgets/delete_dialog.dart';
+import '../widgets/top_bar.dart';
 import '../widgets/shake.dart';
 import '../models/sample_model.dart';
 
@@ -32,11 +32,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     // initState -> didChangeDependencies
     // initStateにはcontextが作成されていないため
     if (_loadedData) {
-      // final routeArgs =
-      //     ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      // final String category = routeArgs["category"]!;
-      // iconData = routeArgs["iconData"]!;
-      // categoryTitle = routeArgs["title"]!;
       print("didChangeDependencies");
       await initData();
       await refreshItems();
@@ -52,12 +47,12 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   }
 
   Future<void> initData() async {
-    final db = await SqlCrud.getAllItems();
+    final db = await Sql.getAllItems();
     print(db.isEmpty);
     if (db.isEmpty) {
       SAMPLE_DATA.map(
         (data) async {
-          await SqlCrud.createItem(
+          await Sql.createItem(
               title: data.title,
               description: data.description,
               categories: data.categories);
@@ -68,7 +63,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
   Future<void> refreshItems() async {
     print("refreshItems");
-    final data = await SqlCrud.refreshAndFavoriteJournals();
+    final data = await Sql.refreshAndFavoriteJournals();
     setState(() {
       cardItems = data;
       _loadedData = false;
@@ -102,7 +97,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     } else {
       favorite = 0;
     }
-    await SqlCrud.updateItemFavorite(id: id, favorite: favorite);
+    await Sql.updateItemFavorite(id: id, favorite: favorite);
     refreshItems();
   }
 

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../db/sqlCrud.dart';
+import '../db/sql.dart';
 
 class DeleteDialog extends StatelessWidget {
   final int index;
@@ -27,7 +27,7 @@ class DeleteDialog extends StatelessWidget {
             actions: [
               TextButton(
                   onPressed: () {
-                    SqlCrud.deleteItem(id: journals[index]['id']);
+                    Sql.deleteItem(id: journals[index]['id']);
                     routeName == "/selected-category"
                         ? refreshJournals(category: category)
                         : refreshJournals();
@@ -40,26 +40,37 @@ class DeleteDialog extends StatelessWidget {
             ],
           )
         : CupertinoAlertDialog(
-            title: const Text("さくじょしますか?"),
-            content: Text(journals[index]["title"]),
+            title: const Text("削除しますか?"),
+            content: Text(
+              journals[index]["title"],
+              style: const TextStyle(
+                fontSize: 25,
+              ),
+            ),
             actions: [
               CupertinoDialogAction(
                 isDefaultAction: true,
                 onPressed: () {
-                  SqlCrud.deleteItem(id: journals[index]['id']);
+                  Sql.deleteItem(id: journals[index]['id']);
                   routeName == "/selected-category"
                       ? refreshJournals(category: category)
                       : refreshJournals();
                   Navigator.of(context).pop();
                 },
-                child: const Text('します'),
+                child: const Text(
+                  'します',
+                  style: TextStyle(color: Colors.redAccent),
+                ),
               ),
               CupertinoDialogAction(
                 isDestructiveAction: true,
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('しません'),
+                child: const Text(
+                  'しません',
+                  style: TextStyle(color: Colors.blueAccent),
+                ),
               ),
             ],
           );

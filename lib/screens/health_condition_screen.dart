@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../widgets/top_Bar.dart';
+import '../widgets/top_bar.dart';
 import '../widgets/shake.dart';
-import '../widgets/generate_Grid.dart';
-import '../widgets/generate_Caterory.dart';
+import '../widgets/generate_grid.dart';
+import '../widgets/generate_caterory.dart';
 
 class HealthConditionScreen extends StatefulWidget {
   static const routeName = '/health-condition';

@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:text_to_speech_demo/models/opinion.dart';
-import '../db/sqlCrud.dart';
+import '../db/sql.dart';
 import '../models/sample_model.dart';
 import '../widgets/text_to_speech.dart';
 import '../widgets/adding_edit_modal.dart';
 import '../widgets/shake.dart';
-import '../widgets/delete_Dialog.dart';
+import '../widgets/delete_dialog.dart';
 
 class SelectedCategory extends StatefulWidget {
   static const routeName = "/selected-category";
@@ -68,12 +68,12 @@ class _SelectedCategoryState extends State<SelectedCategory> {
   }
 
   Future<void> initData() async {
-    final db = await SqlCrud.getAllItems();
+    final db = await Sql.getAllItems();
     print(db.isEmpty);
     if (db.isEmpty) {
       SAMPLE_DATA.map(
         (data) async {
-          await SqlCrud.createItem(
+          await Sql.createItem(
               title: data.title,
               description: data.description,
               categories: data.categories);
@@ -84,8 +84,8 @@ class _SelectedCategoryState extends State<SelectedCategory> {
 
   Future<void> refreshItems({required String? category}) async {
     print("refreshItems");
-    final data = await SqlCrud.refreshAndInitJournals(category: category!);
-    // final data = await SqlCrud.refreshAndFavoriteJournals();
+    final data = await Sql.refreshAndInitJournals(category: category!);
+    // final data = await Sql.refreshAndFavoriteJournals();
     setState(() {
       cardItems = data;
       _loadedData = false;
@@ -118,7 +118,7 @@ class _SelectedCategoryState extends State<SelectedCategory> {
     } else {
       favorite = 0;
     }
-    await SqlCrud.updateItemFavorite(id: id, favorite: favorite);
+    await Sql.updateItemFavorite(id: id, favorite: favorite);
     refreshItems(category: category);
   }
 
@@ -154,124 +154,133 @@ class _SelectedCategoryState extends State<SelectedCategory> {
         ),
       ),
       body: _loadedData
-          ? const CircularProgressIndicator()
+          ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               child: Column(
                 children: [
                   SizedBox(
-                    height: deviceHeight * 0.80,
+                    height: deviceHeight * 0.9,
                     child: RefreshIndicator(
                       onRefresh: () async {
-                        TextToSpeech.speak("お気に入り情報を更新しました");
+                        TextToSpeech.speak("情報を更新しました");
                         await refreshItems(category: category);
                       },
-                      child: ListView.builder(
-                        itemCount: cardItems.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(20),
-                                onTap: () => buttonTapProcess(index),
-                                onLongPress: () => buttonTapProcess(index),
-                                child: ListTile(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  leading: IconButton(
-                                    onPressed: () => _updateFavorite(
-                                      index: index,
-                                      id: cardItems[index]["id"],
-                                      category: category,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 0,
+                          vertical: 10,
+                        ),
+                        child: ListView.builder(
+                          itemCount: cardItems.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(20),
+                                  onTap: () => buttonTapProcess(index),
+                                  onLongPress: () => buttonTapProcess(index),
+                                  child: ListTile(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
-                                    icon: Icon(
-                                      cardItems[index]["favorite"] != 0
-                                          ? Icons.favorite_rounded
-                                          : Icons.favorite_border,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
-                                  ),
-                                  title: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      cardItems[index]["title"],
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 24,
+                                    leading: IconButton(
+                                      onPressed: () => _updateFavorite(
+                                        index: index,
+                                        id: cardItems[index]["id"],
+                                        category: category,
+                                      ),
+                                      icon: Icon(
+                                        cardItems[index]["favorite"] != 0
+                                            ? Icons.favorite_rounded
+                                            : Icons.favorite_border,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                       ),
                                     ),
-                                  ),
-                                  trailing: Wrap(
-                                    alignment: WrapAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 0),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            _modal(
-                                              id: cardItems[index]['id'],
-                                              category: category,
-                                            );
-                                          },
-                                          onLongPress: () {
-                                            _modal(
-                                              id: cardItems[index]['id'],
-                                              category: category,
-                                            );
-                                          },
-                                          child: const Icon(Icons.edit),
+                                    title: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        cardItems[index]["title"],
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 0),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (_) {
-                                                return DeleteDialog(
-                                                  index: index,
-                                                  journals: cardItems,
-                                                  category: category,
-                                                  refreshJournals: refreshItems,
-                                                  routeName: SelectedCategory
-                                                      .routeName,
-                                                );
-                                              },
-                                            );
-                                          },
-                                          onLongPress: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (_) {
-                                                return DeleteDialog(
-                                                  index: index,
-                                                  journals: cardItems,
-                                                  category: category,
-                                                  refreshJournals: refreshItems,
-                                                  routeName: SelectedCategory
-                                                      .routeName,
-                                                );
-                                              },
-                                            );
-                                          },
-                                          child: const Icon(Icons.delete),
+                                    ),
+                                    trailing: Wrap(
+                                      alignment: WrapAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 0),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              _modal(
+                                                id: cardItems[index]['id'],
+                                                category: category,
+                                              );
+                                            },
+                                            onLongPress: () {
+                                              _modal(
+                                                id: cardItems[index]['id'],
+                                                category: category,
+                                              );
+                                            },
+                                            child: const Icon(Icons.edit),
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 0),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (_) {
+                                                  return DeleteDialog(
+                                                    index: index,
+                                                    journals: cardItems,
+                                                    category: category,
+                                                    refreshJournals:
+                                                        refreshItems,
+                                                    routeName: SelectedCategory
+                                                        .routeName,
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            onLongPress: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (_) {
+                                                  return DeleteDialog(
+                                                    index: index,
+                                                    journals: cardItems,
+                                                    category: category,
+                                                    refreshJournals:
+                                                        refreshItems,
+                                                    routeName: SelectedCategory
+                                                        .routeName,
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            child: const Icon(Icons.delete),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   )
