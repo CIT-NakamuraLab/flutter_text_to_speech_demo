@@ -73,7 +73,7 @@ class _TitleScreenState extends State<TitleScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color.fromARGB(255, 174, 249, 232),
       body: Center(
-        child: Image.asset("assets/images/loading_screen.png"),
+        child: Image.asset("assets/images/app/loading_screen.png"),
       ),
     );
   }
