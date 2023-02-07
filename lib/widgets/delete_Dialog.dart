@@ -9,13 +9,14 @@ class DeleteDialog extends StatelessWidget {
   final List<Map<String, dynamic>> journals;
   final Function refreshJournals;
   final String category;
-  const DeleteDialog({
-    super.key,
-    required this.index,
-    required this.journals,
-    required this.refreshJournals,
-    required this.category,
-  });
+  final String routeName;
+  const DeleteDialog(
+      {super.key,
+      required this.index,
+      required this.journals,
+      required this.refreshJournals,
+      required this.category,
+      required this.routeName});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,9 @@ class DeleteDialog extends StatelessWidget {
               TextButton(
                   onPressed: () {
                     SqlCrud.deleteItem(id: journals[index]['id']);
-                    refreshJournals(category: category);
+                    routeName == "/selected-category"
+                        ? refreshJournals(category: category)
+                        : refreshJournals();
                     Navigator.of(context).pop();
                   },
                   child: const Text("します")),
@@ -44,9 +47,9 @@ class DeleteDialog extends StatelessWidget {
                 isDefaultAction: true,
                 onPressed: () {
                   SqlCrud.deleteItem(id: journals[index]['id']);
-                  refreshJournals(
-                    category: category,
-                  );
+                  routeName == "/selected-category"
+                      ? refreshJournals(category: category)
+                      : refreshJournals();
                   Navigator.of(context).pop();
                 },
                 child: const Text('します'),

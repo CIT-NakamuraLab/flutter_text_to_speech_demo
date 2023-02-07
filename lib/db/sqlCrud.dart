@@ -145,7 +145,7 @@ class SqlCrud {
       categories: category,
     );
     // print("sqlCrud\n");
-    print(data);
+    print("refreshAndInitJournals :$data");
     return data;
   }
 
@@ -154,7 +154,7 @@ class SqlCrud {
         // favorite: favorite,
         );
     // print("sqlCrud\n");
-    print(data);
+    print("refreshAndFavoriteJournals :$data");
     return data;
   }
 }

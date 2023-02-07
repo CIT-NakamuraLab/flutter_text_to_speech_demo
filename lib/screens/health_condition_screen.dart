@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import '../widgets/top_Bar.dart';
-import '../widgets/generate_grid.dart';
-import '../widgets/generate_caterory.dart';
 import '../widgets/shake.dart';
+import '../widgets/generate_Grid.dart';
+import '../widgets/generate_Caterory.dart';
 
-class HealthCondition extends StatefulWidget {
+class HealthConditionScreen extends StatefulWidget {
   static const routeName = '/health-condition';
-  const HealthCondition({super.key});
+  const HealthConditionScreen({super.key});
 
   @override
-  State<HealthCondition> createState() => _HealthConditionState();
+  State<HealthConditionScreen> createState() => _HealthConditionScreenState();
 }
 
-class _HealthConditionState extends State<HealthCondition> {
+class _HealthConditionScreenState extends State<HealthConditionScreen> {
   @override
   void initState() {
     super.initState();
@@ -48,7 +48,7 @@ class _HealthConditionState extends State<HealthCondition> {
                     const GenerateCaterory(
                       text: 'どうされましたか?',
                       icon: Icons.vaccines,
-                      routeName: HealthCondition.routeName,
+                      routeName: HealthConditionScreen.routeName,
                     ),
                     GridView(
                       shrinkWrap: true,
@@ -62,39 +62,39 @@ class _HealthConditionState extends State<HealthCondition> {
                         GenerateGrid(
                           labelText: '痛い',
                           speakText: '痛いです',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                         GenerateGrid(
                           labelText: '苦しい',
                           speakText: '苦しいです',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                         GenerateGrid(
                           labelText: 'かゆい',
                           speakText: 'かゆいです',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                         GenerateGrid(
                           labelText: 'めまい',
                           speakText: 'めまいがします',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                         GenerateGrid(
                           labelText: '不安',
                           speakText: '不安です',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                         GenerateGrid(
                           labelText: '吐き気',
                           speakText: '吐き気がします',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                       ],
                     ),
                     const GenerateCaterory(
                       text: 'どこが?',
                       icon: Icons.where_to_vote,
-                      routeName: HealthCondition.routeName,
+                      routeName: HealthConditionScreen.routeName,
                     ),
                     GridView(
                       shrinkWrap: true,
@@ -108,49 +108,49 @@ class _HealthConditionState extends State<HealthCondition> {
                         GenerateGrid(
                           labelText: '頭が',
                           speakText: '頭が',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                         GenerateGrid(
                           labelText: '目が',
                           speakText: '目が',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                         GenerateGrid(
                           labelText: '耳が',
                           speakText: '耳が',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                         GenerateGrid(
                           labelText: '歯が',
                           speakText: '歯が',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                         GenerateGrid(
                           labelText: '肺が',
                           speakText: '肺が',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                         GenerateGrid(
                           labelText: '腹が',
                           speakText: '腹が',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                         GenerateGrid(
                           labelText: '腰が',
                           speakText: '腰が',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                         GenerateGrid(
                           labelText: '足が',
                           speakText: '足が',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                       ],
                     ),
                     const GenerateCaterory(
                       text: 'どうしたい?',
                       icon: Icons.where_to_vote,
-                      routeName: HealthCondition.routeName,
+                      routeName: HealthConditionScreen.routeName,
                     ),
                     GridView(
                       shrinkWrap: true,
@@ -164,12 +164,12 @@ class _HealthConditionState extends State<HealthCondition> {
                         GenerateGrid(
                           labelText: '病院に行きたい',
                           speakText: '病院に行きたいです',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                         GenerateGrid(
                           labelText: '薬を飲みたい',
                           speakText: '薬を飲みたいです',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                       ],
                     ),
@@ -185,17 +185,17 @@ class _HealthConditionState extends State<HealthCondition> {
                         GenerateGrid(
                           labelText: '今すぐ',
                           speakText: '今すぐ',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                         GenerateGrid(
                           labelText: '様子を見て',
                           speakText: '様子を見て',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                         GenerateGrid(
                           labelText: '明日',
                           speakText: '明日',
-                          routeName: HealthCondition.routeName,
+                          routeName: HealthConditionScreen.routeName,
                         ),
                       ],
                     ),
