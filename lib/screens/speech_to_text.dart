@@ -100,6 +100,7 @@ class _SpeechToTextState extends State<SpeechToText> {
     });
 
     return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
           title: const Text('SpeechToText'),
         ),
