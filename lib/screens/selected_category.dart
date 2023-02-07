@@ -154,7 +154,7 @@ class _SelectedCategoryState extends State<SelectedCategory> {
         ),
       ),
       body: _loadedData
-          ? const CircularProgressIndicator()
+          ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               child: Column(
                 children: [
