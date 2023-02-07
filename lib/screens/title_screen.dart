@@ -70,12 +70,10 @@ class _TitleScreenState extends State<TitleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: const Color.fromARGB(255, 174, 249, 232),
       body: Center(
-        child: FittedBox(
-          fit: BoxFit.contain,
-          child: Image.asset("assets/images/loading_screen.png"),
-        ),
+        child: Image.asset("assets/images/loading_screen.png"),
       ),
     );
   }

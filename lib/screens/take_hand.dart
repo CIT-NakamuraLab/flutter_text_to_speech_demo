@@ -145,10 +145,10 @@ class _TakeHandState extends State<TakeHand> {
                                           context: context,
                                           builder: (_) {
                                             return DeleteDialog(
-                                              title: _journals[index]["title"],
                                               index: index,
                                               journals: _journals,
                                               refreshJournals: refreshJournals,
+                                              category: category,
                                             );
                                           },
                                         );

@@ -55,13 +55,12 @@ class AddingEditModal extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 if (id == null) {
-                  print("null");
                   await SqlCrud.createItem(
                     title: titleController.text,
                     description: descriptionController.text,
                     categories: category,
                   );
-                  refreshJournals();
+                  refreshJournals(category: category);
                 } else {
                   await SqlCrud.updateItem(
                     id: id!,
@@ -69,7 +68,7 @@ class AddingEditModal extends StatelessWidget {
                     description: descriptionController.text,
                     categories: category,
                   );
-                  refreshJournals();
+                  refreshJournals(category: category);
                 }
                 titleController.text = "";
                 descriptionController.text = "";
