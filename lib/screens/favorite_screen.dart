@@ -72,7 +72,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
   void _modal({required int? id, required String category}) {
     // 宣言しているcategoryを引数とする理由は､lateであるため､buildまでにinitializedしていないためnull
-
     showModalBottomSheet(
       context: context,
       elevation: 20,
@@ -107,7 +106,26 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     );
   }
 
-  final notCardItem = "お気に入りカードが存在しません";
+  Widget favoriteUpdate() {
+    return Center(
+      child: TextButton(
+        onPressed: () async {
+          await refreshItems();
+          cardItems.isEmpty
+              ? TextToSpeech.speak("お気に入りカードが存在しません")
+              : TextToSpeech.speak("お気に入り情報を更新しました");
+        },
+        child: Text(
+          "お気に入りカードが存在しません",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,24 +139,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         title: const TopBar(),
       ),
       body: cardItems.isEmpty
-          ? Center(
-              child: TextButton(
-                onPressed: () async {
-                  await refreshItems();
-                  cardItems.isEmpty
-                      ? TextToSpeech.speak(notCardItem)
-                      : TextToSpeech.speak("お気に入り情報を更新しました");
-                },
-                child: Text(
-                  notCardItem,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-              ),
-            )
+          ? favoriteUpdate()
           : RefreshIndicator(
               onRefresh: () async {
                 TextToSpeech.speak("お気に入り情報を更新しました");
@@ -198,8 +199,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                 fontWeight: FontWeight.w900,
                               ),
                             ),
-                            tileColor: Colors.white,
-                            // Theme.of(context).colorScheme.secondary,
                             trailing: SizedBox(
                               // width:100になるように iPhone14 Pro MAX width:430/3.4
                               width: deviceWidth / 3.9,
