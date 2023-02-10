@@ -210,6 +210,8 @@ class _SelectedCategoryState extends State<SelectedCategory> {
                                           fontWeight: FontWeight.bold,
                                           fontSize: 24,
                                         ),
+                                        key: const Key(
+                                            "selected_category_title"),
                                       ),
                                     ),
                                     trailing: Wrap(
@@ -231,7 +233,11 @@ class _SelectedCategoryState extends State<SelectedCategory> {
                                                 category: category,
                                               );
                                             },
-                                            child: const Icon(Icons.edit),
+                                            child: const Icon(
+                                              Icons.edit,
+                                              key:
+                                                  Key("selected_category_edit"),
+                                            ),
                                           ),
                                         ),
                                         Padding(

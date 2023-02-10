@@ -68,7 +68,7 @@ class _TabsScreenState extends State<TabsScreen> {
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.favorite_border),
-            activeIcon: const Icon(Icons.favorite),
+            activeIcon: const Icon(Icons.favorite_rounded),
             backgroundColor: Theme.of(context).colorScheme.primary,
             label: "お気に入り",
           ),

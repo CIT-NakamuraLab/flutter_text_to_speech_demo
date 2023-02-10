@@ -22,7 +22,7 @@ class DeleteDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Platform.isAndroid
         ? AlertDialog(
-            title: const Text("さくじょしますか?"),
+            title: const Text("削除しますか?"),
             content: Text(journals[index]["title"]),
             actions: [
               TextButton(

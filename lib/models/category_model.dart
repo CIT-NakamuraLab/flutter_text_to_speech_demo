@@ -42,6 +42,6 @@ const CATEGORY_DATA = [
     category: "else",
     title: "その他",
     color: Colors.white,
-    iconData: Icons.info,
+    iconData: Icons.info_rounded,
   ),
 ];
