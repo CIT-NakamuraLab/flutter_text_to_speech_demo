@@ -128,6 +128,11 @@ class _SelectedCategoryState extends State<SelectedCategory> {
     );
   }
 
+  bool isDarkMode(BuildContext context) {
+    final Brightness brightness = MediaQuery.platformBrightnessOf(context);
+    return brightness == Brightness.dark;
+  }
+
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height -
@@ -197,9 +202,13 @@ class _SelectedCategoryState extends State<SelectedCategory> {
                                         cardItems[index]["favorite"] != 0
                                             ? Icons.favorite_rounded
                                             : Icons.favorite_border,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
+                                        color: isDarkMode(context)
+                                            ? Theme.of(context)
+                                                .colorScheme
+                                                .inversePrimary
+                                            : Theme.of(context)
+                                                .colorScheme
+                                                .primary,
                                       ),
                                     ),
                                     title: Align(

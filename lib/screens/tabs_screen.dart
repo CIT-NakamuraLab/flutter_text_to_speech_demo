@@ -46,6 +46,11 @@ class _TabsScreenState extends State<TabsScreen> {
     );
   }
 
+  bool isDarkMode(BuildContext context) {
+    final Brightness brightness = MediaQuery.platformBrightnessOf(context);
+    return brightness == Brightness.dark;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +91,9 @@ class _TabsScreenState extends State<TabsScreen> {
         selectedItemColor: Colors.white,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: isDarkMode(context)
+            ? Colors.black12
+            : Theme.of(context).colorScheme.primary,
         unselectedItemColor: Colors.white,
         type: BottomNavigationBarType.fixed,
       ),

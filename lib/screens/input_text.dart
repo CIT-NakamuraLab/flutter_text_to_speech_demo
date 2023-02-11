@@ -131,6 +131,11 @@ class _InputTextState extends State<InputText> {
       });
     }
 
+    bool isDarkMode(BuildContext context) {
+      final Brightness brightness = MediaQuery.platformBrightnessOf(context);
+      return brightness == Brightness.dark;
+    }
+
     Widget generateButtons(List<List<List<String>>> type) {
       return SingleChildScrollView(
         child: Column(
@@ -148,8 +153,10 @@ class _InputTextState extends State<InputText> {
                           onPressed: () => onLetterButton(type[i][j][0]),
                           onLongPress: () => onLetterButton(type[i][j][0]),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Theme.of(context).colorScheme.primary,
+                            elevation: 5,
+                            backgroundColor: isDarkMode(context)
+                                ? Colors.grey[800]
+                                : Theme.of(context).colorScheme.primary,
                             shape: const CircleBorder(),
                             minimumSize: const Size(50, 50),
                             maximumSize: const Size(100, 100),
@@ -158,7 +165,11 @@ class _InputTextState extends State<InputText> {
                             type[i][j][0],
                             style: TextStyle(
                               fontSize: deviceWidth * 0.07,
-                              // fontSize: 20,
+                              color: isDarkMode(context)
+                                  ? Theme.of(context).colorScheme.onPrimary
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .inversePrimary,
                             ),
                           ),
                         ),
@@ -184,7 +195,7 @@ class _InputTextState extends State<InputText> {
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.all(10),
+                margin: const EdgeInsets.all(10),
                 height: deviceHeight * 0.10,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -195,7 +206,10 @@ class _InputTextState extends State<InputText> {
                     controller: _inputTextController,
                     enabled: false,
                     maxLines: null,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                     ),
@@ -214,23 +228,44 @@ class _InputTextState extends State<InputText> {
                   children: [
                     InputTextButton(
                       buttonFunction: onPlayButton,
-                      buttonChild: const Icon(Icons.play_arrow),
+                      buttonChild: Icon(
+                        Icons.play_arrow,
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                      ),
                     ),
                     InputTextButton(
                       buttonFunction: onDakutenButton,
-                      buttonChild: const Text('"'),
+                      buttonChild: Text(
+                        '"',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          fontSize: 22,
+                        ),
+                      ),
                     ),
                     InputTextButton(
                       buttonFunction: onChangeButton,
-                      buttonChild: const Text('ア'),
+                      buttonChild: Text(
+                        'ア',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          fontSize: 22,
+                        ),
+                      ),
                     ),
                     InputTextButton(
                       buttonFunction: onDeleteButton,
-                      buttonChild: const Icon(Icons.backspace),
+                      buttonChild: Icon(
+                        Icons.backspace,
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                      ),
                     ),
                     InputTextButton(
                       buttonFunction: onClearButton,
-                      buttonChild: const Icon(Icons.delete),
+                      buttonChild: Icon(
+                        Icons.delete,
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                      ),
                     ),
                   ],
                 ),

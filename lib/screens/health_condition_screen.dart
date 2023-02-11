@@ -26,7 +26,7 @@ class _HealthConditionScreenState extends State<HealthConditionScreen> {
     super.dispose();
   }
 
-  List<Widget> method(String keyword) {
+  List<Widget> modelData(String keyword) {
     List<Widget> out = [];
 
     for (var element in healthConditionModel) {
@@ -69,7 +69,7 @@ class _HealthConditionScreenState extends State<HealthConditionScreen> {
                         crossAxisCount: 3,
                         childAspectRatio: 3 / 2,
                       ),
-                      children: method("condition"),
+                      children: modelData("condition"),
                     ),
                     const GenerateCaterory(
                       text: 'どこが?',
@@ -84,7 +84,7 @@ class _HealthConditionScreenState extends State<HealthConditionScreen> {
                         crossAxisCount: 4,
                         childAspectRatio: 3 / 2,
                       ),
-                      children: method("bodySite"),
+                      children: modelData("bodySite"),
                     ),
                     const GenerateCaterory(
                       text: 'どうしたい?',
@@ -99,7 +99,7 @@ class _HealthConditionScreenState extends State<HealthConditionScreen> {
                         crossAxisCount: 2,
                         childAspectRatio: 5 / 2,
                       ),
-                      children: method("howHarf"),
+                      children: modelData("howHarf"),
                     ),
                     GridView(
                       shrinkWrap: true,
@@ -109,7 +109,7 @@ class _HealthConditionScreenState extends State<HealthConditionScreen> {
                         crossAxisCount: 3,
                         childAspectRatio: 3 / 2,
                       ),
-                      children: method("howThreePart"),
+                      children: modelData("howThreePart"),
                     ),
                   ],
                 ),

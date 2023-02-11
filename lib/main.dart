@@ -30,13 +30,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: Colors.redAccent[100],
-          secondary: Colors.greenAccent,
-          // background: Colors.greenAccent[100],
+          onPrimary: Colors.grey[850],
+          inversePrimary: Colors.white,
+          secondary: Colors.green[300],
+          onSecondary: Colors.greenAccent,
           background: const Color.fromARGB(255, 252, 239, 217),
           error: Colors.red,
-        ),
-        buttonTheme: const ButtonThemeData(
-          buttonColor: Colors.amber,
         ),
       ),
       home: const TitleScreen(),

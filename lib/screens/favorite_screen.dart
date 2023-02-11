@@ -106,6 +106,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     );
   }
 
+  bool isDarkMode(BuildContext context) {
+    final Brightness brightness = MediaQuery.platformBrightnessOf(context);
+    return brightness == Brightness.dark;
+  }
+
   Widget favoriteUpdate() {
     return Center(
       child: TextButton(
@@ -120,7 +125,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.primary,
+            color: isDarkMode(context)
+                ? Theme.of(context).colorScheme.inversePrimary
+                : Theme.of(context).colorScheme.primary,
           ),
         ),
       ),

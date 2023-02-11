@@ -15,7 +15,7 @@ class InputTextButton extends StatelessWidget {
       onPressed: () => buttonFunction(),
       onLongPress: () => buttonFunction(),
       style: ElevatedButton.styleFrom(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Theme.of(context).colorScheme.onSecondary,
         shape: const CircleBorder(),
         minimumSize: const Size(50, 50),
         maximumSize: const Size(100, 100),

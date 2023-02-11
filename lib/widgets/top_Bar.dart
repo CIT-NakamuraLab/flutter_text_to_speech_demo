@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../widgets/text_to_speech.dart';
 
 class TopBar extends StatelessWidget {
   const TopBar({super.key});
@@ -16,35 +15,46 @@ class TopBar extends StatelessWidget {
             child: Form(
               child: TextFormField(
                 controller: controller,
-                decoration: const InputDecoration(
-                  labelText: 'お名前入力',
-                  fillColor: Colors.white,
-                  filled: true,
+                decoration: InputDecoration(
+                    labelText: 'お名前入力',
+                    fillColor: Colors.grey[100],
+                    filled: true,
+                    labelStyle: const TextStyle(
+                      color: Colors.blue,
+                    )),
+                style: const TextStyle(
+                  color: Colors.black,
                 ),
               ),
             ),
           ),
         ),
-        const Text(
-          '来てください',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 5,
+          ),
+          child: Text(
+            '来てください',
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onPrimary,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
           ),
         ),
         Column(
-          children: const [
+          children: [
             Icon(
               Icons.screen_rotation,
-              color: Colors.black,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
             Text(
               '振ってください',
               style: TextStyle(
-                  fontSize: 10,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
+                fontSize: 10,
+                color: Theme.of(context).colorScheme.onPrimary,
+                fontWeight: FontWeight.bold,
+              ),
             )
           ],
         ),
