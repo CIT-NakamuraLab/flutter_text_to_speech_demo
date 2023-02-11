@@ -230,6 +230,7 @@ class _InputTextState extends State<InputText> {
                       buttonFunction: onPlayButton,
                       buttonChild: const Icon(
                         Icons.play_arrow,
+                        color: Colors.white,
                       ),
                     ),
                     InputTextButton(
@@ -238,6 +239,7 @@ class _InputTextState extends State<InputText> {
                         '"',
                         style: TextStyle(
                           fontSize: 22,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -247,6 +249,7 @@ class _InputTextState extends State<InputText> {
                         'ア',
                         style: TextStyle(
                           fontSize: 22,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -254,12 +257,14 @@ class _InputTextState extends State<InputText> {
                       buttonFunction: onDeleteButton,
                       buttonChild: const Icon(
                         Icons.backspace,
+                        color: Colors.white,
                       ),
                     ),
                     InputTextButton(
                       buttonFunction: onClearButton,
                       buttonChild: const Icon(
                         Icons.delete,
+                        color: Colors.white,
                       ),
                     ),
                   ],
