@@ -88,10 +88,12 @@ class AddingEditModal extends StatelessWidget {
                     ? const Text(
                         "さくせい",
                         key: Key("adding_edit_modal_make"),
+                        style: TextStyle(color: Colors.white),
                       )
                     : const Text(
                         "こうしん",
                         key: Key("adding_edit_modal_update"),
+                        style: TextStyle(color: Colors.white),
                       ),
               ),
             ],

@@ -145,8 +145,14 @@ class _SelectedCategoryState extends State<SelectedCategory> {
       appBar: AppBar(
         leading: IconButton(
           icon: Platform.isIOS
-              ? const Icon(Icons.arrow_back_ios)
-              : const Icon(Icons.arrow_back),
+              ? const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                )
+              : const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                ),
           onPressed: () {
             // ここで任意の処理
             TextToSpeech.speak("1つ前のページに戻りました");
@@ -155,7 +161,11 @@ class _SelectedCategoryState extends State<SelectedCategory> {
         ),
         title: Text(
           categoryTitle,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.inversePrimary,
+          ),
         ),
       ),
       body: _loadedData
@@ -304,7 +314,10 @@ class _SelectedCategoryState extends State<SelectedCategory> {
             ),
       floatingActionButton: FloatingActionButton(
         heroTag: "add",
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
         onPressed: () => _modal(
           id: null,
           category: category,

@@ -228,43 +228,38 @@ class _InputTextState extends State<InputText> {
                   children: [
                     InputTextButton(
                       buttonFunction: onPlayButton,
-                      buttonChild: Icon(
+                      buttonChild: const Icon(
                         Icons.play_arrow,
-                        color: Theme.of(context).colorScheme.inversePrimary,
                       ),
                     ),
                     InputTextButton(
                       buttonFunction: onDakutenButton,
-                      buttonChild: Text(
+                      buttonChild: const Text(
                         '"',
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.inversePrimary,
                           fontSize: 22,
                         ),
                       ),
                     ),
                     InputTextButton(
                       buttonFunction: onChangeButton,
-                      buttonChild: Text(
+                      buttonChild: const Text(
                         'ア',
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.inversePrimary,
                           fontSize: 22,
                         ),
                       ),
                     ),
                     InputTextButton(
                       buttonFunction: onDeleteButton,
-                      buttonChild: Icon(
+                      buttonChild: const Icon(
                         Icons.backspace,
-                        color: Theme.of(context).colorScheme.inversePrimary,
                       ),
                     ),
                     InputTextButton(
                       buttonFunction: onClearButton,
-                      buttonChild: Icon(
+                      buttonChild: const Icon(
                         Icons.delete,
-                        color: Theme.of(context).colorScheme.inversePrimary,
                       ),
                     ),
                   ],
