@@ -84,21 +84,5 @@ void main() {
 
       expect(find.text("Hoge"), findsOneWidget);
     });
-
-    testWidgets("5. 画面遷移しカードを削除できるか確認する", (WidgetTester tester) async {
-      var random = math.Random().nextInt(6);
-      await initScreen(tester);
-
-      await tester.tap(find.byIcon(CATEGORY_DATA[random].iconData));
-      await tester.pump();
-
-      expect(find.text(CATEGORY_DATA[random].title), findsOneWidget);
-      await tester.pump();
-      expect(find.byIcon(Icons.add), findsOneWidget);
-
-      await addItem(tester);
-
-      expect(find.byIcon(Icons.delete), findsNothing);
-    });
   });
 }

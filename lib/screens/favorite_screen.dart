@@ -136,9 +136,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final deviceHeight = MediaQuery.of(context).size.height -
-        AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top;
     final deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -196,7 +193,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                 cardItems[index]["favorite"] != 0
                                     ? Icons.favorite_rounded
                                     : Icons.favorite_border,
-                                color: Theme.of(context).colorScheme.primary,
+                                color: isDarkMode(context)
+                                    ? Theme.of(context).colorScheme.onPrimary
+                                    : Theme.of(context).colorScheme.primary,
                               ),
                             ),
                             title: Text(
