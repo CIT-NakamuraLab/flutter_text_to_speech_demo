@@ -100,6 +100,7 @@ void main() {
       );
 
       // Hogeを確認するため
+      await tester.drag(find.byType(ListView), const Offset(0.0, -10000.0));
       await tester.pumpAndSettle(const Duration(seconds: 2));
       expect(find.text("Hoge"), findsOneWidget);
       await tester.tap(find.text("Hoge"));
