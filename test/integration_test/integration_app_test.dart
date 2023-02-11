@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:text_to_speech_demo/main.dart' as app;
-
+import 'package:text_to_speech_demo/models/health_condition_model.dart';
 import 'package:text_to_speech_demo/models/category_model.dart';
+import 'package:text_to_speech_demo/main.dart' as app;
 import 'dart:math' as math;
 
 void main() {
@@ -241,15 +241,14 @@ void main() {
       await tester.pumpAndSettle();
     });
 
-    testWidgets("8. 健康画面に行きどうされましたかカテゴリーを全て押す", (WidgetTester tester) async {
+    testWidgets("8. 健康画面に行きボタンを全て押す", (WidgetTester tester) async {
       await initScreen(tester);
       await tester.tap(find.byIcon(Icons.medical_services_outlined));
       await tester.pumpAndSettle();
-      final List situation = ["痛い", "苦しい", "かゆい", "めまい", "不安", "吐き気"];
-      for (var i = 0; i < situation.length; i++) {
-        expect(find.text(situation[i]), findsOneWidget);
-        await tester.tap(find.text(situation[i]));
-        await tester.pump(const Duration(seconds: 2));
+      for (var element in healthConditionModel) {
+        expect(find.text(element["label"]), findsOneWidget);
+        await tester.tap(find.text(element["label"]));
+        await tester.pump(const Duration(seconds: 1));
       }
     });
   });
