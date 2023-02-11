@@ -132,8 +132,8 @@ class Sql {
   static Future<void> deleteItem({required int id}) async {
     final db = await Sql.db();
     try {
-      await db.delete("items");
-      // await db.delete("items", where: "id = ?", whereArgs: [id]);
+      // await db.delete("items");
+      await db.delete("items", where: "id = ?", whereArgs: [id]);
     } catch (err) {
       debugPrint("Something went wrong when deleting an item: $err");
     }
