@@ -45,6 +45,7 @@ class AddingEditModal extends StatelessWidget {
               TextField(
                 decoration: const InputDecoration(hintText: "みることば"),
                 controller: titleController,
+                key: const Key("adding_edit_modal_see"),
               ),
               const SizedBox(
                 height: 10,
@@ -52,6 +53,7 @@ class AddingEditModal extends StatelessWidget {
               TextField(
                 decoration: const InputDecoration(hintText: "はなすことば"),
                 controller: descriptionController,
+                key: const Key("adding_edit_modal_speack"),
               ),
               const SizedBox(
                 height: 20,
@@ -82,7 +84,17 @@ class AddingEditModal extends StatelessWidget {
                   descriptionController.text = "";
                   Navigator.of(context).pop();
                 },
-                child: id == null ? const Text("さくせい") : const Text("こうしん"),
+                child: id == null
+                    ? const Text(
+                        "さくせい",
+                        key: Key("adding_edit_modal_make"),
+                        style: TextStyle(color: Colors.white),
+                      )
+                    : const Text(
+                        "こうしん",
+                        key: Key("adding_edit_modal_update"),
+                        style: TextStyle(color: Colors.white),
+                      ),
               ),
             ],
           ),

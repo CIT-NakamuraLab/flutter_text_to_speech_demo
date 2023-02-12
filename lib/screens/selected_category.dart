@@ -128,6 +128,11 @@ class _SelectedCategoryState extends State<SelectedCategory> {
     );
   }
 
+  bool isDarkMode(BuildContext context) {
+    final Brightness brightness = MediaQuery.platformBrightnessOf(context);
+    return brightness == Brightness.dark;
+  }
+
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height -
@@ -140,8 +145,14 @@ class _SelectedCategoryState extends State<SelectedCategory> {
       appBar: AppBar(
         leading: IconButton(
           icon: Platform.isIOS
-              ? const Icon(Icons.arrow_back_ios)
-              : const Icon(Icons.arrow_back),
+              ? const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                )
+              : const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                ),
           onPressed: () {
             // ここで任意の処理
             TextToSpeech.speak("1つ前のページに戻りました");
@@ -150,7 +161,11 @@ class _SelectedCategoryState extends State<SelectedCategory> {
         ),
         title: Text(
           categoryTitle,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.inversePrimary,
+          ),
         ),
       ),
       body: _loadedData
@@ -197,9 +212,13 @@ class _SelectedCategoryState extends State<SelectedCategory> {
                                         cardItems[index]["favorite"] != 0
                                             ? Icons.favorite_rounded
                                             : Icons.favorite_border,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
+                                        color: isDarkMode(context)
+                                            ? Theme.of(context)
+                                                .colorScheme
+                                                .inversePrimary
+                                            : Theme.of(context)
+                                                .colorScheme
+                                                .primary,
                                       ),
                                     ),
                                     title: Align(
@@ -210,6 +229,8 @@ class _SelectedCategoryState extends State<SelectedCategory> {
                                           fontWeight: FontWeight.bold,
                                           fontSize: 24,
                                         ),
+                                        key: const Key(
+                                            "selected_category_title"),
                                       ),
                                     ),
                                     trailing: Wrap(
@@ -231,7 +252,11 @@ class _SelectedCategoryState extends State<SelectedCategory> {
                                                 category: category,
                                               );
                                             },
-                                            child: const Icon(Icons.edit),
+                                            child: const Icon(
+                                              Icons.edit,
+                                              key:
+                                                  Key("selected_category_edit"),
+                                            ),
                                           ),
                                         ),
                                         Padding(
@@ -289,7 +314,10 @@ class _SelectedCategoryState extends State<SelectedCategory> {
             ),
       floatingActionButton: FloatingActionButton(
         heroTag: "add",
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
         onPressed: () => _modal(
           id: null,
           category: category,

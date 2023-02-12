@@ -25,16 +25,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Text To Speech Demo',
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.system,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: Colors.redAccent[100],
+          onPrimary: Colors.grey[850],
+          inversePrimary: Colors.white,
           secondary: Colors.greenAccent,
-          // background: Colors.greenAccent[100],
+          onSecondary: Colors.green[300],
           background: const Color.fromARGB(255, 252, 239, 217),
           error: Colors.red,
-        ),
-        buttonTheme: const ButtonThemeData(
-          buttonColor: Colors.amber,
         ),
       ),
       home: const TitleScreen(),

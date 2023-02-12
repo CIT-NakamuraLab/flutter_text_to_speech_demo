@@ -13,11 +13,9 @@ class GenerateGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool screenIcon = true;
-    Color color = Colors.blue.shade700;
-    if (routeName != "/take-hand") {
-      screenIcon = false;
-      color = Theme.of(context).colorScheme.primary;
+    bool isDarkMode(BuildContext context) {
+      final Brightness brightness = MediaQuery.platformBrightnessOf(context);
+      return brightness == Brightness.dark;
     }
 
     final deviceWidth = MediaQuery.of(context).size.width;
@@ -26,79 +24,35 @@ class GenerateGrid extends StatelessWidget {
       TextToSpeech.speak(speakText);
     }
 
-    return screenIcon
-        ? Card(
-            elevation: 3,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-              side: BorderSide(
-                color: color,
-                width: 5,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 3),
+      child: Card(
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide(
+            color: isDarkMode(context)
+                ? Theme.of(context).colorScheme.onPrimary
+                : Theme.of(context).colorScheme.primary,
+            width: 3,
+          ),
+        ),
+        child: InkWell(
+          onTap: () => buttonTapProcess(),
+          onLongPress: () => buttonTapProcess(),
+          child: Align(
+            alignment: Alignment.center,
+            child: Text(
+              labelText,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: deviceWidth / 21.5,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            child: InkWell(
-              onTap: () {
-                TextToSpeech.speak(speakText);
-              },
-              onLongPress: () {
-                TextToSpeech.speak(speakText);
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Icon(
-                          Icons.back_hand,
-                          color: color,
-                        ),
-                      ),
-                      Text(
-                        textAlign: TextAlign.center,
-                        labelText,
-                        style: TextStyle(
-                          // Iphone 14 Pro max(width) 430 = 20(fontsize)* X
-                          fontSize: deviceWidth / 21.5,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Icon(
-                          Icons.volume_up,
-                          color: color,
-                        ),
-                      ),
-                    ]),
-              ),
-            ),
-          )
-        : Card(
-            elevation: 3,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-              side: BorderSide(
-                color: color,
-                width: 5,
-              ),
-            ),
-            child: InkWell(
-              onTap: () => buttonTapProcess(),
-              onLongPress: () => buttonTapProcess(),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  labelText,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: deviceWidth / 21.5,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          );
+          ),
+        ),
+      ),
+    );
   }
 }
