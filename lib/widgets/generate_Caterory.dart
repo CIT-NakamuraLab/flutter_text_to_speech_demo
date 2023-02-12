@@ -15,6 +15,8 @@ class GenerateCaterory extends StatelessWidget {
     final deviceHeight = MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
         MediaQuery.of(context).padding.top;
+    // Iphone 14 PRO MAX 876.0 24pixcel 固定 0.027
+    // Iphone SE 3 611.0
     return Container(
       width: double.infinity,
       height: deviceHeight * 0.07,
@@ -24,22 +26,29 @@ class GenerateCaterory extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Icon(
-              Icons.help,
-              size: 36,
-              color: Colors.white,
-            ),
-            Text(
-              text,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
+            const FittedBox(
+              child: Icon(
+                Icons.help,
+                size: 36,
+                color: Colors.white,
               ),
             ),
-            Icon(
-              icon,
-              size: 36,
-              color: Colors.white,
+            FittedBox(
+              child: Text(
+                text,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            FittedBox(
+              child: Icon(
+                icon,
+                size: 36,
+                color: Colors.white,
+              ),
             )
           ],
         ),
