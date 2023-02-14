@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'sample_category.dart';
 
-const CATEGORY_DATA = [
+const categoryModel = [
   SampleCategory(
     category: "drink",
     title: "飲み物",

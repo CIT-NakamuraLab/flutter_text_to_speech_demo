@@ -1,6 +1,6 @@
 import 'package:text_to_speech_demo/models/opinion.dart';
 
-const List<Opinion> SAMPLE_DATA = [
+const List<Opinion> opinionModel = [
   // init回避のため
   Opinion(
     title: "title",

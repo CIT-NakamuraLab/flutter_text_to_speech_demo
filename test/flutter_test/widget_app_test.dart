@@ -54,12 +54,12 @@ void main() {
       expect(find.byIcon(Icons.keyboard_alt_rounded), findsOneWidget);
     });
     testWidgets("2.ランダムなページに移動することができる", (WidgetTester tester) async {
-      // その他ページが作成されていない?? CATEGORY_DATA[6].title="その他"とは認識している
+      // その他ページが作成されていない?? categoryModel[6].title="その他"とは認識している
       var random = math.Random().nextInt(6);
       await initScreen(tester);
 
       // 画面遷移
-      await tester.tap(find.byIcon(CATEGORY_DATA[random].iconData));
+      await tester.tap(find.byIcon(categoryModel[random].iconData));
       await tester.pump();
 
       // 画面遷移元に戻る
@@ -67,16 +67,16 @@ void main() {
       await tester.pump();
 
       // 元のページが表示されていることを検証する
-      expect(find.byIcon(CATEGORY_DATA[random].iconData), findsOneWidget);
+      expect(find.byIcon(categoryModel[random].iconData), findsOneWidget);
     });
     testWidgets("3. 画面遷移しカードを追加することができる", (WidgetTester tester) async {
       var random = math.Random().nextInt(6);
       await initScreen(tester);
 
-      await tester.tap(find.byIcon(CATEGORY_DATA[random].iconData));
+      await tester.tap(find.byIcon(categoryModel[random].iconData));
       await tester.pump();
 
-      expect(find.text(CATEGORY_DATA[random].title), findsOneWidget);
+      expect(find.text(categoryModel[random].title), findsOneWidget);
       await tester.pump();
       expect(find.byIcon(Icons.add), findsOneWidget);
 

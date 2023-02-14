@@ -68,7 +68,7 @@ void main() {
       await initScreen(tester);
 
       // 画面遷移
-      await tester.tap(find.byIcon(CATEGORY_DATA[random].iconData));
+      await tester.tap(find.byIcon(categoryModel[random].iconData));
       await tester.pumpAndSettle();
 
       // 画面遷移元に戻る
@@ -76,13 +76,13 @@ void main() {
       await tester.pumpAndSettle();
 
       // 元のページが表示されていることを検証する
-      expect(find.text(CATEGORY_DATA[random].title), findsOneWidget);
+      expect(find.text(categoryModel[random].title), findsOneWidget);
     });
     testWidgets("3. 画面遷移しカードを追加することができる", (WidgetTester tester) async {
       var random = math.Random().nextInt(6);
       await initScreen(tester);
 
-      await tester.tap(find.byIcon(CATEGORY_DATA[random].iconData));
+      await tester.tap(find.byIcon(categoryModel[random].iconData));
       await tester.pumpAndSettle();
 
       // アイコンがあるか確認+押してモーダルを表示
@@ -110,7 +110,7 @@ void main() {
 
       await initScreen(tester);
 
-      await tester.tap(find.byIcon(CATEGORY_DATA[random].iconData));
+      await tester.tap(find.byIcon(categoryModel[random].iconData));
       await tester.pumpAndSettle();
       await tester.tap(find.byType(FloatingActionButton));
       await tester.pumpAndSettle();
@@ -149,7 +149,7 @@ void main() {
       var random = math.Random().nextInt(6);
 
       await initScreen(tester);
-      await tester.tap(find.byIcon(CATEGORY_DATA[random].iconData));
+      await tester.tap(find.byIcon(categoryModel[random].iconData));
       await tester.pumpAndSettle();
       await tester.tap(find.byType(FloatingActionButton));
       await tester.pumpAndSettle();
@@ -190,7 +190,7 @@ void main() {
       var random = math.Random().nextInt(6);
 
       await initScreen(tester);
-      await tester.tap(find.byIcon(CATEGORY_DATA[random].iconData));
+      await tester.tap(find.byIcon(categoryModel[random].iconData));
       await tester.pumpAndSettle();
       await tester.tap(find.byType(FloatingActionButton));
       await tester.pumpAndSettle();
@@ -219,7 +219,7 @@ void main() {
       await tester.pumpAndSettle(const Duration(seconds: 2));
       expect(find.text("イルカ"), findsOneWidget);
     });
-    testWidgets("7. 入力画面に行きボタンを「こんにちは」を入力して再生し削除する",
+    testWidgets("7. 入力画面に行きボタンを「おはよう」を入力して再生し削除する",
         (WidgetTester tester) async {
       await initScreen(tester);
       expect(find.byIcon(Icons.keyboard_alt_outlined), findsOneWidget);
