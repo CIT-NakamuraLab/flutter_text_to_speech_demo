@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:text_to_speech_demo/main.dart';
-import 'package:text_to_speech_demo/models/category_model.dart';
+import 'package:connect/main.dart';
+import '../../lib/models/category_model.dart';
 import 'dart:math' as math;
 
 void main() {

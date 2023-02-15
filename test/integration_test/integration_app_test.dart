@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:text_to_speech_demo/models/health_condition_model.dart';
-import 'package:text_to_speech_demo/models/category_model.dart';
-import 'package:text_to_speech_demo/main.dart' as app;
+import 'package:connect/models/health_condition_model.dart';
+import 'package:connect/models/category_model.dart';
+import 'package:connect/main.dart' as app;
 import 'dart:math' as math;
 
 void main() {
