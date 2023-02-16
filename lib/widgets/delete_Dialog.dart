@@ -1,33 +1,37 @@
 import 'dart:io';
-
+import 'package:connect/models/opinion.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../db/sql.dart';
 
 class DeleteDialog extends StatelessWidget {
   final int index;
-  final List<Map<String, dynamic>> journals;
+  // final List<Map<String, dynamic>> journals;
+  final Opinion cardItem;
   final Function refreshJournals;
   final String category;
   final String routeName;
-  const DeleteDialog(
-      {super.key,
-      required this.index,
-      required this.journals,
-      required this.refreshJournals,
-      required this.category,
-      required this.routeName});
+  final int id;
+  const DeleteDialog({
+    super.key,
+    required this.index,
+    required this.cardItem,
+    required this.refreshJournals,
+    required this.category,
+    required this.id,
+    required this.routeName,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Platform.isAndroid
         ? AlertDialog(
             title: const Text("削除しますか?"),
-            content: Text(journals[index]["title"]),
+            content: Text(cardItem.title),
             actions: [
               TextButton(
                   onPressed: () {
-                    Sql.deleteItem(id: journals[index]['id']);
+                    Sql.deleteItem(id: id);
                     routeName == "/selected-category"
                         ? refreshJournals(category: category)
                         : refreshJournals();
@@ -42,7 +46,7 @@ class DeleteDialog extends StatelessWidget {
         : CupertinoAlertDialog(
             title: const Text("削除しますか?"),
             content: Text(
-              journals[index]["title"],
+              cardItem.title,
               style: const TextStyle(
                 fontSize: 25,
               ),
@@ -51,7 +55,7 @@ class DeleteDialog extends StatelessWidget {
               CupertinoDialogAction(
                 isDefaultAction: true,
                 onPressed: () {
-                  Sql.deleteItem(id: journals[index]['id']);
+                  Sql.deleteItem(id: id);
                   routeName == "/selected-category"
                       ? refreshJournals(category: category)
                       : refreshJournals();

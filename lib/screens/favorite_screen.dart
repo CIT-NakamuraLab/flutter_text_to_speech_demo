@@ -1,29 +1,33 @@
+import 'package:connect/Function/icon/favorite_icon.dart';
+import 'package:connect/models/opinion.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../Function/app_function.dart';
+import '../provider/state_provider.dart';
 import '../widgets/text_to_speech.dart';
-import '../widgets/adding_edit_modal.dart';
 import '../db/sql.dart';
 import '../widgets/delete_dialog.dart';
 import '../widgets/top_bar.dart';
 import '../widgets/shake.dart';
-import '../models/sample_model.dart';
 
-class FavoriteScreen extends StatefulWidget {
+class FavoriteScreen extends ConsumerStatefulWidget {
   static const String routeName = "/favorite-screen";
   const FavoriteScreen({
     super.key,
   });
 
   @override
-  State<FavoriteScreen> createState() => _FavoriteScreenState();
+  ConsumerState<FavoriteScreen> createState() => _FavoriteScreenState();
 }
 
-class _FavoriteScreenState extends State<FavoriteScreen> {
-  bool _loadedData = true;
+class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
   List<Map<String, dynamic>> cardItems = [];
+  late Opinion cardItem;
 
   void initState() {
     // TODO: implement initState
     Shake.detector.startListening();
+    refreshItems();
     super.initState();
   }
 
@@ -31,10 +35,12 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   void didChangeDependencies() async {
     // initState -> didChangeDependencies
     // initStateにはcontextが作成されていないため
-    if (_loadedData) {
+    final isLoading = ref.watch(initloadProvider);
+    if (isLoading) {
       print("didChangeDependencies");
-      await initData();
+      await AppFunction.initData();
       await refreshItems();
+      ref.watch(initloadProvider.notifier).state = !isLoading;
     }
     super.didChangeDependencies();
   }
@@ -46,90 +52,106 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     super.dispose();
   }
 
-  Future<void> initData() async {
-    final db = await Sql.getAllItems();
-    print(db.isEmpty);
-    if (db.isEmpty) {
-      SAMPLE_DATA.map(
-        (data) async {
-          await Sql.createItem(
-              title: data.title,
-              description: data.description,
-              categories: data.categories);
-        },
-      ).toList();
-    }
-  }
-
   Future<void> refreshItems() async {
-    print("refreshItems");
     final data = await Sql.refreshAndFavoriteJournals();
-    setState(() {
-      cardItems = data;
-      _loadedData = false;
-    });
-  }
-
-  void _modal({required int? id, required String category}) {
-    // 宣言しているcategoryを引数とする理由は､lateであるため､buildまでにinitializedしていないためnull
-    showModalBottomSheet(
-      context: context,
-      elevation: 20,
-      isScrollControlled: true,
-      builder: (context) {
-        return AddingEditModal(
-          id: id,
-          category: category,
-          journals: cardItems,
-          refreshJournals: refreshItems,
-          routeName: FavoriteScreen.routeName,
-        );
-      },
-    );
-  }
-
-  Future<void> _updateFavorite(
-      {required int id, required int index, required String category}) async {
-    int favorite = cardItems[index]["favorite"];
-    if (cardItems[index]["favorite"] == 0) {
-      favorite = 1;
-    } else {
-      favorite = 0;
-    }
-    await Sql.updateItemFavorite(id: id, favorite: favorite);
-    refreshItems();
+    ref.watch(dataProvider.notifier).state = data;
   }
 
   void buttonTapProcess(int index) {
+    cardItems = ref.watch(dataProvider);
     TextToSpeech.speak(
       cardItems[index]["description"],
     );
   }
 
-  bool isDarkMode(BuildContext context) {
-    final Brightness brightness = MediaQuery.platformBrightnessOf(context);
-    return brightness == Brightness.dark;
+  Widget favoriteProcess(int index) {
+    cardItems = ref.watch(dataProvider);
+    cardItem = Opinion(
+      title: cardItems[index]["title"],
+      description: cardItems[index]["description"],
+      categories: cardItems[index]["categories"],
+      favorite: cardItems[index]["favorite"],
+    );
+    return FavoriteIcon(
+      cardItem: cardItem,
+      index: index,
+      refreshItems: refreshItems,
+      routeName: FavoriteScreen.routeName,
+      id: cardItems[index]["id"],
+    );
   }
 
-  Widget favoriteUpdate() {
-    return Center(
-      child: TextButton(
-        onPressed: () async {
-          await refreshItems();
-          cardItems.isEmpty
-              ? TextToSpeech.speak("お気に入りカードが存在しません")
-              : TextToSpeech.speak("お気に入り情報を更新しました");
+  Widget editProcess(int index) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+      child: GestureDetector(
+        child: const Icon(Icons.edit),
+        onTap: () {
+          AppFunction.modal(
+            context: context,
+            id: cardItems[index]['id'],
+            category: cardItems[index]["categories"],
+            cardItems: cardItems,
+            refreshItems: refreshItems,
+            routeName: FavoriteScreen.routeName,
+          );
         },
-        child: Text(
-          "お気に入りカードが存在しません",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: isDarkMode(context)
-                ? Theme.of(context).colorScheme.inversePrimary
-                : Theme.of(context).colorScheme.primary,
-          ),
-        ),
+        onLongPress: () {
+          AppFunction.modal(
+            context: context,
+            id: cardItems[index]['id'],
+            category: cardItems[index]["categories"],
+            cardItems: cardItems,
+            refreshItems: refreshItems,
+            routeName: FavoriteScreen.routeName,
+          );
+        },
+      ),
+    );
+  }
+
+  Widget deleteProcess(int index) {
+    cardItems = ref.watch(dataProvider);
+    cardItem = Opinion(
+      title: cardItems[index]["title"],
+      description: cardItems[index]["description"],
+      categories: cardItems[index]["categories"],
+      favorite: cardItems[index]["favorite"],
+    );
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: GestureDetector(
+        child: const Icon(Icons.delete),
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (_) {
+              return DeleteDialog(
+                index: index,
+                cardItem: cardItem,
+                refreshJournals: refreshItems,
+                id: cardItems[index]["id"],
+                category: cardItems[index]["categories"],
+                routeName: FavoriteScreen.routeName,
+              );
+            },
+          );
+        },
+        onLongPress: () {
+          showDialog(
+            context: context,
+            builder: (_) {
+              return DeleteDialog(
+                index: index,
+                cardItem: cardItem,
+                refreshJournals: refreshItems,
+                id: cardItems[index]["id"],
+                category: cardItems[index]["categories"],
+                routeName: FavoriteScreen.routeName,
+              );
+            },
+          );
+        },
       ),
     );
   }
@@ -137,13 +159,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
+    final cardItems = ref.watch(dataProvider);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: const TopBar(),
       ),
       body: cardItems.isEmpty
-          ? favoriteUpdate()
+          ? AppFunction.favoriteUpdate(context, refreshItems, false)
           : RefreshIndicator(
               onRefresh: () async {
                 TextToSpeech.speak("お気に入り情報を更新しました");
@@ -178,26 +201,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            leading: GestureDetector(
-                              onTap: () => _updateFavorite(
-                                index: index,
-                                id: cardItems[index]["id"],
-                                category: cardItems[index]["categories"],
-                              ),
-                              onLongPress: () => _updateFavorite(
-                                index: index,
-                                id: cardItems[index]["id"],
-                                category: cardItems[index]["categories"],
-                              ),
-                              child: Icon(
-                                cardItems[index]["favorite"] != 0
-                                    ? Icons.favorite_rounded
-                                    : Icons.favorite_border,
-                                color: isDarkMode(context)
-                                    ? Theme.of(context).colorScheme.onPrimary
-                                    : Theme.of(context).colorScheme.primary,
-                              ),
-                            ),
+                            leading: favoriteProcess(index),
                             title: Text(
                               cardItems[index]["title"],
                               style: const TextStyle(
@@ -211,66 +215,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 0),
-                                    child: GestureDetector(
-                                      child: const Icon(Icons.edit),
-                                      onTap: () {
-                                        _modal(
-                                          id: cardItems[index]['id'],
-                                          category: cardItems[index]
-                                              ["categories"],
-                                        );
-                                      },
-                                      onLongPress: () {
-                                        _modal(
-                                          id: cardItems[index]['id'],
-                                          category: cardItems[index]
-                                              ["categories"],
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 0),
-                                    child: GestureDetector(
-                                      child: const Icon(Icons.delete),
-                                      onTap: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (_) {
-                                            return DeleteDialog(
-                                              index: index,
-                                              journals: cardItems,
-                                              refreshJournals: refreshItems,
-                                              category: cardItems[index]
-                                                  ["categories"],
-                                              routeName:
-                                                  FavoriteScreen.routeName,
-                                            );
-                                          },
-                                        );
-                                      },
-                                      onLongPress: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (_) {
-                                            return DeleteDialog(
-                                              index: index,
-                                              journals: cardItems,
-                                              refreshJournals: refreshItems,
-                                              category: cardItems[index]
-                                                  ["categories"],
-                                              routeName:
-                                                  FavoriteScreen.routeName,
-                                            );
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ),
+                                  editProcess(index),
+                                  deleteProcess(index),
                                 ],
                               ),
                             ),
