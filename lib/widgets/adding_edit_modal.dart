@@ -1,18 +1,20 @@
+import 'package:connect/models/opinion.dart';
 import 'package:flutter/material.dart';
+import '../screens/favorite_screen.dart';
 import '../db/sql.dart';
 
 class AddingEditModal extends StatelessWidget {
   final Function refreshJournals;
   final String category;
   final int? id;
-  final List<Map<String, dynamic>> journals;
+  final Opinion? cardItem;
   final String routeName;
   const AddingEditModal({
     super.key,
     required this.refreshJournals,
     required this.category,
     required this.id,
-    required this.journals,
+    required this.cardItem,
     required this.routeName,
   });
 
@@ -22,11 +24,9 @@ class AddingEditModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (id != null) {
-      final existingJournal =
-          journals.firstWhere((element) => element["id"] == id);
-      titleController.text = existingJournal["title"];
-      descriptionController.text = existingJournal["description"];
+    if (id != null && cardItem != null) {
+      titleController.text = cardItem!.title;
+      descriptionController.text = cardItem!.description;
     }
 
     return SingleChildScrollView(
@@ -43,6 +43,7 @@ class AddingEditModal extends StatelessWidget {
           child: Column(
             children: [
               TextField(
+                textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(hintText: "みることば"),
                 controller: titleController,
                 key: const Key("adding_edit_modal_see"),
@@ -51,6 +52,7 @@ class AddingEditModal extends StatelessWidget {
                 height: 10,
               ),
               TextField(
+                textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(hintText: "はなすことば"),
                 controller: descriptionController,
                 key: const Key("adding_edit_modal_speack"),
@@ -66,9 +68,9 @@ class AddingEditModal extends StatelessWidget {
                       description: descriptionController.text,
                       categories: category,
                     );
-                    routeName == "/selected-category"
-                        ? refreshJournals(category: category)
-                        : refreshJournals();
+                    routeName == FavoriteScreen.routeName
+                        ? refreshJournals()
+                        : refreshJournals(category: category);
                   } else {
                     await Sql.updateItem(
                       id: id!,
@@ -76,9 +78,9 @@ class AddingEditModal extends StatelessWidget {
                       description: descriptionController.text,
                       categories: category,
                     );
-                    routeName == "/selected-category"
-                        ? refreshJournals(category: category)
-                        : refreshJournals();
+                    routeName == FavoriteScreen.routeName
+                        ? refreshJournals()
+                        : refreshJournals(category: category);
                   }
                   titleController.text = "";
                   descriptionController.text = "";
