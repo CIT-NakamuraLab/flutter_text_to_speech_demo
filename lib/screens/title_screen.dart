@@ -71,9 +71,9 @@ class _TitleScreenState extends State<TitleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: const Color.fromARGB(255, 174, 249, 232),
+      backgroundColor: const Color.fromARGB(255, 229, 137, 127),
       body: Center(
-        child: Image.asset("assets/images/app/loading_screen.png"),
+        child: Image.asset("assets/images/app/talk_support_icon.png"),
       ),
     );
   }
