@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Function/app_function.dart';
 import '../widgets/text_to_speech.dart';
 import './favorite_screen.dart';
 import './health_condition_screen.dart';
@@ -46,11 +47,6 @@ class _TabsScreenState extends State<TabsScreen> {
     );
   }
 
-  bool isDarkMode(BuildContext context) {
-    final Brightness brightness = MediaQuery.platformBrightnessOf(context);
-    return brightness == Brightness.dark;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,7 +87,7 @@ class _TabsScreenState extends State<TabsScreen> {
         selectedItemColor: Colors.white,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        backgroundColor: isDarkMode(context)
+        backgroundColor: AppFunction.isDarkMode(context)
             ? Colors.black12
             : Theme.of(context).colorScheme.primary,
         unselectedItemColor: Colors.white,

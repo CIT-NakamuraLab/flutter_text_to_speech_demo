@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:text_to_speech_demo/widgets/top_bar.dart';
+import '../widgets/top_bar.dart';
 import '../widgets/shake.dart';
 import '../models/letter_model.dart';
 import '../widgets/text_to_speech.dart';

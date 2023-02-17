@@ -1,3 +1,5 @@
+import 'package:connect/Function/icon/delete_icon.dart';
+import 'package:connect/Function/icon/edit_icon.dart';
 import 'package:connect/Function/icon/favorite_icon.dart';
 import 'package:connect/models/opinion.dart';
 import 'package:flutter/material.dart';
@@ -82,31 +84,18 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
   }
 
   Widget editProcess(int index) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-      child: GestureDetector(
-        child: const Icon(Icons.edit),
-        onTap: () {
-          AppFunction.modal(
-            context: context,
-            id: cardItems[index]['id'],
-            category: cardItems[index]["categories"],
-            cardItems: cardItems,
-            refreshItems: refreshItems,
-            routeName: FavoriteScreen.routeName,
-          );
-        },
-        onLongPress: () {
-          AppFunction.modal(
-            context: context,
-            id: cardItems[index]['id'],
-            category: cardItems[index]["categories"],
-            cardItems: cardItems,
-            refreshItems: refreshItems,
-            routeName: FavoriteScreen.routeName,
-          );
-        },
-      ),
+    cardItems = ref.watch(dataProvider);
+    cardItem = Opinion(
+      title: cardItems[index]["title"],
+      description: cardItems[index]["description"],
+      categories: cardItems[index]["categories"],
+      favorite: cardItems[index]["favorite"],
+    );
+    return EditIcon(
+      cardItem: cardItem,
+      refreshItems: refreshItems,
+      id: cardItems[index]["id"],
+      routeName: FavoriteScreen.routeName,
     );
   }
 
@@ -118,42 +107,12 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
       categories: cardItems[index]["categories"],
       favorite: cardItems[index]["favorite"],
     );
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: GestureDetector(
-        child: const Icon(Icons.delete),
-        onTap: () {
-          showDialog(
-            context: context,
-            builder: (_) {
-              return DeleteDialog(
-                index: index,
-                cardItem: cardItem,
-                refreshJournals: refreshItems,
-                id: cardItems[index]["id"],
-                category: cardItems[index]["categories"],
-                routeName: FavoriteScreen.routeName,
-              );
-            },
-          );
-        },
-        onLongPress: () {
-          showDialog(
-            context: context,
-            builder: (_) {
-              return DeleteDialog(
-                index: index,
-                cardItem: cardItem,
-                refreshJournals: refreshItems,
-                id: cardItems[index]["id"],
-                category: cardItems[index]["categories"],
-                routeName: FavoriteScreen.routeName,
-              );
-            },
-          );
-        },
-      ),
-    );
+    return DeleteIcon(
+        index: index,
+        refreshItems: refreshItems,
+        routeName: FavoriteScreen.routeName,
+        id: cardItems[index]["id"],
+        cardItem: cardItem);
   }
 
   @override

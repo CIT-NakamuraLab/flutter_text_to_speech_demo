@@ -1,4 +1,4 @@
-import 'package:text_to_speech_demo/models/opinion.dart';
+import '../models/opinion.dart';
 
 const List<Opinion> opinionModel = [
   // init回避のため

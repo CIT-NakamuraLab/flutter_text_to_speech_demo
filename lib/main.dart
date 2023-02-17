@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:text_to_speech_demo/screens/home_screen.dart';
-import 'package:text_to_speech_demo/screens/tabs_screen.dart';
-
-import 'screens/health_condition_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../screens/home_screen.dart';
+import '../screens/tabs_screen.dart';
+import './screens/health_condition_screen.dart';
 import './screens/title_screen.dart';
 import './screens/input_text.dart';
 
@@ -15,7 +15,7 @@ void main() {
       DeviceOrientation.portraitDown,
     ],
   );
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

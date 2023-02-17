@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:text_to_speech_demo/models/health_condition_model.dart';
+import '../models/health_condition_model.dart';
 import '../widgets/top_bar.dart';
 import '../widgets/shake.dart';
 import '../widgets/generate_caterory.dart';
