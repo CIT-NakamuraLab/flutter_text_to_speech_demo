@@ -41,7 +41,6 @@ void main() {
 
       //
       expect(find.text("飲み物"), findsOneWidget);
-      expect(find.text("飲み物"), findsOneWidget);
 
       // iconが適切か確認
       expect(find.byIcon(Icons.home_outlined), findsNothing);
@@ -54,7 +53,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byIcon(Icons.medical_services_rounded), findsOneWidget);
 
-      await tester.tap(find.byIcon(Icons.favorite_border));
+      await tester.tap(find.byIcon(Icons.favorite_border).last);
       await tester.pumpAndSettle();
       expect(find.byIcon(Icons.favorite_rounded), findsOneWidget);
 
