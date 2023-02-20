@@ -73,8 +73,16 @@ class _TitleScreenState extends State<TitleScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color.fromARGB(255, 229, 137, 127),
       body: Center(
-        child: Image.asset("assets/images/app/talk_support_icon.png"),
+        child: SizedBox.expand(
+          child: FittedBox(
+            child: Image.asset("assets/images/app/talk_support_icon.png"),
+          ),
+        ),
       ),
     );
   }
 }
+//  child: FittedBox(
+//           fit: BoxFit.contain,
+//           child: Image.asset("assets/images/app/talk_support_icon.png"),
+//         ),
